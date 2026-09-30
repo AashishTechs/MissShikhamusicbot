@@ -2,13 +2,13 @@
 # Copyright (c) 2026 ArtistBots
 # All Rights Reserved.
 #
-# Project      : ArtistBots API Telegram Music Bot
-# Powered By   : Artist
-# Type         : API Based Telegram Music Bot
+# Project      : MissShikhamusicbot
+# Powered By   : MissShikhamusicbot
+# Type         : Telegram Music Bot
 #
-# Bot          : @ArtistApibot
-# Channel      : https://t.me/artistbots
-# GitHub       : https://github.com/elevenyts
+# Bot          : @MissShikhaMusicBot
+# 
+# GitHub       : https://github.com/AashishTechs/MissShikhamusicbot
 #
 # Unauthorized copying, modification, or redistribution
 # of this source code without permission is prohibited.
@@ -86,35 +86,61 @@ class Inline:
             # MAIN PLAYER CONTROL ROW
             # --------------------------------------------------
 
+            # --------------------------------------------------
+            # PRIMARY CONTROLS
+            # --------------------------------------------------
+
             keyboard.append(
                 [
                     self.ikb(
-                        text="⏪ 10",
+                        text="⏪ 10s",
                         callback_data=f"controls seek_back_10 {chat_id}",
+                        style=ButtonStyle.PRIMARY,
                     ),
                     self.ikb(
                         text="⏸",
                         callback_data=f"controls pause {chat_id}",
+                        style=ButtonStyle.SUCCESS,
                     ),
                     self.ikb(
-                        text="⏩ 10",
-                        callback_data=f"controls skip {chat_id}",
+                        text="10s ⏩",
+                        callback_data=f"controls seek_forward_10 {chat_id}",
+                        style=ButtonStyle.PRIMARY,
                     ),
                 ]
             )
 
             # --------------------------------------------------
-            # CLICK ME / SUPPORT
+            # SECONDARY PLAYER CONTROLS
             # --------------------------------------------------
 
             keyboard.append(
                 [
                     self.ikb(
-                        text="✨ CLICK ME ↗",
+                        text="🔂 Loop",
+                        callback_data=f"controls loop {chat_id}",
+                        style=ButtonStyle.PRIMARY,
+                    ),
+                    self.ikb(
+                        text="🔀 Shuffle",
+                        callback_data=f"controls shuffle {chat_id}",
+                        style=ButtonStyle.PRIMARY,
+                    ),
+                ]
+            )
+
+            # --------------------------------------------------
+            # SUPPORT
+            # --------------------------------------------------
+
+            keyboard.append(
+                [
+                    self.ikb(
+                        text="✨ Channel ↗",
                         url=config.SUPPORT_CHANNEL,
                     ),
                     self.ikb(
-                        text="💬 SUPPORT ↗",
+                        text="💬 Support ↗",
                         url=config.SUPPORT_CHAT,
                     ),
                 ]
@@ -127,8 +153,9 @@ class Inline:
             keyboard.append(
                 [
                     self.ikb(
-                        text="✕ CLOSE",
+                        text="✕ Close Player",
                         callback_data=f"controls close {chat_id}",
+                        style=ButtonStyle.DANGER,
                     )
                 ]
             )
@@ -409,7 +436,7 @@ class Inline:
                 ),
                 self.ikb(
                     text="ꜱᴏᴜʀᴄᴇ",
-                    url="https://github.com/kalyan631/BlackMusic",
+                    url="https://github.com/AashishTechs/MissShikhamusicbot",
                     style=ButtonStyle.SUCCESS,
                 ),
             ],

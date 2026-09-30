@@ -1,73 +1,59 @@
 <div align="center">
 
-<img src="./Welcome.jpg" alt="Apple Music" width="400"/>
+<img src="./Welcome.jpg" alt="Miss Shikha Music" width="420"/>
 
-# 🎵 𝗔ᴘᴘʟᴇ 𝗠ᴜsɪᴄ <<3
+# 🎧 Miss Shikha Music
 
-[![Typing SVG](https://readme-typing-svg.herokuapp.com/?lines=🎵+WELCOME+TO+APPLE+MUSIC;🎧+ADVANCED+TELEGRAM+MUSIC+BOT;⚡+POWERED+BY+APPLE+MUSIC)](https://github.com/)
+**Fast • Clean • Direct Voice-Chat Music**
 
-<p><b>A Powerful Telegram Music Player Bot</b></p>
+A Telegram music bot focused on low-latency VC playback, a clean now-playing panel, queue controls, and direct YouTube streaming.
 
 </div>
 
 ---
 
-<h2 align="center">🎵 𝗔ᴘᴘʟᴇ 𝗠ᴜsɪᴄ <<3</h2>
+## ✨ Highlights
+
+- ⚡ **Low-latency VC playback** with direct stream URLs
+- 🚀 **Background next-track preparation** for smoother queue transitions
+- 🎛️ **Systematic player panel** with seek, pause/resume, loop and shuffle
+- 🎵 **YouTube search, links and playlists**
+- 📋 **Queue management** with force play and playback controls
+- 🎤 **Voice-command support**
+- 📺 **Group and channel playback**
+- 🖼️ **Dynamic thumbnails** with a clean now-playing layout
+
+## 🎚️ Player Controls
+
+The player panel is organized into four sections:
+
+1. **Progress** — current playback position
+2. **Primary controls** — 10s rewind, pause/resume, 10s forward
+3. **Secondary controls** — loop and shuffle
+4. **Support / Close** — quick links and player cleanup
+
+## ⚡ Playback Architecture
+
+The bot uses temporary direct YouTube stream URLs instead of downloading every track before playback.
+
+For queued tracks, the bot can extract upcoming stream URLs in the background. When the next song starts, an already-prepared URL can be reused instead of waiting for another extraction.
+
+## 🛠️ Run Locally
+
+```bash
+python -m Elevenyts
+```
+
+Configure the required environment variables from `sample.env` before starting.
+
+## 🔐 Security
+
+Keep tokens, MongoDB credentials, sessions, and YouTube cookies outside Git. The repository's MIT license and required upstream attribution are preserved.
 
 ---
 
-## ✨ Features
+<div align="center">
 
-- 🎵 **High Quality Music Streaming** — Clear and smooth audio playback
-- 🎧 **YouTube Support** — Play music using YouTube links or search
-- 📝 **Queue System** — Add and manage multiple songs
-- ⚡ **Fast & Reliable** — Built with Pyrogram and PyTgCalls
-- 🎛 **Playback Controls** — Pause, resume, skip, stop and seek
-- 🔀 **Shuffle & Loop** — Control your music queue
-- 👥 **User Authorization** — Control access using authorized users
-- 📊 **Statistics** — Track bot usage and performance
-- 🎤 **Voice Commands** — Voice-based `Play <song name>` support
-- 📱 **Telegram VC Support** — Stream music directly in group voice chats
+**🎶 Miss Shikha Music — Music beyond the wait.**
 
----
-
-## 🎤 Voice Command
-
-🎵 APPLE MUSIC BOT — RUN PROCESS
-
-📁 Project Folder:
-E:\BlackMusic-main
-
-1️⃣ VS Code open karo aur E:\BlackMusic-main folder open karo.
-
-2️⃣ VS Code Terminal kholo.
-
-3️⃣ Ye commands ek-ek karke run karo:
-
-cd /d E:\BlackMusic-main
-venv\Scripts\activate
-python -m Elevenyts
-
-✅ Agar bot successfully start ho gaya to logs me:
-Bot started successfully! Ready to play music!
-
-🎧 Music Test:
-/play Kesariya
-
-🎤 Voice Command Test:
-Play Kesariya
-
-🔄 BOT RESTART:
-Ctrl + C
-
-cd /d E:\BlackMusic-main
-venv\Scripts\activate
-python -m Elevenyts
-🛑 BOT STOP:
-Ctrl + C
-
-⚡ Future me bot start karne ke liye:
-
-cd /d E:\BlackMusic-main
-venv\Scripts\activate
-python -m Elevenyts
+</div>
