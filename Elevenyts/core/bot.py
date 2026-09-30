@@ -1,12 +1,12 @@
 # ==========================================================
-# Copyright (c) 2026 MissShikhamusicbot
+# Copyright (c) 2026 Apple Music <<3
 # All Rights Reserved.
 #
-# Project      : MissShikhamusicbot
-# Powered By   : MissShikhamusicbot
+# Project      : Apple Music Telegram Music Bot
+# Powered By   : Apple Music <<3
 # Type         : Telegram Music Bot
 #
-# Bot          : @MissShikhaMusicBot
+# Bot          : @AppleMusix_bot
 #
 # Unauthorized copying, modification, or redistribution
 # of this source code without permission is prohibited.
