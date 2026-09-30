@@ -86,35 +86,61 @@ class Inline:
             # MAIN PLAYER CONTROL ROW
             # --------------------------------------------------
 
+            # --------------------------------------------------
+            # PRIMARY CONTROLS
+            # --------------------------------------------------
+
             keyboard.append(
                 [
                     self.ikb(
-                        text="⏪ 10",
+                        text="⏪ 10s",
                         callback_data=f"controls seek_back_10 {chat_id}",
+                        style=ButtonStyle.PRIMARY,
                     ),
                     self.ikb(
                         text="⏸",
                         callback_data=f"controls pause {chat_id}",
+                        style=ButtonStyle.SUCCESS,
                     ),
                     self.ikb(
-                        text="⏩ 10",
-                        callback_data=f"controls skip {chat_id}",
+                        text="10s ⏩",
+                        callback_data=f"controls seek_forward_10 {chat_id}",
+                        style=ButtonStyle.PRIMARY,
                     ),
                 ]
             )
 
             # --------------------------------------------------
-            # CLICK ME / SUPPORT
+            # SECONDARY PLAYER CONTROLS
             # --------------------------------------------------
 
             keyboard.append(
                 [
                     self.ikb(
-                        text="✨ CLICK ME ↗",
+                        text="🔂 Loop",
+                        callback_data=f"controls loop {chat_id}",
+                        style=ButtonStyle.PRIMARY,
+                    ),
+                    self.ikb(
+                        text="🔀 Shuffle",
+                        callback_data=f"controls shuffle {chat_id}",
+                        style=ButtonStyle.PRIMARY,
+                    ),
+                ]
+            )
+
+            # --------------------------------------------------
+            # SUPPORT
+            # --------------------------------------------------
+
+            keyboard.append(
+                [
+                    self.ikb(
+                        text="✨ Channel ↗",
                         url=config.SUPPORT_CHANNEL,
                     ),
                     self.ikb(
-                        text="💬 SUPPORT ↗",
+                        text="💬 Support ↗",
                         url=config.SUPPORT_CHAT,
                     ),
                 ]
@@ -127,8 +153,9 @@ class Inline:
             keyboard.append(
                 [
                     self.ikb(
-                        text="✕ CLOSE",
+                        text="✕ Close Player",
                         callback_data=f"controls close {chat_id}",
+                        style=ButtonStyle.DANGER,
                     )
                 ]
             )
