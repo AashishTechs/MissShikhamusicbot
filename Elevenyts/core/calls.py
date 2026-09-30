@@ -1584,7 +1584,7 @@ class TgCall(PyTgCalls):
                     )
 
                 # ==================================================
-                # Fresh direct stream URL
+                # Playback status message
                 # ==================================================
 
                 _lang = await lang.get_lang(
@@ -1593,36 +1593,9 @@ class TgCall(PyTgCalls):
 
                 msg = None
 
-                # --------------------------------------------------
-                # IMPORTANT:
-                # Always refresh the direct URL for the next track.
-                #
-                # YouTube stream URLs are temporary.
-                # --------------------------------------------------
-
-                media.file_path = None
-
-                stream_url = await self._get_stream_url(
-                    media
-                )
-
-                if not stream_url:
-
-                    logger.error(
-                        f"Could not get direct stream URL "
-                        f"for next track {media.id}"
-                    )
-
-                    await self.stop(
-                        chat_id
-                    )
-
-                    return
-
-                # ==================================================
-                # Playback status message
-                # ==================================================
-
+                # Send the lightweight transition message first.
+                # Stream extraction can take several seconds and should
+                # not block the user-facing state update.
                 try:
 
                     msg = await app.send_message(
@@ -1675,6 +1648,33 @@ class TgCall(PyTgCalls):
                     if msg
                     else 0
                 )
+
+                # ==================================================
+                # Fresh direct stream URL
+                # ==================================================
+
+                # Reuse the background-preloaded URL when available.
+                # If it is missing, extract it now. Direct URLs are
+                # temporary, so replay/seek paths still force refreshes.
+                if not media.file_path:
+                    stream_url = await self._get_stream_url(media)
+
+                    if not stream_url:
+                        logger.error(
+                            f"Could not get direct stream URL "
+                            f"for next track {media.id}"
+                        )
+
+                        if msg:
+                            try:
+                                await msg.edit_text(
+                                    "❌ Unable to prepare the next track."
+                                )
+                            except Exception:
+                                pass
+
+                        await self.stop(chat_id)
+                        return
 
                 # ==================================================
                 # Start playback
