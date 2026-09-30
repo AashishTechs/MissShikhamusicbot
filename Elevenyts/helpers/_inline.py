@@ -1,13 +1,13 @@
 # ==========================================================
-# Copyright (c) 2026 ArtistBots
+# Copyright (c) 2026 Apple Music <<3
 # All Rights Reserved.
 #
-# Project      : MissShikhamusicbot
-# Powered By   : MissShikhamusicbot
+# Project      : Apple Music Telegram Music Bot
+# Powered By   : Apple Music <<3
 # Type         : Telegram Music Bot
 #
-# Bot          : @MissShikhaMusicBot
-# 
+# Bot          : @AppleMusix_bot
+# Channel      : https://t.me/deep_emotions_01
 # GitHub       : https://github.com/AashishTechs/MissShikhamusicbot
 #
 # Unauthorized copying, modification, or redistribution
