@@ -496,10 +496,20 @@ async def _controls(_, query: types.CallbackQuery):
             status=status if action != "resume" else None
         )
 
-        await query.edit_message_text(
-            f"{mtext}\n\n<blockquote>{reply}</blockquote>",
-            reply_markup=keyboard
-        )
+        # Player cards are photos, so update the caption first.
+        # Text fallback keeps compatibility with text-only messages.
+        updated_text = f"{mtext}\n\n<blockquote>{reply}</blockquote>"
+
+        try:
+            await query.edit_message_caption(
+                caption=updated_text,
+                reply_markup=keyboard,
+            )
+        except Exception:
+            await query.edit_message_text(
+                updated_text,
+                reply_markup=keyboard,
+            )
 
     except FloodWait as e:
 
@@ -507,10 +517,16 @@ async def _controls(_, query: types.CallbackQuery):
 
         try:
 
-            await query.edit_message_text(
-                f"{mtext}\n\n<blockquote>{reply}</blockquote>",
-                reply_markup=keyboard
-            )
+            try:
+                await query.edit_message_caption(
+                    caption=updated_text,
+                    reply_markup=keyboard,
+                )
+            except Exception:
+                await query.edit_message_text(
+                    updated_text,
+                    reply_markup=keyboard,
+                )
 
         except Exception:
             pass
