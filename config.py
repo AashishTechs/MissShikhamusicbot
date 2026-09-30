@@ -1,12 +1,12 @@
 # ==========================================================
-# Copyright (c) 2026 Apple Music <<3
+# Copyright (c) 2026 MissShikhamusicbot
 # All Rights Reserved.
 #
-# Project      : Apple Music Telegram Music Bot
-# Powered By   : Apple Music <<3
+# Project      : MissShikhamusicbot
+# Powered By   : MissShikhamusicbot
 # Type         : API Based Telegram Music Bot
 #
-# Bot          : @AppleMusix_bot
+# Bot          : @MissShikhaMusicBot
 #
 # Unauthorized copying, modification, or redistribution
 # of this source code without permission is prohibited.
@@ -41,8 +41,8 @@ class Config:
         self.SESSION3: str = getenv("STRING_SESSION3", "")
 
         # Support Links
-        self.SUPPORT_CHANNEL: str = getenv("SUPPORT_CHANNEL", "https://t.me/deep_emotions_01")
-        self.SUPPORT_CHAT: str = getenv("SUPPORT_CHAT", "https://t.me/+cGoEVo7d8YtjOTI9")
+        self.SUPPORT_CHANNEL: str = getenv("SUPPORT_CHANNEL", "https://github.com/AashishTechs/MissShikhamusicbot")
+        self.SUPPORT_CHAT: str = getenv("SUPPORT_CHAT", "https://github.com/AashishTechs/MissShikhamusicbot/issues")
 
         # Excluded Chats
         self.EXCLUDED_CHATS: List[int] = self._parse_excluded_chats()
