@@ -9,12 +9,12 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# ऐप कॉपी करें
+# Copy application
 COPY . /app/
 WORKDIR /app/
 
 # पायथन पैकेज इंस्टॉल करें
 RUN pip install -r requirements.txt
 
-# स्टार्ट कमांड
+# Start application
 CMD bash start
