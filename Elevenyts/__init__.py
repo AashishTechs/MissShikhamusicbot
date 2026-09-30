@@ -1,12 +1,12 @@
 # ==========================================================
-# Copyright (c) 2026 Apple Music <<3
+# Copyright (c) 2026 MissShikhamusicbot
 # All Rights Reserved.
 #
-# Project      : Apple Music Telegram Music Bot
-# Powered By   : Apple Music <<3
+# Project      : MissShikhamusicbot
+# Powered By   : MissShikhamusicbot
 # Type         : API Based Telegram Music Bot
 #
-# Bot          : @AppleMusix_bot
+# Bot          : @MissShikhaMusicBot
 #
 # Unauthorized copying, modification, or redistribution
 # of this source code without permission is prohibited.
@@ -75,10 +75,6 @@ from Elevenyts.core.telegram import Telegram
 from Elevenyts.core.youtube import YouTube
 tg = Telegram()
 yt = YouTube()
-
-# Initialize preload manager for background track downloading
-from Elevenyts.core.preload import PreloadManager
-preload = PreloadManager()
 
 # Initialize queue manager
 from Elevenyts.helpers import Queue
