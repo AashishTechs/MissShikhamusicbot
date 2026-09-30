@@ -2,13 +2,13 @@
 # Copyright (c) 2026 ArtistBots
 # All Rights Reserved.
 #
-# Project      : ArtistBots API Telegram Music Bot
-# Powered By   : Artist
-# Type         : API Based Telegram Music Bot
+# Project      : MissShikhamusicbot
+# Powered By   : MissShikhamusicbot
+# Type         : Telegram Music Bot
 #
-# Bot          : @ArtistApibot
-# Channel      : https://t.me/artistbots
-# GitHub       : https://github.com/elevenyts
+# Bot          : @MissShikhaMusicBot
+# 
+# GitHub       : https://github.com/AashishTechs/MissShikhamusicbot
 #
 # Unauthorized copying, modification, or redistribution
 # of this source code without permission is prohibited.

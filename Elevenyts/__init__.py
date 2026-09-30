@@ -76,10 +76,6 @@ from Elevenyts.core.youtube import YouTube
 tg = Telegram()
 yt = YouTube()
 
-# Initialize preload manager for background track downloading
-from Elevenyts.core.preload import PreloadManager
-preload = PreloadManager()
-
 # Initialize queue manager
 from Elevenyts.helpers import Queue
 queue = Queue()
