@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="./welcome.jpg" alt="Apple Music" width="400"/>
+<img src="./Welcome.jpg" alt="Apple Music" width="400"/>
 
 # 🎵 𝗔ᴘᴘʟᴇ 𝗠ᴜsɪᴄ <<3
 
