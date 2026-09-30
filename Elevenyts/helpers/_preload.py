@@ -26,9 +26,10 @@ class PreloadManager:
 
     IMPORTANT:
     - MP3/MP4 download nahi karta.
-    - YouTube stream URL advance me extract nahi karta.
-    - Actual stream URL playback ke time generate hoga.
-    - Existing preload API compatibility ke liye maintain ki gayi hai.
+    - MP3/MP4 download nahi karta.
+    - Upcoming direct stream URLs ko background me extract karta hai.
+    - Temporary URLs are reused only for the short transition window.
+    - A fresh URL is still generated when a cached URL is missing/invalid.
     """
 
     def __init__(self):
@@ -98,28 +99,30 @@ class PreloadManager:
             return
 
         try:
-            logger.debug(
-                f"Skipping file preload for chat {chat_id}: "
-                f"{title}"
+            # Direct-stream preload: extract the temporary URL in
+            # the background, but never download an audio/video file.
+            from Elevenyts import yt
+
+            stream_url = await yt.get_stream_url(
+                media_id,
+                is_live=getattr(media, "is_live", False),
+                video=getattr(media, "video", False),
             )
 
-            # Important:
-            # file_path ko yahan direct URL se fill nahi karna.
-            # YouTube direct URLs expire ho sakte hain.
-            #
-            # Actual URL:
-            # Elevenyts/core/calls.py
-            # playback ke time generate karega.
+            if stream_url:
+                media.file_path = stream_url
+                self._preloaded.setdefault(
+                    chat_id,
+                    set()
+                ).add(media_id)
 
-            self._preloaded.setdefault(
-                chat_id,
-                set()
-            ).add(media_id)
-
-            logger.debug(
-                f"Direct-stream preparation complete for "
-                f"chat {chat_id}: {title}"
-            )
+                logger.debug(
+                    f"Preloaded direct stream for chat {chat_id}: {title}"
+                )
+            else:
+                logger.debug(
+                    f"Could not preload direct stream for chat {chat_id}: {title}"
+                )
 
         except asyncio.CancelledError:
             logger.debug(
@@ -227,21 +230,15 @@ class PreloadManager:
                 if not media_id:
                     continue
 
-                # Direct streaming architecture me
-                # file_path ko download result se fill nahi karna.
-                #
-                # Actual stream URL playback ke time
-                # generate hoga.
-
+                # Keep a valid preloaded URL if one already exists.
                 if getattr(media, "file_path", None):
-                    # Agar accidentally old cached file path hai,
-                    # direct-stream mode me remove kar do.
-                    media.file_path = None
+                    self._preloaded.setdefault(
+                        chat_id,
+                        set()
+                    ).add(media_id)
+                    continue
 
-                await self.preload_next(
-                    chat_id,
-                    media
-                )
+                await self.preload_next(chat_id, media)
 
         except Exception as e:
             logger.debug(
