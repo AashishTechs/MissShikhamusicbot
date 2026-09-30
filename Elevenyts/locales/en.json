@@ -41,7 +41,7 @@
 
   "play_usage": "<blockquote>⚠ <b>USAGE</b></blockquote>\n\nPlease give me a song name or a link after the command.\n\n<b>Example</b>  •  <code>/play tum hi ho</code>",
 
-  "play_media": "<blockquote><b>♛  A P P L E  M U S I X  •  P R E M I U M</b></blockquote>\n\n<blockquote>𝄞  <b>NOW PLAYING</b>\n\n<b>Title</b>  •  <a href={0}>{1}</a>\n<b>Duration</b>  •  {2} minutes\n<b>Requested by</b>  •  {3}</blockquote>\n\n<blockquote>✦ <b>PREMIUM MUSIC PLAYER</b>\n𝄞  Enjoy your music experience\n\n♛ \"<a href=\"https://t.me/Aashish_0fficial\">𝗔ᴀsʜɪsʜ</a></blockquote>",
+  "play_media": "<blockquote><b>🎧  MISS SHIKHA MUSIC • NOW PLAYING</b></blockquote>\n\n<blockquote>🎵 <b>Title</b>  •  <a href={0}>{1}</a>\n⏱ <b>Duration</b>  •  {2}\n👤 <b>Requested by</b>  •  {3}</blockquote>\n\n<blockquote>✨ <b>PLAYER CONTROLS</b>\nUse the buttons below to pause, seek, loop or shuffle.\n\n💫 <i>Enjoy the music.</i></blockquote>",
 
   "play_admin": "<blockquote><b>♛ ADMIN ONLY PLAY</b></blockquote>\n\nOnly administrators are allowed to play music in this chat.",
 
