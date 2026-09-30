@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://files.catbox.moe/welcome.jpg" alt="Miss Shikha Music" width="420"/>
+<img src="./Welcome.jpg" alt="Miss Shikha Music" width="420"/>
 
 # 🎧 Miss Shikha Music
 
