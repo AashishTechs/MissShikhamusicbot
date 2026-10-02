@@ -85,7 +85,7 @@ class Bot(pyrogram.Client):
 
         # Verify logger group access
         try:
-            await self.send_message(self.logger, "🤖 ʙᴏᴛ ꜱᴛᴀʀᴛᴇᴅ")
+            await self.send_message(self.logger, "╭─❖ 𝑨𝒑𝒑𝒍𝒆 𝑴𝒖𝒔𝒊𝒙 ❖─╮\n│ ✨ 𝑩𝒐𝒕 𝒊𝒔 𝒏𝒐𝒘 𝒍𝒊𝒗𝒆\n│ 🎧 𝑹𝒆𝒂𝒅𝒚 𝒇𝒐𝒓 𝒎𝒖𝒔𝒊𝒄 & 𝒄𝒐𝒎𝒎𝒂𝒏𝒅𝒔\n╰────────────────────╯")
             member = await self.get_chat_member(self.logger, self.id)
         except Exception as ex:
             raise SystemExit(
