@@ -83,7 +83,7 @@ class Inline:
 
         if timer:
             keyboard.append([self.ikb(
-                text=f"🎵  {timer}",
+                text=timer,
                 callback_data=f"controls status {chat_id}",
             )])
 
@@ -353,7 +353,7 @@ class Inline:
             [
                 self.ikb(
                     text="⚙️ ʜᴇʟᴘ ᴀɴᴅ ᴄᴏᴍᴍᴀɴᴅꜱ ↗",
-                    callback_data="help",
+                    callback_data="help_main",
                     style=ButtonStyle.DANGER,
                 )
             ],
