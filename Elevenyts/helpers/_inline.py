@@ -66,7 +66,7 @@ class Inline:
                 ),
                 self.ikb(
                     text="↻",
-                    callback_data=f"controls loop {chat_id}",
+                    callback_data=f"controls replay {chat_id}",
                     style=ButtonStyle.PRIMARY,
                 ),
                 self.ikb(
