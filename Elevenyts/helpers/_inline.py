@@ -10,8 +10,8 @@
 # Channel      : https://t.me/deep_emotions_01
 # GitHub       : https://github.com/AashishTechs/MissShikhamusicbot
 #
-# Unauthorized copying, modification, or redistribution
-# of this source code without permission is prohibited.
+# Unauthorized copying, modification,
+# or redistribution of this source code without permission is prohibited.
 # ==========================================================
 
 from pyrogram import types
@@ -207,13 +207,6 @@ class Inline:
                 ],
                 [
                     self.ikb(
-                        text="🚀 ᴄʀᴇᴀᴛᴇ ʏᴏᴜʀ ɢʀᴏᴜᴘ",
-                        url=f"https://t.me/{app.username}?startgroup=true",
-                        style=ButtonStyle.DANGER,
-                    )
-                ],
-                [
-                    self.ikb(
                         text="ʙᴀᴄᴋ",
                         callback_data="start",
                         style=ButtonStyle.SUCCESS,
@@ -252,30 +245,28 @@ class Inline:
         item_id: str,
         _text: str,
     ) -> types.InlineKeyboardMarkup:
-        return self.ikm([
-            [
-                self.ikb(
-                    text="▷",
-                    callback_data=f"controls resume {chat_id}",
-                    style=ButtonStyle.SUCCESS,
-                ),
-                self.ikb(
-                    text="Ⅱ",
-                    callback_data=f"controls pause {chat_id}",
-                    style=ButtonStyle.PRIMARY,
-                ),
-                self.ikb(
-                    text="⏭",
-                    callback_data=f"controls skip {chat_id}",
-                    style=ButtonStyle.PRIMARY,
-                ),
-                self.ikb(
-                    text="□",
-                    callback_data=f"controls close {chat_id}",
-                    style=ButtonStyle.DANGER,
-                ),
-            ],
-        ])
+        return self.ikm([[
+            self.ikb(
+                text="▷",
+                callback_data=f"controls resume {chat_id}",
+                style=ButtonStyle.SUCCESS,
+            ),
+            self.ikb(
+                text="Ⅱ",
+                callback_data=f"controls pause {chat_id}",
+                style=ButtonStyle.PRIMARY,
+            ),
+            self.ikb(
+                text="⏭",
+                callback_data=f"controls skip {chat_id}",
+                style=ButtonStyle.PRIMARY,
+            ),
+            self.ikb(
+                text="□",
+                callback_data=f"controls close {chat_id}",
+                style=ButtonStyle.DANGER,
+            ),
+        ]])
 
     def queue_markup(
         self,
@@ -351,6 +342,8 @@ class Inline:
                     style=ButtonStyle.PRIMARY,
                 ),
             ],
+        ]
+
         if show_help:
             rows.append(
                 [
