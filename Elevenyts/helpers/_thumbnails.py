@@ -66,12 +66,12 @@ class Thumbnail:
         try:
             temp = f"cache/temp_{song.id}.jpg"
             # Versioned filename forces regeneration of old cached panels.
-            output = f"cache/{song.id}_apple_v3.png"
+            output = f"cache/{song.id}_apple_v4.png"
 
             if os.path.exists(output):
                 return output
 
-            await self.save_thumb(temp, song.thumbnail)
+            await self.save_thumb(temp, "https://files.catbox.moe/welcome.jpg")
 
             return await asyncio.get_event_loop().run_in_executor(
                 None,
