@@ -291,6 +291,23 @@ async def play_hndlr(
     if not sent:
         return
 
+    # Animated kiss sticker shown while the first search is running.
+    search_sticker = None
+    try:
+        search_sticker = await app.send_sticker(
+            chat_id=m.chat.id,
+            sticker="CAACAgQAAxkBAANcar99RyusrT2r5xKQbB91vKAsgcMAAn4UAAJu-GFS9G-q64S2XDoeBA",
+        )
+    except Exception as e:
+        logger.warning(f"Could not send search sticker: {e}")
+
+    async def cleanup_search_sticker():
+        if search_sticker:
+            try:
+                await search_sticker.delete()
+            except Exception:
+                pass
+
     # ------------------------------------------------------
     # User / media
     # ------------------------------------------------------
@@ -359,6 +376,7 @@ async def play_hndlr(
                     "Please try a single track instead."
                     "</blockquote>",
                 )
+                await cleanup_search_sticker()
 
                 return
 
@@ -368,6 +386,7 @@ async def play_hndlr(
                     sent,
                     m.lang["playlist_error"],
                 )
+                await cleanup_search_sticker()
 
                 return
 
@@ -395,6 +414,7 @@ async def play_hndlr(
                     config.SUPPORT_CHAT
                 ),
             )
+            await cleanup_search_sticker()
 
             return
 
@@ -419,8 +439,11 @@ async def play_hndlr(
                     config.SUPPORT_CHAT
                 ),
             )
+            await cleanup_search_sticker()
 
             return
+
+    await cleanup_search_sticker()
 
     # ------------------------------------------------------
     # No file
