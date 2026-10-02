@@ -581,9 +581,10 @@ async def play_hndlr(
             # Send a dedicated queued card in the group with the
             # same 4 controls as the reference queued panel.
             try:
-                await app.send_message(
+                await app.send_photo(
                     chat_id=m.chat.id,
-                    text=queued_text,
+                    photo="https://files.catbox.moe/welcome.jpg",
+                    caption=queued_text,
                     reply_markup=buttons.play_queued(
                         chat_id,
                         file.id,
