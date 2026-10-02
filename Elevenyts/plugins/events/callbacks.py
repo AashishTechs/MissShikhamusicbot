@@ -798,115 +798,131 @@ async def handle_shuffle(
     & ~app.bl_users
 )
 @lang.language()
+@safe_callback
 async def _help(_, query: types.CallbackQuery):
+    """Show the complete Apple Musix command help center."""
 
     await query.answer()
 
-    # Main help menu
-    if query.data == "help":
+    help_menu = """🎧 <b>APPLE MUSIX • HELP CENTER</b>
 
-        try:
+<b>🎵 MUSIC & PLAYBACK</b>
+/play — Play a song, YouTube link, or playlist.
+/queue — Show the current queue.
+/pause — Pause the current track.
+/resume — Resume playback.
+/skip — Skip to the next track.
+/stop — Stop playback and clear the call.
+/replay — Replay the current track.
+/shuffle — Shuffle the waiting queue.
+/loop — Toggle loop mode.
+/seek — Seek forward/backward in the current track.
 
-            await query.edit_message_caption(
-                caption=query.lang["help_menu"],
-                reply_markup=buttons.help_markup(
-                    query.lang
-                )
-            )
+<b>ℹ️ INFORMATION</b>
+/help — Open this Help Center.
+/start — Open the bot welcome panel.
+/ping — Check bot response time. (/alive)
+/stats — Show bot statistics.
+/activevc — Show active voice chats. (sudo)
 
-        except Exception:
+<b>⚙️ SETTINGS</b>
+/settings — Open playback settings.
+/playmode — Change playback mode.
+/auth — Authorize a user for music controls.
+/unauth — Remove an authorized user.
+/authlist — Show authorized users.
+/admincache — Refresh admin cache. (/reload)
+/channelplay — Configure channel playback.
 
-            try:
+<b>🛡️ CHAT / BLACKLIST</b>
+/blacklistchat — Blacklist a chat. (sudo)
+/whitelistchat — Whitelist a chat. (/unblacklistchat)
+/blacklistedchat — Show blacklisted chats. (/blchats)
+/block — Block a user. (sudo)
+/unblock — Unblock a user. (sudo)
+/blockedusers — Show blocked users. (/blusers)
 
-                await query.edit_message_text(
-                    text=query.lang["help_menu"],
-                    reply_markup=buttons.help_markup(
-                        query.lang
-                    )
-                )
+<b>👑 SUDO / ADMIN</b>
+/broadcast — Broadcast a message. (sudo)
+/stop_gcast — Stop an active broadcast. (sudo)
+/gban — Globally ban a user. (sudo)
+/ungban — Remove a global ban. (/unglobalban)
+/gbanlist — Show globally banned users. (/gbannedusers)
+/leave — Make the bot leave a chat. (sudo)
+/leaveall — Leave all eligible chats. (sudo)
+/maintenance — Toggle maintenance mode. (sudo)
+/addsudo — Add a sudo user.
+/delsudo — Remove a sudo user. (/rmsudo)
+/listsudo — Show sudo users. (/sudolist)
+/autoleave — Configure automatic leaving.
+/logs — View bot logs. (sudo)
+/logger — Logger controls. (sudo)
+/restart — Restart the bot. (sudo)
+/update — Update the bot. (sudo)
 
-            except Exception:
-                pass
+<b>🔧 OWNER / DEVELOPER</b>
+/eval — Execute owner evaluation code.
+/exec — Execute owner evaluation code.
 
-        return
+<b>🎬 VIDEO PLAYBACK</b>
+/vplay — Play video in the voice chat.
+/vplayforce — Force video playback.
 
-    category = query.data.replace(
-        "help_",
-        ""
-    )
+<b>🎛️ PLAY COMMAND VARIANTS</b>
+/playforce — Force play a track.
+/cplay — Cached play mode.
+/cplayforce — Force cached play.
+/cvplay — Cached video play.
+/cvplayforce — Force cached video play.
 
-    if category == "main":
+<i>Use /help anytime to open this command reference.</i>"""
 
-        try:
+    category = query.data.replace("help_", "")
 
-            await query.edit_message_caption(
-                caption=query.lang["help_menu"],
-                reply_markup=buttons.help_markup(
-                    query.lang
-                )
-            )
-
-        except Exception:
-
-            try:
-
-                await query.edit_message_text(
-                    text=query.lang["help_menu"],
-                    reply_markup=buttons.help_markup(
-                        query.lang
-                    )
-                )
-
-            except Exception:
-                pass
-
-        return
-
+    # Existing command buttons use category callbacks.  Every one now has
+    # a real description instead of falling back to the admin help text.
     help_texts = {
-        "admins": query.lang["help_admins"],
-        "auth": query.lang["help_auth"],
-        "broadcast": query.lang["help_sudo"],
-        "blchat": query.lang["help_blchat"],
-        "bluser": query.lang["help_bluser"],
-        "gban": query.lang["help_gban"],
-        "loop": query.lang["help_loop"],
-        "play": query.lang["help_play"],
-        "queue": query.lang["help_queue"],
-        "seek": query.lang["help_seek"],
-        "shuffle": query.lang["help_shuffle"],
-        "ping": query.lang["help_ping"],
-        "stats": query.lang["help_stats"],
-        "sudo": query.lang["help_sudo"],
-        "maintenance": query.lang["help_maintenance"],
+        "play": "🎵 <b>/play</b>\n\nPlay a song, YouTube link, or playlist in the voice chat.\n\n<b>Aliases:</b> /playforce /cplay /cplayforce /vplay /vplayforce /cvplay /cvplayforce",
+        "queue": "📋 <b>/queue</b>\n\nShow the current playing track and queued songs.\n\n<b>Aliases:</b> /playing /cqueue /cplaying",
+        "pause": "⏸️ <b>/pause</b>\n\nPause the current track.\n\n<b>Alias:</b> /cpause",
+        "resume": "▶️ <b>/resume</b>\n\nResume a paused track.\n\n<b>Alias:</b> /cresume",
+        "skip": "⏭️ <b>/skip</b>\n\nSkip the current track and continue with the next queued track.\n\n<b>Aliases:</b> /next /cskip /cnext",
+        "stop": "⏹️ <b>/stop</b>\n\nStop playback and clear the current voice session.\n\n<b>Aliases:</b> /end /cend /cstop",
+        "replay": "🔄 <b>/replay</b>\n\nReplay the currently playing track.",
+        "shuffle": "🔀 <b>/shuffle</b>\n\nRandomize the remaining queue.\n\n<b>Alias:</b> /cshuffle",
+        "loop": "🔁 <b>/loop</b>\n\nToggle loop mode between off, single-track, and queue loop.\n\n<b>Alias:</b> /cloop",
+        "seek": "⏩ <b>/seek</b>\n\nSeek within the current track.\n\n<b>Aliases:</b> /seekback /cseek /cseekback",
+        "ping": "🏓 <b>/ping</b>\n\nCheck the bot response time.\n\n<b>Alias:</b> /alive",
+        "stats": "📊 <b>/stats</b>\n\nShow bot statistics and system information.",
+        "settings": "⚙️ <b>/settings</b>\n\nOpen playback settings.\n\n<b>Alias:</b> /playmode",
+        "admins": "👮 <b>ADMIN COMMANDS</b>\n\nUse /auth, /unauth, /authlist, /admincache and /channelplay to manage authorized playback and chat settings.",
+        "sudo": "👑 <b>SUDO COMMANDS</b>\n\nSudo tools include /broadcast, /gban, /ungban, /gbanlist, /leave, /leaveall, /maintenance, /addsudo, /delsudo and /listsudo.",
+        "broadcast": "📢 <b>/broadcast</b>\n\nSend a broadcast message to the bot's configured chats. Sudo only.\n\n<b>Stop:</b> /stop_gcast",
+        "gban": "🚫 <b>/gban</b>\n\nGlobally ban a user. Sudo only.\n\n<b>Related:</b> /ungban /unglobalban /gbanlist /gbannedusers",
+        "maintenance": "🛠️ <b>/maintenance</b>\n\nEnable or disable maintenance mode. Sudo only.",
+        "auth": "🔐 <b>/auth</b>\n\nAuthorize a user to use music controls in the group.\n\n<b>Related:</b> /unauth /authlist",
+        "blchat": "🚫 <b>CHAT BLACKLIST</b>\n\nManage blocked chats with /blacklistchat, /whitelistchat and /blacklistedchat. Sudo only.",
+        "bluser": "🚫 <b>USER BLOCKLIST</b>\n\nManage blocked users with /block, /unblock and /blockedusers. Sudo only.",
     }
 
-    help_text = help_texts.get(
-        category,
-        query.lang["help_admins"]
-    )
+    if query.data in ("help", "help_main"):
+        help_text = help_menu
+        markup = buttons.help_markup(query.lang)
+    else:
+        help_text = help_texts.get(category, help_menu)
+        markup = buttons.help_markup(query.lang, True)
 
     try:
-
         await query.edit_message_caption(
             caption=help_text,
-            reply_markup=buttons.help_markup(
-                query.lang,
-                True
-            )
+            reply_markup=markup,
         )
-
     except Exception:
-
         try:
-
             await query.edit_message_text(
                 text=help_text,
-                reply_markup=buttons.help_markup(
-                    query.lang,
-                    True
-                )
+                reply_markup=markup,
             )
-
         except Exception:
             pass
 
