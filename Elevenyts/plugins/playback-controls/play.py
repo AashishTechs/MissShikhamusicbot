@@ -583,7 +583,7 @@ async def play_hndlr(
             try:
                 await app.send_photo(
                     chat_id=m.chat.id,
-                    photo="https://files.catbox.moe/welcome.jpg",
+                    photo=config.START_IMG,
                     caption=queued_text,
                     reply_markup=buttons.play_queued(
                         chat_id,
@@ -592,7 +592,21 @@ async def play_hndlr(
                     ),
                 )
             except Exception as e:
-                logger.warning(f"Could not send queued panel: {e}")
+                logger.warning(f"Could not send queued photo panel: {e}")
+                try:
+                    await app.send_message(
+                        chat_id=m.chat.id,
+                        text=queued_text,
+                        reply_markup=buttons.play_queued(
+                            chat_id,
+                            file.id,
+                            m.lang["play_now"],
+                        ),
+                    )
+                except Exception as fallback_error:
+                    logger.error(
+                        f"Could not send queued panel fallback: {fallback_error}"
+                    )
 
             # ------------------------------------------------
             # Add playlist tracks
