@@ -376,12 +376,14 @@ class TgCall(PyTgCalls):
         # Thumbnail
         # --------------------------------------------------
 
-        if (
-            config.THUMB_GEN
-            and isinstance(media, Track)
-        ):
-            _thumb = await thumb.generate(media)
-
+        # Always use the real YouTube thumbnail for the Now Playing card.
+        # The previous generator could fail and silently fall back to the
+        # bot's DEFAULT_THUMB, which is why every song showed the same image.
+        if isinstance(media, Track):
+            _thumb = (
+                getattr(media, "thumbnail", None)
+                or f"https://i.ytimg.com/vi/{media.id}/hqdefault.jpg"
+            )
         else:
             _thumb = config.DEFAULT_THUMB
 
