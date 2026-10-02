@@ -316,6 +316,7 @@ class Inline:
         self,
         lang: dict,
         private: bool = False,
+        show_help: bool = False,
     ) -> types.InlineKeyboardMarkup:
 
         rows = [
@@ -350,14 +351,16 @@ class Inline:
                     style=ButtonStyle.PRIMARY,
                 ),
             ],
-            [
-                self.ikb(
-                    text="⚙️ ʜᴇʟᴘ ᴀɴᴅ ᴄᴏᴍᴍᴀɴᴅꜱ",
-                    callback_data="help_main",
-                    style=ButtonStyle.DANGER,
-                )
-            ],
-        ]
+        if show_help:
+            rows.append(
+                [
+                    self.ikb(
+                        text="⚙️ ʜᴇʟᴘ ᴀɴᴅ ᴄᴏᴍᴍᴀɴᴅꜱ",
+                        callback_data="help_main",
+                        style=ButtonStyle.DANGER,
+                    )
+                ]
+            )
 
         return self.ikm(rows)
 
