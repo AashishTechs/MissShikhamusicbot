@@ -397,7 +397,8 @@ class TgCall(PyTgCalls):
 
             if not stream_url:
 
-                if message:                    try:
+                if message:
+                    try:
                         await message.edit_text(
                             _lang["error_no_file"].format(
                                 config.SUPPORT_CHAT
@@ -783,51 +784,86 @@ class TgCall(PyTgCalls):
                     media.user,
                 )
 
+                # ------------------------------------------------
+                # Progress bar
+                # ------------------------------------------------
+
                 if (
                     not media.is_live
                     and media.duration_sec
                 ):
+
                     import time as time_module
 
                     played = media.time
                     duration = media.duration_sec
+
                     bar_length = 8
 
-                    percentage = (
-                        min((played / duration) * 100, 100)
-                        if duration
-                        else 0
-                    )
+                    if duration == 0:
+                        percentage = 0
+                    else:
+                        percentage = min(
+                            (played / duration) * 100,
+                            100,
+                        )
 
                     filled = int(
                         round(
-                            bar_length * percentage / 100
+                            bar_length
+                            * percentage
+                            / 100
                         )
                     )
 
                     timer_bar = (
                         "—" * filled
                         + "●"
-                        + "—" * (bar_length - filled)
+                        + "—"
+                        * (
+                            bar_length
+                            - filled
+                        )
                     )
 
                     if duration >= 3600:
-                        played_time = time_module.strftime(
-                            "%H:%M:%S",
-                            time_module.gmtime(played),
+
+                        played_time = (
+                            time_module.strftime(
+                                "%H:%M:%S",
+                                time_module.gmtime(
+                                    played
+                                ),
+                            )
                         )
-                        total_time = time_module.strftime(
-                            "%H:%M:%S",
-                            time_module.gmtime(duration),
+
+                        total_time = (
+                            time_module.strftime(
+                                "%H:%M:%S",
+                                time_module.gmtime(
+                                    duration
+                                ),
+                            )
                         )
+
                     else:
-                        played_time = time_module.strftime(
-                            "%M:%S",
-                            time_module.gmtime(played),
+
+                        played_time = (
+                            time_module.strftime(
+                                "%M:%S",
+                                time_module.gmtime(
+                                    played
+                                ),
+                            )
                         )
-                        total_time = time_module.strftime(
-                            "%M:%S",
-                            time_module.gmtime(duration),
+
+                        total_time = (
+                            time_module.strftime(
+                                "%M:%S",
+                                time_module.gmtime(
+                                    duration
+                                ),
+                            )
                         )
 
                     timer_text = (
@@ -840,7 +876,9 @@ class TgCall(PyTgCalls):
                         chat_id,
                         timer=timer_text,
                     )
+
                 else:
+
                     keyboard = buttons.controls(
                         chat_id
                     )
@@ -1159,7 +1197,8 @@ class TgCall(PyTgCalls):
                 exc_info=True,
             )
 
-    # ======================================================    # Seek
+    # ======================================================
+    # Seek
     # ======================================================
 
     async def seek_stream(
@@ -1558,3 +1597,304 @@ class TgCall(PyTgCalls):
                 # Stream extraction can take several seconds and should
                 # not block the user-facing state update.
                 try:
+
+                    msg = await app.send_message(
+                        chat_id=target_chat,
+                        text=_lang["play_next"],
+                    )
+
+                except errors.FloodWait as fw:
+
+                    logger.warning(
+                        f"FloodWait in play_next for "
+                        f"{chat_id}: skipping status "
+                        f"message ({fw.value}s)"
+                    )
+
+                    msg = None
+
+                except errors.ChannelPrivate:
+
+                    logger.warning(
+                        f"Bot removed from "
+                        f"{chat_id}, cleaning up"
+                    )
+
+                    await self.leave_call(
+                        chat_id
+                    )
+
+                    await db.rm_chat(
+                        chat_id
+                    )
+
+                    return
+
+                except Exception as e:
+
+                    logger.error(
+                        f"Failed to send play_next "
+                        f"message for {chat_id}: {e}"
+                    )
+
+                    msg = None
+
+                # ==================================================
+                # Save message ID
+                # ==================================================
+
+                media.message_id = (
+                    msg.id
+                    if msg
+                    else 0
+                )
+
+                # ==================================================
+                # Fresh direct stream URL
+                # ==================================================
+
+                # Reuse the background-preloaded URL when available.
+                # If it is missing, extract it now. Direct URLs are
+                # temporary, so replay/seek paths still force refreshes.
+                if not media.file_path:
+                    stream_url = await self._get_stream_url(media)
+
+                    if not stream_url:
+                        logger.error(
+                            f"Could not get direct stream URL "
+                            f"for next track {media.id}"
+                        )
+
+                        if msg:
+                            try:
+                                await msg.edit_text(
+                                    "❌ Unable to prepare the next track."
+                                )
+                            except Exception:
+                                pass
+
+                        await self.stop(chat_id)
+                        return
+
+                # ==================================================
+                # Start playback
+                # ==================================================
+
+                if msg:
+
+                    await self.play_media(
+                        chat_id,
+                        msg,
+                        media,
+                        message_chat_id=message_chat_id,
+                    )
+
+                else:
+
+                    logger.info(
+                        f"Playing next track for "
+                        f"{chat_id} without message update"
+                    )
+
+                    await self.play_media(
+                        chat_id,
+                        None,
+                        media,
+                        message_chat_id=message_chat_id,
+                    )
+
+                # ==================================================
+                # Start no-download preload manager
+                # ==================================================
+
+                try:
+
+                    asyncio.create_task(
+                        preload.start_preload(
+                            chat_id,
+                            count=2,
+                        )
+                    )
+
+                except Exception as e:
+
+                    logger.debug(
+                        f"Error starting preload "
+                        f"after play_next for "
+                        f"{chat_id}: {e}"
+                    )
+
+            except Exception as e:
+
+                logger.error(
+                    f"Error in play_next for "
+                    f"{chat_id}: {e}",
+                    exc_info=True,
+                )
+
+                try:
+
+                    await self.stop(
+                        chat_id
+                    )
+
+                except Exception:
+                    pass
+
+    # ======================================================
+    # Ping
+    # ======================================================
+
+    async def ping(self) -> float:
+
+        if not self.clients:
+            return 0.0
+
+        pings = [
+            client.ping
+            for client in self.clients
+        ]
+
+        return round(
+            sum(pings) / len(pings),
+            2,
+        )
+
+    # ======================================================
+    # PyTgCalls event decorators
+    # ======================================================
+
+    async def decorators(
+        self,
+        client: PyTgCalls,
+    ) -> None:
+
+        for client in self.clients:
+
+            @client.on_update()
+            async def update_handler(
+                _,
+                update: types.Update,
+            ) -> None:
+
+                # ==============================================
+                # Stream ended
+                # ==============================================
+
+                if isinstance(
+                    update,
+                    types.StreamEnded,
+                ):
+
+                    if (
+                        update.stream_type
+                        == types.StreamEnded.Type.AUDIO
+                    ):
+
+                        chat_id = update.chat_id
+
+                        current_time = (
+                            asyncio.get_event_loop().time()
+                        )
+
+                        # ------------------------------------------------
+                        # Ignore duplicate StreamEnded events
+                        # ------------------------------------------------
+
+                        if (
+                            chat_id
+                            in self._stream_end_cache
+                        ):
+
+                            if (
+                                current_time
+                                - self._stream_end_cache[
+                                    chat_id
+                                ]
+                                < 2.0
+                            ):
+
+                                return
+
+                        self._stream_end_cache[
+                            chat_id
+                        ] = current_time
+
+                        # ------------------------------------------------
+                        # Clean old cache entries
+                        # ------------------------------------------------
+
+                        self._stream_end_cache = {
+                            cid: timestamp
+                            for cid, timestamp
+                            in self._stream_end_cache.items()
+                            if (
+                                current_time
+                                - timestamp
+                                < 5.0
+                            )
+                        }
+
+                        await self.play_next(
+                            chat_id
+                        )
+
+                # ==============================================
+                # Voice chat state updates
+                # ==============================================
+
+                elif isinstance(
+                    update,
+                    types.ChatUpdate,
+                ):
+
+                    if update.status in [
+                        types.ChatUpdate.Status.KICKED,
+                        types.ChatUpdate.Status.LEFT_GROUP,
+                        types.ChatUpdate.Status.CLOSED_VOICE_CHAT,
+                    ]:
+
+                        await self.stop(
+                            update.chat_id
+                        )
+
+    # ======================================================
+    # Boot
+    # ======================================================
+
+    async def boot(self) -> None:
+
+        PyTgCallsSession.notice_displayed = True
+
+        from Elevenyts.core.voice_commands import (
+            register_voice_listener
+        )
+
+        for ub in userbot.clients:
+
+            client = PyTgCalls(
+                ub,
+                cache_duration=100,
+            )
+
+            await client.start()
+
+            self.clients.append(
+                client
+            )
+
+            await self.decorators(
+                client
+            )
+
+            # ==============================================
+            # Register VC voice command listener
+            # ==============================================
+
+            register_voice_listener(
+                client
+            )
+
+        logger.info(
+            "📞 PyTgCalls client(s) started."
+        )
