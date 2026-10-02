@@ -98,7 +98,7 @@ class Inline:
         if back:
             rows = [[self.ikb(
                 text="ʙᴀᴄᴋ",
-                callback_data="help_main",
+                callback_data="start",
                 style=ButtonStyle.SUCCESS,
             )]]
         else:
