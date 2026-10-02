@@ -102,7 +102,7 @@ class Bot(pyrogram.Client):
             )
 
         # Register common commands so Telegram shows them when users type "/".
-        await self.set_bot_commands([
+        commands = [
             pyrogram.types.BotCommand("start", "Start the bot"),
             pyrogram.types.BotCommand("play", "Play audio on voice chat"),
             pyrogram.types.BotCommand("playforce", "Force play audio"),
@@ -124,7 +124,14 @@ class Bot(pyrogram.Client):
             pyrogram.types.BotCommand("stats", "Show bot statistics"),
             pyrogram.types.BotCommand("settings", "Open group settings"),
             pyrogram.types.BotCommand("playmode", "Change playback mode"),
-        ])
+        ]
+
+        # Default commands + commands specifically for group chats.
+        await self.set_bot_commands(commands)
+        await self.set_bot_commands(
+            commands,
+            scope=pyrogram.types.BotCommandScopeAllGroupChats(),
+        )
 
         logger.info(f"🤖 Bot started successfully as @{self.username}")
 
