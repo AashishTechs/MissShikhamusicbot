@@ -79,7 +79,7 @@ async def start(_, message: types.Message):
 
     # Choose appropriate welcome message
     _text = (
-        message.lang["start_pm"].format(message.from_user.first_name, app.name)
+        message.lang["start_pm"].format(message.from_user.first_name, app.name, message.from_user.id)
         if private
         else message.lang["start_gp"].format(app.name)
     )
