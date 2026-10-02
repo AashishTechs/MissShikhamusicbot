@@ -96,108 +96,66 @@ class Inline:
     ) -> types.InlineKeyboardMarkup:
 
         if back:
-            rows = [[self.ikb(
-                text="ʙᴀᴄᴋ",
-                callback_data="start",
-                style=ButtonStyle.SUCCESS,
-            )]]
+            rows = [[
+                self.ikb(
+                    text="ʙᴀᴄᴋ",
+                    callback_data="help_main",
+                    style=ButtonStyle.SUCCESS,
+                )
+            ]]
         else:
+            # Help Center category buttons: red on the main page.
+            # Category/detail pages use a green Back button.
             rows = [
                 [
                     self.ikb(
-                        text="/play",
-                        callback_data="help_play",
-                        style=ButtonStyle.PRIMARY,
+                        text="ᴀᴅᴍɪɴ",
+                        callback_data="help_admin",
+                        style=ButtonStyle.DANGER,
                     ),
                     self.ikb(
-                        text="/queue",
-                        callback_data="help_queue",
-                        style=ButtonStyle.PRIMARY,
+                        text="ᴀᴜᴛʜ",
+                        callback_data="help_auth",
+                        style=ButtonStyle.DANGER,
                     ),
                     self.ikb(
-                        text="/pause",
-                        callback_data="help_pause",
-                        style=ButtonStyle.PRIMARY,
-                    ),
-                ],
-                [
-                    self.ikb(
-                        text="/resume",
-                        callback_data="help_resume",
-                        style=ButtonStyle.PRIMARY,
-                    ),
-                    self.ikb(
-                        text="/skip",
-                        callback_data="help_skip",
-                        style=ButtonStyle.PRIMARY,
-                    ),
-                    self.ikb(
-                        text="/stop",
-                        callback_data="help_stop",
-                        style=ButtonStyle.PRIMARY,
-                    ),
-                ],
-                [
-                    self.ikb(
-                        text="/replay",
-                        callback_data="help_replay",
-                        style=ButtonStyle.PRIMARY,
-                    ),
-                    self.ikb(
-                        text="/shuffle",
-                        callback_data="help_shuffle",
-                        style=ButtonStyle.PRIMARY,
-                    ),
-                    self.ikb(
-                        text="/loop",
-                        callback_data="help_loop",
-                        style=ButtonStyle.PRIMARY,
-                    ),
-                ],
-                [
-                    self.ikb(
-                        text="/seek",
-                        callback_data="help_seek",
-                        style=ButtonStyle.PRIMARY,
-                    ),
-                    self.ikb(
-                        text="/ping",
-                        callback_data="help_ping",
-                        style=ButtonStyle.PRIMARY,
-                    ),
-                    self.ikb(
-                        text="/stats",
-                        callback_data="help_stats",
-                        style=ButtonStyle.PRIMARY,
-                    ),
-                ],
-                [
-                    self.ikb(
-                        text="/settings",
-                        callback_data="help_settings",
-                        style=ButtonStyle.PRIMARY,
-                    ),
-                    self.ikb(
-                        text="ᴀᴅᴍɪɴꜱ",
-                        callback_data="help_admins",
-                        style=ButtonStyle.PRIMARY,
+                        text="ʙʟᴀᴄᴋʟɪꜱᴛ",
+                        callback_data="help_blacklist",
+                        style=ButtonStyle.DANGER,
                     ),
                 ],
                 [
                     self.ikb(
                         text="ʙʀᴏᴀᴅᴄᴀꜱᴛ",
                         callback_data="help_broadcast",
-                        style=ButtonStyle.PRIMARY,
+                        style=ButtonStyle.DANGER,
                     ),
                     self.ikb(
-                        text="ɢ-ʙᴀɴ",
-                        callback_data="help_gban",
-                        style=ButtonStyle.PRIMARY,
+                        text="ᴘɪɴɢ",
+                        callback_data="help_ping",
+                        style=ButtonStyle.DANGER,
                     ),
                     self.ikb(
-                        text="ᴍᴀɪɴᴛᴇɴᴀɴᴄᴇ",
-                        callback_data="help_maintenance",
-                        style=ButtonStyle.PRIMARY,
+                        text="ᴘʟᴀʏ",
+                        callback_data="help_play",
+                        style=ButtonStyle.DANGER,
+                    ),
+                ],
+                [
+                    self.ikb(
+                        text="ᴠɪᴅᴇᴏᴄʜᴀᴛꜱ",
+                        callback_data="help_videochats",
+                        style=ButtonStyle.DANGER,
+                    ),
+                    self.ikb(
+                        text="ꜱᴛᴀʀᴛ",
+                        callback_data="help_start",
+                        style=ButtonStyle.DANGER,
+                    ),
+                    self.ikb(
+                        text="ᴀᴜᴛᴏ ᴘʟᴀʏ",
+                        callback_data="help_autoplay",
+                        style=ButtonStyle.DANGER,
                     ),
                 ],
                 [
