@@ -48,60 +48,43 @@ class Inline:
 
         if status:
             keyboard.append([self.ikb(
-                text=f"🎶  {status}",
+                text=f"🎵  {status}",
                 callback_data=f"controls status {chat_id}",
             )])
         elif timer:
             keyboard.append([self.ikb(
-                text=f"🎶  {timer}",
+                text=f"🎵  {timer}",
                 callback_data=f"controls status {chat_id}",
             )])
 
         if not remove:
             keyboard.append([
                 self.ikb(
-                    text="⏪ 10s",
-                    callback_data=f"controls seek_back_10 {chat_id}",
-                    style=ButtonStyle.PRIMARY,
+                    text="▶️",
+                    callback_data=f"controls resume {chat_id}",
+                    style=ButtonStyle.SUCCESS,
                 ),
                 self.ikb(
                     text="⏸",
                     callback_data=f"controls pause {chat_id}",
-                    style=ButtonStyle.SUCCESS,
-                ),
-                self.ikb(
-                    text="10s ⏩",
-                    callback_data=f"controls seek_forward_10 {chat_id}",
                     style=ButtonStyle.PRIMARY,
                 ),
-            ])
-            keyboard.append([
                 self.ikb(
-                    text="🔂 Loop",
+                    text="🔁",
                     callback_data=f"controls loop {chat_id}",
                     style=ButtonStyle.PRIMARY,
                 ),
                 self.ikb(
-                    text="🔀 Shuffle",
-                    callback_data=f"controls shuffle {chat_id}",
+                    text="⏭",
+                    callback_data=f"controls skip {chat_id}",
                     style=ButtonStyle.PRIMARY,
                 ),
-            ])
-            keyboard.append([
                 self.ikb(
-                    text="✨ Channel ↗",
-                    url=config.SUPPORT_CHANNEL,
-                ),
-                self.ikb(
-                    text="💬 Support ↗",
-                    url=config.SUPPORT_CHAT,
+                    text="⏹",
+                    callback_data=f"controls close {chat_id}",
+                    style=ButtonStyle.DANGER,
                 ),
             ])
-            keyboard.append([self.ikb(
-                text="✕ Close Player",
-                callback_data=f"controls close {chat_id}",
-                style=ButtonStyle.DANGER,
-            )])
 
         return self.ikm(keyboard)
 
@@ -271,32 +254,26 @@ class Inline:
         return self.ikm([
             [
                 self.ikb(
-                    text="⏪ 10",
-                    callback_data=f"controls seek_back_10 {chat_id}",
+                    text="▶️",
+                    callback_data=f"controls resume {chat_id}",
+                    style=ButtonStyle.SUCCESS,
                 ),
                 self.ikb(
                     text="⏸",
                     callback_data=f"controls pause {chat_id}",
+                    style=ButtonStyle.PRIMARY,
                 ),
                 self.ikb(
-                    text="⏩ 10",
+                    text="⏭",
                     callback_data=f"controls skip {chat_id}",
-                ),
-            ],
-            [
-                self.ikb(
-                    text="✨ CLICK ME ↗",
-                    url=config.SUPPORT_CHANNEL,
+                    style=ButtonStyle.PRIMARY,
                 ),
                 self.ikb(
-                    text="💬 SUPPORT ↗",
-                    url=config.SUPPORT_CHAT,
+                    text="⏹",
+                    callback_data=f"controls close {chat_id}",
+                    style=ButtonStyle.DANGER,
                 ),
             ],
-            [self.ikb(
-                text="✕ CLOSE",
-                callback_data=f"controls close {chat_id}",
-            )],
         ])
 
     def queue_markup(
