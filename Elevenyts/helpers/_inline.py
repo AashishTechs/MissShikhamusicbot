@@ -51,11 +51,6 @@ class Inline:
                 text=f"🎵  {status}",
                 callback_data=f"controls status {chat_id}",
             )])
-        elif timer:
-            keyboard.append([self.ikb(
-                text=f"🎵  {timer}",
-                callback_data=f"controls status {chat_id}",
-            )])
 
         if not remove:
             keyboard.append([
@@ -85,6 +80,12 @@ class Inline:
                     style=ButtonStyle.DANGER,
                 ),
             ])
+
+        if timer:
+            keyboard.append([self.ikb(
+                text=f"🎵  {timer}",
+                callback_data=f"controls status {chat_id}",
+            )])
 
         return self.ikm(keyboard)
 
