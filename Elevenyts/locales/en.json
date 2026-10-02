@@ -66,5 +66,7 @@
   "maintenance": "<blockquote>🛠️ <b>MAINTENANCE MODE</b></blockquote>\n\nThe music system is temporarily unavailable.\n\n✦ Please try again later.",
   "footer": "<blockquote>♛ <b>APPLE MUSIX</b>\n𝄞 Premium Telegram Music Experience</blockquote>",
   "restarting": "♻️ <b>RESTARTING APPLE MUSIX...</b>\n\nPlease wait a moment.",
-  "play_queued": "<blockquote><b>▶️ QUEUED | #{0}</b></blockquote>\n\n<blockquote>▶️ <b>TRACK :</b> <a href={1}>{2}</a>\n⏱ <b>LENGTH :</b> {3} MIN\n👤 <b>USER :</b> {4}</blockquote>"
+  "play_queued": "<blockquote><b>▶️ QUEUED | #{0}</b></blockquote>\n\n<blockquote>▶️ <b>TRACK :</b> <a href={1}>{2}</a>\n⏱ <b>LENGTH :</b> {3} MIN\n👤 <b>USER :</b> {4}</blockquote>",
+  "start_pm": "<a href=\"tg://user?id={2}\">Hey {0}! 🎸</a>\\nThis is <b>AAKSHU 🎵 MUSIC</b> ✨\\n\\n<blockquote>🎧 <b>Ready To Feel The Music 🐼 💬</b>\\n\\n🔹 I'm a super-fast & powerful Telegram Music Bot🤖\\n🔹 Designed to bring non-stop music with awesome features 🎶</blockquote>\\n\\n<blockquote>⚪ <b>Wanna Explore My Powers 🐼</b>\\n\\n🔹 Tap on the <b>Help & Commands</b> button 🔴\\n🔹 And discover everything I can do 🚀</blockquote>",
+  "start_gp": "<blockquote><b>🎵 AAKSHU MUSIC</b></blockquote>\\n\\nUse /play <i>song name</i> to start music."
 }
