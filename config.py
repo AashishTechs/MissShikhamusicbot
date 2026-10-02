@@ -41,8 +41,8 @@ class Config:
         self.SESSION3: str = getenv("STRING_SESSION3", "")
 
         # Support Links
-        self.SUPPORT_CHANNEL: str = getenv("SUPPORT_CHANNEL", "https://github.com/AashishTechs/MissShikhamusicbot")
-        self.SUPPORT_CHAT: str = getenv("SUPPORT_CHAT", "https://github.com/AashishTechs/MissShikhamusicbot/issues")
+        self.SUPPORT_CHANNEL: str = getenv("SUPPORT_CHANNEL", "https://t.me/+cGoEVo7d8YtjOTI9")
+        self.SUPPORT_CHAT: str = getenv("SUPPORT_CHAT", "https://t.me/deep_emotions_01")
 
         # Excluded Chats
         self.EXCLUDED_CHATS: List[int] = self._parse_excluded_chats()
@@ -92,7 +92,7 @@ class Config:
         chat_ids = []
         for chat_id in excluded.split(","):
             chat_id = chat_id.strip()
-            if chat_id.lstrip('-').isdigit():
+            if chat_id.lstrip("-").isdigit():
                 chat_ids.append(int(chat_id))
         return chat_ids
 
