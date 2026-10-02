@@ -100,70 +100,32 @@ class Inline:
                 self.ikb(
                     text="ʙᴀᴄᴋ",
                     callback_data="help_main",
-                    style=ButtonStyle.SUCCESS,
+                    style=ButtonStyle.DANGER,
                 )
             ]]
         else:
-            # Help Center category buttons: red on the main page.
-            # Category/detail pages use a green Back button.
             rows = [
+                # Row 1: red
                 [
-                    self.ikb(
-                        text="ᴀᴅᴍɪɴ",
-                        callback_data="help_admin",
-                        style=ButtonStyle.DANGER,
-                    ),
-                    self.ikb(
-                        text="ᴀᴜᴛʜ",
-                        callback_data="help_auth",
-                        style=ButtonStyle.DANGER,
-                    ),
-                    self.ikb(
-                        text="ʙʟᴀᴄᴋʟɪꜱᴛ",
-                        callback_data="help_blacklist",
-                        style=ButtonStyle.DANGER,
-                    ),
+                    self.ikb(text="ᴀᴅᴍɪɴ", callback_data="help_admin", style=ButtonStyle.DANGER),
+                    self.ikb(text="ᴀᴜᴛʜ", callback_data="help_auth", style=ButtonStyle.DANGER),
+                    self.ikb(text="ʙʟᴀᴄᴋʟɪꜱᴛ", callback_data="help_blacklist", style=ButtonStyle.DANGER),
                 ],
+                # Row 2: blue / sky
                 [
-                    self.ikb(
-                        text="ʙʀᴏᴀᴅᴄᴀꜱᴛ",
-                        callback_data="help_broadcast",
-                        style=ButtonStyle.DANGER,
-                    ),
-                    self.ikb(
-                        text="ᴘɪɴɢ",
-                        callback_data="help_ping",
-                        style=ButtonStyle.DANGER,
-                    ),
-                    self.ikb(
-                        text="ᴘʟᴀʏ",
-                        callback_data="help_play",
-                        style=ButtonStyle.DANGER,
-                    ),
+                    self.ikb(text="ʙʀᴏᴀᴅᴄᴀꜱᴛ", callback_data="help_broadcast", style=ButtonStyle.PRIMARY),
+                    self.ikb(text="ᴘɪɴɢ", callback_data="help_ping", style=ButtonStyle.PRIMARY),
+                    self.ikb(text="ᴘʟᴀʏ", callback_data="help_play", style=ButtonStyle.PRIMARY),
                 ],
+                # Row 3: green
                 [
-                    self.ikb(
-                        text="ᴠɪᴅᴇᴏᴄʜᴀᴛꜱ",
-                        callback_data="help_videochats",
-                        style=ButtonStyle.DANGER,
-                    ),
-                    self.ikb(
-                        text="ꜱᴛᴀʀᴛ",
-                        callback_data="help_start",
-                        style=ButtonStyle.DANGER,
-                    ),
-                    self.ikb(
-                        text="ᴀᴜᴛᴏ ᴘʟᴀʏ",
-                        callback_data="help_autoplay",
-                        style=ButtonStyle.DANGER,
-                    ),
+                    self.ikb(text="ᴠɪᴅᴇᴏᴄʜᴀᴛꜱ", callback_data="help_videochats", style=ButtonStyle.SUCCESS),
+                    self.ikb(text="ꜱᴛᴀʀᴛ", callback_data="help_start", style=ButtonStyle.SUCCESS),
+                    self.ikb(text="ᴀᴜᴛᴏ ᴘʟᴀʏ", callback_data="help_autoplay", style=ButtonStyle.SUCCESS),
                 ],
+                # Back: red
                 [
-                    self.ikb(
-                        text="ʙᴀᴄᴋ",
-                        callback_data="start",
-                        style=ButtonStyle.SUCCESS,
-                    )
+                    self.ikb(text="ʙᴀᴄᴋ", callback_data="start", style=ButtonStyle.DANGER)
                 ],
             ]
 
