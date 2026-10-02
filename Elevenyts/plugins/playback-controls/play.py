@@ -583,7 +583,7 @@ async def play_hndlr(
             try:
                 await app.send_photo(
                     chat_id=m.chat.id,
-                    photo=config.START_IMG,
+                    photo="https://files.catbox.moe/welcome.jpg",
                     caption=queued_text,
                     reply_markup=buttons.play_queued(
                         chat_id,
