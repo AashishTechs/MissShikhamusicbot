@@ -290,82 +290,39 @@ async def play_hndlr(
                 )
 
     # ------------------------------------------------------
-    # Searching message
+    # Searching sticker
     # ------------------------------------------------------
 
-    play_emoji = m.lang["play_emoji"]
-
+    # Keep an internal message object because playback later edits
+    # this message into the Now Playing card. The visible searching
+    # state is the animated sticker supplied by the owner.
     try:
-
-        sent = await safe_reply(
-            m,
-            m.lang["play_searching"].format(play_emoji),
-        )
-
+        sent = await safe_reply(m, "\u2060")
     except Exception:
         return
 
     if not sent:
         return
 
-    # Animated stickers shown one-by-one while search is running.
-    search_stickers = [
-        "CAACAgQAAxkBAANcar99RyusrT2r5xKQbB91vKAsgcMAAn4UAAJu-GFS9G-q64S2XDoeBA",
-        "CAACAgQAAxkBAANear996nKVSjUfCb9jGlznJ7qi8hgAAj4VAAIbFplSKW9wHTvVqHQeBA",
-        "CAACAgQAAxkBAANgar9-jC4moAS4gQbNlWTxC_5CZEYAAgkXAAKm8XEeUl21hutNR6oeBA",
-    ]
-    stop_search_animation = asyncio.Event()
-    search_animation_task = None
-
-    async def rotate_search_stickers():
-        while not stop_search_animation.is_set():
-            for sticker_id in search_stickers:
-                if stop_search_animation.is_set():
-                    break
-
-                sticker_message = None
-
-                try:
-                    sticker_message = await app.send_sticker(
-                        chat_id=m.chat.id,
-                        sticker=sticker_id,
-                    )
-                except Exception as e:
-                    logger.warning(
-                        f"Could not send search sticker: {e}"
-                    )
-
-                try:
-                    await asyncio.wait_for(
-                        stop_search_animation.wait(),
-                        timeout=1.2,
-                    )
-                except asyncio.TimeoutError:
-                    pass
-
-                if sticker_message:
-                    try:
-                        await sticker_message.delete()
-                    except Exception:
-                        pass
-
-    search_animation_task = asyncio.create_task(
-        rotate_search_stickers()
+    search_sticker_id = (
+        "CAACAgIAAxkBAAOQar_56JuGC-VdOxYr8LwOWitQnyEAAgIBAAL3AsgPSGVtLW_zIZweBA"
     )
+    search_sticker_message = None
+
+    try:
+        search_sticker_message = await app.send_sticker(
+            chat_id=m.chat.id,
+            sticker=search_sticker_id,
+        )
+    except Exception as e:
+        logger.warning(
+            f"Could not send searching sticker: {e}"
+        )
 
     async def cleanup_search_sticker():
-        stop_search_animation.set()
-
-        if search_animation_task:
+        if search_sticker_message:
             try:
-                await asyncio.wait_for(
-                    search_animation_task,
-                    timeout=2,
-                )
-            except asyncio.TimeoutError:
-                search_animation_task.cancel()
-            except asyncio.CancelledError:
-                pass
+                await search_sticker_message.delete()
             except Exception:
                 pass
 
