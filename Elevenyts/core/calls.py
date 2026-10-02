@@ -791,7 +791,7 @@ class TgCall(PyTgCalls):
 
                     played = media.time
                     duration = media.duration_sec
-                    bar_length = 12
+                    bar_length = 8
 
                     percentage = (
                         min((played / duration) * 100, 100)
