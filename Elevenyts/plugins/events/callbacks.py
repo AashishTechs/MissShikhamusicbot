@@ -732,27 +732,113 @@ async def _help(_, query: types.CallbackQuery):
     category = query.data.replace("help_", "")
 
     help_texts = {
-        "play": "🎵 <b>/play</b>\n\nPlay a song, YouTube link, or playlist in the voice chat.\n\n<b>Aliases:</b> /playforce /cplay /cplayforce /vplay /vplayforce /cvplay /cvplayforce",
-        "queue": "📋 <b>/queue</b>\n\nShow the current playing track and queued songs.\n\n<b>Aliases:</b> /playing /cqueue /cplaying",
-        "pause": "⏸️ <b>/pause</b>\n\nPause the current track.\n\n<b>Alias:</b> /cpause",
-        "resume": "▶️ <b>/resume</b>\n\nResume a paused track.\n\n<b>Alias:</b> /cresume",
-        "skip": "⏭️ <b>/skip</b>\n\nSkip the current track and continue with the next queued track.\n\n<b>Aliases:</b> /next /cskip /cnext",
-        "stop": "⏹️ <b>/stop</b>\n\nStop playback and clear the current voice session.\n\n<b>Aliases:</b> /end /cend /cstop",
-        "replay": "🔄 <b>/replay</b>\n\nReplay the currently playing track.",
-        "shuffle": "🔀 <b>/shuffle</b>\n\nRandomize the remaining queue.\n\n<b>Alias:</b> /cshuffle",
-        "loop": "🔁 <b>/loop</b>\n\nToggle loop mode between off, single-track, and queue loop.\n\n<b>Alias:</b> /cloop",
-        "seek": "⏩ <b>/seek</b>\n\nSeek within the current track.\n\n<b>Aliases:</b> /seekback /cseek /cseekback",
-        "ping": "🏓 <b>/ping</b>\n\nCheck the bot response time.\n\n<b>Alias:</b> /alive",
-        "stats": "📊 <b>/stats</b>\n\nShow bot statistics and system information.",
-        "settings": "⚙️ <b>/settings</b>\n\nOpen playback settings.\n\n<b>Alias:</b> /playmode",
-        "admins": "👮 <b>ADMIN COMMANDS</b>\n\nUse /auth, /unauth, /authlist, /admincache and /channelplay to manage authorized playback and chat settings.",
-        "sudo": "👑 <b>SUDO COMMANDS</b>\n\nSudo tools include /broadcast, /gban, /ungban, /gbanlist, /leave, /leaveall, /maintenance, /addsudo, /delsudo and /listsudo.",
-        "broadcast": "📢 <b>/broadcast</b>\n\nSend a broadcast message to the bot's configured chats. Sudo only.\n\n<b>Stop:</b> /stop_gcast",
-        "gban": "🚫 <b>/gban</b>\n\nGlobally ban a user. Sudo only.\n\n<b>Related:</b> /ungban /unglobalban /gbanlist /gbannedusers",
-        "maintenance": "🛠️ <b>/maintenance</b>\n\nEnable or disable maintenance mode. Sudo only.",
-        "auth": "🔐 <b>/auth</b>\n\nAuthorize a user to use music controls in the group.\n\n<b>Related:</b> /unauth /authlist",
-        "blchat": "🚫 <b>CHAT BLACKLIST</b>\n\nManage blocked chats with /blacklistchat, /whitelistchat and /blacklistedchat. Sudo only.",
-        "bluser": "🚫 <b>USER BLOCKLIST</b>\n\nManage blocked users with /block, /unblock and /blockedusers. Sudo only.",
+        "admin": """👮 <b>ADMIN COMMANDS</b>
+
+<b>Playback</b>
+
+<code>/pause</code> — Pause the current track.
+<code>/resume</code> — Resume a paused track.
+<code>/skip</code> — Skip to the next queued track.
+<code>/end</code> / <code>/stop</code> — Stop playback and clear the queue.
+<code>/queue</code> — Show the current queue.
+<code>/shuffle</code> — Shuffle queued tracks.
+<code>/loop [1-10]</code> — Repeat the current track.
+<code>/seek [time]</code> — Seek to a timestamp.
+<code>/seekback [time]</code> — Seek backward to a timestamp.
+
+<i>These commands control playback in the current voice chat.</i>""",
+
+        "auth": """🔐 <b>AUTH COMMANDS</b>
+
+<code>/auth</code> — Authorize a user to control music.
+<code>/unauth</code> — Remove a user's authorization.
+<code>/authlist</code> — Show authorized users.
+<code>/admincache</code> — Refresh the admin cache.
+<code>/reload</code> — Alias for admin cache refresh.
+<code>/channelplay</code> — Configure channel playback.
+
+<i>Use these commands to manage who can control playback.</i>""",
+
+        "blacklist": """🚫 <b>BLACKLIST COMMANDS</b>
+
+<code>/blacklistchat</code> — Add a chat to the blacklist.
+<code>/whitelistchat</code> — Remove a chat from the blacklist.
+<code>/blacklistedchat</code> — Show blacklisted chats.
+<code>/block</code> — Block a user from using the bot.
+<code>/unblock</code> — Remove a user from the blocklist.
+<code>/blockedusers</code> — Show blocked users.
+
+<i>Blacklist commands are restricted where required by the bot.</i>""",
+
+        "broadcast": """📢 <b>BROADCAST COMMANDS</b>
+
+<code>/broadcast</code> — Send a broadcast message to configured chats.
+<code>/stop_gcast</code> — Stop an active broadcast.
+
+<i>Broadcast tools are intended for authorized/sudo use.</i>""",
+
+        "ping": """🏓 <b>PING COMMANDS</b>
+
+<code>/ping</code> — Check the bot's response time.
+<code>/alive</code> — Alias for <code>/ping</code>.
+
+<i>Use this when you want to quickly check whether the bot is responding.</i>""",
+
+        "play": """🎵 <b>PLAY COMMANDS</b>
+
+<code>/play</code> — Play a song, YouTube link, or playlist.
+<code>/playforce</code> — Force play a track.
+<code>/cplay</code> — Play using cached mode.
+<code>/cplayforce</code> — Force cached playback.
+
+<b>Video variants:</b>
+<code>/vplay</code> — Play video in the voice chat.
+<code>/vplayforce</code> — Force video playback.
+<code>/cvplay</code> — Cached video playback.
+<code>/cvplayforce</code> — Force cached video playback.
+
+<i>You can also use the supported aliases for these commands.</i>""",
+
+        "videochats": """🎬 <b>VIDEO CHAT COMMANDS</b>
+
+<code>/vplay</code> — Play video in the voice chat.
+<code>/vplayforce</code> — Force video playback.
+<code>/cvplay</code> — Play cached video.
+<code>/cvplayforce</code> — Force cached video playback.
+
+<i>These commands are for video playback in active voice chats.</i>""",
+
+        "start": """🚀 <b>START COMMANDS</b>
+
+<code>/start</code> — Open the bot welcome panel.
+<code>/help</code> — Open the Help Center.
+<code>/settings</code> — Open playback settings.
+<code>/playmode</code> — Change the playback mode.
+
+<i>Use /start anytime to return to the welcome panel.</i>""",
+
+        "autoplay": """▶️ <b>AUTO PLAY</b>
+
+<b>What it does:</b>
+When more than one track is queued, the bot continues with the next track automatically after the current track finishes.
+
+<code>/play</code> — Add tracks to the queue.
+<code>/queue</code> — Check the queued tracks.
+
+<i>Auto Play works through the normal queue/playback flow; there is no separate /autoplay command in this bot.</i>""",
+
+        "sudo": """👑 <b>SUDO COMMANDS</b>
+
+<code>/broadcast</code> — Broadcast a message.
+<code>/gban</code> — Globally ban a user.
+<code>/ungban</code> — Remove a global ban.
+<code>/leave</code> — Make the bot leave a chat.
+<code>/maintenance</code> — Toggle maintenance mode.
+<code>/addsudo</code> — Add a sudo user.
+<code>/delsudo</code> — Remove a sudo user.
+<code>/listsudo</code> — Show sudo users.
+
+<i>Sudo tools are restricted to authorized users.</i>""",
     }
 
     if query.data in ("help", "help_main"):
