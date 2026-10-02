@@ -1,5 +1,5 @@
 {
-  "start": "<a href=\"tg://user?id={0}\">Hey {1}! 🎸</a>\\nThis is <b>AAKSHU 🎵 MUSIC</b> ✨\\n\\n<blockquote>🎧 <b>Ready To Feel The Music 🐼 💬</b>\\n\\n🔹 I'm a super-fast & powerful Telegram Music Bot🤖\\n🔹 Designed to bring non-stop music with awesome features 🎶</blockquote>\\n\\n<blockquote>⚪ <b>Wanna Explore My Powers 🐼</b>\\n\\n🔹 Tap on the <b>Help & Commands</b> button 🔴\\n🔹 And discover everything I can do 🚀</blockquote>",
+  "start": "<a href=\\\"tg://user?id={2}\\\">Hey {0}! 🎧</a>\\n\\n🍎 <b>Apple Music <<3 🎵</b>\\n\\nYour music. Your vibe. Your moment. ♡\\n\\n🎶 <b>High-Quality Music Streaming</b>\\n⚡ <b>Fast & Smooth Playback</b>\\n🔊 <b>24×7 Music in Voice Chat</b>\\n\\n━━━━━━━━━━━━━━\\n\\n🐼 <b>Ready to Feel the Music?</b>\\n\\n🔴 <b>Tap Help & Commands</b>\\n🚀 <b>Explore my features & start listening!</b>\\n\\n👑 <b>Owner: @Aashish_0fficial</b>",
   "help": "🎧 <b>APPLE MUSIX • HELP CENTER</b>\n\nSelect a category below to explore available commands.",
   "add_me": "➕ ᴀᴅᴅ ᴍᴇ ᴛᴏ ɢʀᴏᴜᴘ",
   "support": "🆘 ꜱᴜᴘᴘᴏʀᴛ",
@@ -67,6 +67,6 @@
   "footer": "<blockquote>♛ <b>APPLE MUSIX</b>\n𝄞 Premium Telegram Music Experience</blockquote>",
   "restarting": "♻️ <b>RESTARTING APPLE MUSIX...</b>\n\nPlease wait a moment.",
   "play_queued": "<blockquote><b>▶️ QUEUED | #{0}</b></blockquote>\n\n<blockquote>▶️ <b>TRACK :</b> <a href={1}>{2}</a>\n⏱ <b>LENGTH :</b> {3} MIN\n👤 <b>USER :</b> {4}</blockquote>",
-  "start_pm": "<a href=\"tg://user?id={2}\">Hey {0}! 🎸</a>\\nThis is <b>AAKSHU 🎵 MUSIC</b> ✨\\n\\n<blockquote>🎧 <b>Ready To Feel The Music 🐼 💬</b>\\n\\n🔹 I'm a super-fast & powerful Telegram Music Bot🤖\\n🔹 Designed to bring non-stop music with awesome features 🎶</blockquote>\\n\\n<blockquote>⚪ <b>Wanna Explore My Powers 🐼</b>\\n\\n🔹 Tap on the <b>Help & Commands</b> button 🔴\\n🔹 And discover everything I can do 🚀</blockquote>",
+  "start_pm": "<a href=\\\"tg://user?id={2}\\\">Hey {0}! 🎧</a>\\n\\n🍎 <b>Apple Music <<3 🎵</b>\\n\\nYour music. Your vibe. Your moment. ♡\\n\\n🎶 <b>High-Quality Music Streaming</b>\\n⚡ <b>Fast & Smooth Playback</b>\\n🔊 <b>24×7 Music in Voice Chat</b>\\n\\n━━━━━━━━━━━━━━\\n\\n🐼 <b>Ready to Feel the Music?</b>\\n\\n🔴 <b>Tap Help & Commands</b>\\n🚀 <b>Explore my features & start listening!</b>\\n\\n👑 <b>Owner: @Aashish_0fficial</b>",
   "start_gp": "<blockquote><b>🎵 AAKSHU MUSIC</b></blockquote>\\n\\nUse /play <i>song name</i> to start music."
 }
