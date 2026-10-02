@@ -658,76 +658,12 @@ async def _help(_, query: types.CallbackQuery):
 
     help_menu = """🎧 <b>APPLE MUSIX • HELP CENTER</b>
 
-<b>🎵 MUSIC & PLAYBACK</b>
-/play — Play a song, YouTube link, or playlist.
-/queue — Show the current queue.
-/pause — Pause the current track.
-/resume — Resume playback.
-/skip — Skip to the next track.
-/stop — Stop playback and clear the call.
-/replay — Replay the current track.
-/shuffle — Shuffle the waiting queue.
-/loop — Toggle loop mode.
-/seek — Seek forward/backward in the current track.
+<b>CHOOSE THE CATEGORY FOR WHICH YOU WANT HELP.</b>
+ASK YOUR DOUBTS AT <a href="https://t.me/Dosto_ki_Mehfil786">SUPPORT CHAT</a>
 
-<b>ℹ️ INFORMATION</b>
-/help — Open this Help Center.
-/start — Open the bot welcome panel.
-/ping — Check bot response time. (/alive)
-/stats — Show bot statistics.
-/activevc — Show active voice chats. (sudo)
+ALL COMMANDS CAN BE USED WITH : /
 
-<b>⚙️ SETTINGS</b>
-/settings — Open playback settings.
-/playmode — Change playback mode.
-/auth — Authorize a user for music controls.
-/unauth — Remove an authorized user.
-/authlist — Show authorized users.
-/admincache — Refresh admin cache. (/reload)
-/channelplay — Configure channel playback.
-
-<b>🛡️ CHAT / BLACKLIST</b>
-/blacklistchat — Blacklist a chat. (sudo)
-/whitelistchat — Whitelist a chat. (/unblacklistchat)
-/blacklistedchat — Show blacklisted chats. (/blchats)
-/block — Block a user. (sudo)
-/unblock — Unblock a user. (sudo)
-/blockedusers — Show blocked users. (/blusers)
-
-<b>👑 SUDO / ADMIN</b>
-/broadcast — Broadcast a message. (sudo)
-/stop_gcast — Stop an active broadcast. (sudo)
-/gban — Globally ban a user. (sudo)
-/ungban — Remove a global ban. (/unglobalban)
-/gbanlist — Show globally banned users. (/gbannedusers)
-/leave — Make the bot leave a chat. (sudo)
-/leaveall — Leave all eligible chats. (sudo)
-/maintenance — Toggle maintenance mode. (sudo)
-/addsudo — Add a sudo user.
-/delsudo — Remove a sudo user. (/rmsudo)
-/listsudo — Show sudo users. (/sudolist)
-/autoleave — Configure automatic leaving.
-/logs — View bot logs. (sudo)
-/logger — Logger controls. (sudo)
-/restart — Restart the bot. (sudo)
-/update — Update the bot. (sudo)
-
-<b>🔧 OWNER / DEVELOPER</b>
-/eval — Execute owner evaluation code.
-/exec — Execute owner evaluation code.
-
-<b>🎬 VIDEO PLAYBACK</b>
-/vplay — Play video in the voice chat.
-/vplayforce — Force video playback.
-
-<b>🎛️ PLAY COMMAND VARIANTS</b>
-/playforce — Force play a track.
-/cplay — Cached play mode.
-/cplayforce — Force cached play.
-/cvplay — Cached video play.
-/cvplayforce — Force cached video play.
-
-<i>Use /help anytime to open this command reference.</i>"""
+<i>Tap any category below to see its commands and explanations.</i>"""
 
     category = query.data.replace("help_", "")
 
