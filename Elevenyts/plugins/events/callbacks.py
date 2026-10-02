@@ -797,7 +797,6 @@ async def handle_shuffle(
     filters.regex(r"^help")
     & ~app.bl_users
 )
-@lang.language()
 @safe_callback
 async def _help(_, query: types.CallbackQuery):
     """Show the complete Apple Musix command help center."""
@@ -907,10 +906,10 @@ async def _help(_, query: types.CallbackQuery):
 
     if query.data in ("help", "help_main"):
         help_text = help_menu
-        markup = buttons.help_markup(query.lang)
+        markup = buttons.help_markup({})
     else:
         help_text = help_texts.get(category, help_menu)
-        markup = buttons.help_markup(query.lang, True)
+        markup = buttons.help_markup({}, True)
 
     try:
         await query.edit_message_caption(
