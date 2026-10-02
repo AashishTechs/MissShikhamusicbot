@@ -783,9 +783,67 @@ class TgCall(PyTgCalls):
                     media.user,
                 )
 
-                keyboard = buttons.controls(
-                    chat_id
-                )
+                if (
+                    not media.is_live
+                    and media.duration_sec
+                ):
+                    import time as time_module
+
+                    played = media.time
+                    duration = media.duration_sec
+                    bar_length = 12
+
+                    percentage = (
+                        min((played / duration) * 100, 100)
+                        if duration
+                        else 0
+                    )
+
+                    filled = int(
+                        round(
+                            bar_length * percentage / 100
+                        )
+                    )
+
+                    timer_bar = (
+                        "—" * filled
+                        + "●"
+                        + "—" * (bar_length - filled)
+                    )
+
+                    if duration >= 3600:
+                        played_time = time_module.strftime(
+                            "%H:%M:%S",
+                            time_module.gmtime(played),
+                        )
+                        total_time = time_module.strftime(
+                            "%H:%M:%S",
+                            time_module.gmtime(duration),
+                        )
+                    else:
+                        played_time = time_module.strftime(
+                            "%M:%S",
+                            time_module.gmtime(played),
+                        )
+                        total_time = time_module.strftime(
+                            "%M:%S",
+                            time_module.gmtime(duration),
+                        )
+
+                    timer_text = (
+                        f"{played_time} "
+                        f"{timer_bar} "
+                        f"{total_time}"
+                    )
+
+                    keyboard = buttons.controls(
+                        chat_id,
+                        timer=timer_text,
+                    )
+                else:
+                    keyboard = buttons.controls(
+                        chat_id
+                    )
 
                 # ------------------------------------------------
                 # Delete command message
