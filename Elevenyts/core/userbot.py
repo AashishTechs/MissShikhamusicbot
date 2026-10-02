@@ -77,7 +77,10 @@ class Userbot(Client):
             return  # Don't raise SystemExit, just skip this assistant
 
         try:
-            await client.send_message(config.LOGGER_ID, f"Assistant {num} Started")
+            await client.send_message(
+                config.LOGGER_ID,
+                f"♛ 𝑨𝒖𝒅𝒊𝒐 𝑷𝒖𝒍𝒔𝒆 {num} — 𝑹𝒆𝒂𝒅𝒚 🎧"
+            )
         except Exception as e:
             logger.warning(
                 f"⚠️ Assistant {num} couldn't send message to logger: {e}")
