@@ -679,131 +679,104 @@ complete command details & usage.</i>"""
     category = query.data.replace("help_", "")
 
     help_texts = {
-        "admin": """👮 <b>ADMIN COMMANDS</b>
+        "admin": """👮 <b>ADMIN MODULE</b>
 
-<b>Commands available only to administrators.</b>
+Commands for administrators to control playback and manage the group.
 
-<b>Playback</b>
+<b>Admin Commands</b>
 
-<code>/pause</code>
-Pause the current playing stream.
+<pre>┌────────────────────┬────────────────────────────┐
+│ Command            │ Description                │
+├────────────────────┼────────────────────────────┤
+│ /pause             │ Pause current playback.    │
+│ /resume            │ Resume paused playback.    │
+│ /skip              │ Skip to next track.        │
+│ /end / /stop       │ Stop and clear queue.      │
+│ /queue             │ Show queued tracks.        │
+│ /shuffle           │ Shuffle the queue.         │
+│ /loop [1-10]       │ Repeat current track.      │
+│ /seek [time]       │ Seek to a timestamp.       │
+│ /seekback [time]   │ Seek backward.             │
+└────────────────────┴────────────────────────────┘</pre>
 
-<code>/resume</code>
-Resume the paused stream.
+<i>Use the c prefix for linked channel playback where supported.</i>""",
 
-<code>/skip</code>
-Skip the current stream and play the next track in the queue.
+        "auth": """🔐 <b>AUTH MODULE</b>
 
-<code>/end</code> / <code>/stop</code>
-Stop playback and clear the queue.
+Manage users who are allowed to control music.
 
-<code>/queue</code>
-Show all tracks currently waiting in the queue.
+<b>Auth Commands</b>
 
-<code>/shuffle</code>
-Shuffle the queued tracks.
+<pre>┌────────────────────┬────────────────────────────┐
+│ Command            │ Description                │
+├────────────────────┼────────────────────────────┤
+│ /auth              │ Authorize a user.          │
+│ /unauth            │ Remove authorization.      │
+│ /authlist          │ Show authorized users.     │
+│ /admincache        │ Refresh admin cache.       │
+│ /reload            │ Reload admin cache.        │
+│ /channelplay       │ Enable channel playback.   │
+│ /channelplay       │ Use 'disable' to turn off. │
+└────────────────────┴────────────────────────────┘</pre>
 
-<code>/loop [1-10]</code>
-Repeat the current track the specified number of times.
+<i>Authorization commands require the required permissions.</i>""",
 
-<code>/seek [time]</code>
-Seek the current track to the given timestamp.
+        "blacklist": """🚫 <b>BLACKLIST MODULE</b>
 
-<code>/seekback [time]</code>
-Seek backward to the given timestamp.
+Manage blocked chats and users.
 
-<i>Prefix commands with c to use them in linked channels.</i>""",
+<b>Blacklist Commands</b>
 
-        "auth": """🔐 <b>AUTH COMMANDS</b>
+<pre>┌────────────────────┬────────────────────────────┐
+│ Command            │ Description                │
+├────────────────────┼────────────────────────────┤
+│ /blacklistchat     │ Add current chat to list.  │
+│ /whitelistchat     │ Remove chat from list.     │
+│ /blacklistedchat   │ Show blacklisted chats.    │
+│ /block             │ Block a user.              │
+│ /unblock           │ Remove a user block.       │
+│ /blockedusers      │ Show blocked users.        │
+└────────────────────┴────────────────────────────┘</pre>
 
-<b>Manage users who are allowed to control music.</b>
+<i>Some blacklist actions require admin or sudo permission.</i>""",
 
-<code>/auth</code>
-Authorize a user to control music playback.
+        "broadcast": """📢 <b>BROADCAST MODULE</b>
 
-<code>/unauth</code>
-Remove a user's music authorization.
+Send and manage broadcasts and global moderation.
 
-<code>/authlist</code>
-Show the list of authorized users.
+<b>Broadcast Commands</b>
 
-<code>/admincache</code>
-Refresh the administrator cache.
+<pre>┌────────────────────┬────────────────────────────┐
+│ Command            │ Description                │
+├────────────────────┼────────────────────────────┤
+│ /broadcast         │ Send a broadcast message.  │
+│ /stop_gcast        │ Stop active broadcast.     │
+│ /gban              │ Globally ban a user.       │
+│ /ungban            │ Remove a global ban.       │
+│ /gbanlist          │ Show global ban list.      │
+└────────────────────┴────────────────────────────┘</pre>
 
-<code>/reload</code>
-Reload the admin cache using the reload alias.
+<i>These commands are restricted to authorized users.</i>""",
 
-<code>/channelplay</code>
-Connect channel playback to the selected group.
+        "ping": """🏓 <b>PING MODULE</b>
 
-<code>/channelplay disable</code>
-Disable channel playback for the group.
+Check bot status, response time and runtime information.
 
-<i>Use authorization commands only when you have the required permissions.</i>""",
+<b>Ping Commands</b>
 
-        "blacklist": """🚫 <b>BLACKLIST COMMANDS</b>
+<pre>┌────────────────────┬────────────────────────────┐
+│ Command            │ Description                │
+├────────────────────┼────────────────────────────┤
+│ /ping              │ Check response time.       │
+│ /alive             │ Check whether bot is live. │
+│ /stats             │ Show bot statistics.       │
+└────────────────────┴────────────────────────────┘</pre>
 
-<b>Manage blocked chats and users.</b>
-
-<code>/blacklistchat</code>
-Add the current chat to the blacklist.
-
-<code>/whitelistchat</code>
-Remove a chat from the blacklist.
-
-<code>/blacklistedchat</code>
-Show all blacklisted chats.
-
-<code>/block</code>
-Block a user from using the bot.
-
-<code>/unblock</code>
-Remove a user from the blocklist.
-
-<code>/blockedusers</code>
-Show all blocked users.
-
-<i>Some blacklist actions require administrator or sudo permission.</i>""",
-
-        "broadcast": """📢 <b>BROADCAST COMMANDS</b>
-
-<b>Send and manage broadcasts.</b>
-
-<code>/broadcast</code>
-Send a broadcast message to configured chats.
-
-<code>/stop_gcast</code>
-Stop an active broadcast.
-
-<code>/gban</code>
-Globally ban a user from the bot.
-
-<code>/ungban</code>
-Remove a user's global ban.
-
-<code>/gbanlist</code>
-Show the globally banned users.
-
-<i>Broadcast and global moderation commands are restricted to authorized users.</i>""",
-
-        "ping": """🏓 <b>PING COMMANDS</b>
-
-<b>Check the bot's status and response time.</b>
-
-<code>/ping</code>
-Check the bot's response time.
-
-<code>/alive</code>
-Alias for <code>/ping</code> to quickly check whether the bot is online.
-
-<code>/stats</code>
-Show bot statistics and runtime information.
-
-<i>Use these commands when you want to verify that the bot is responding normally.</i>""",
+<i>Use these commands to verify that the bot is responding.</i>""",
 
         "play": """🎵 <b>PLAY MODULE</b>
 
-<b>Commands for playing music and videos.</b>
+Commands for playing music and videos.
 
 <b>Play Commands</b>
 
@@ -811,113 +784,94 @@ Show bot statistics and runtime information.
 • <b>v</b> stands for <b>Video Play</b>.
 • <b>force</b> stands for <b>Force Play</b>.
 
-<code>/play</code> / <code>/vplay</code> / <code>/cplay</code>
-Start streaming the requested track in the voice/video chat.
+<pre>┌────────────────────┬────────────────────────────┐
+│ Command            │ Description                │
+├────────────────────┼────────────────────────────┤
+│ /play              │ Play requested track.      │
+│ /vplay             │ Play requested video.      │
+│ /cplay             │ Play through channel.      │
+│ /playforce         │ Force play music track.    │
+│ /vplayforce        │ Force play video.          │
+│ /cplayforce        │ Force channel playback.    │
+│ /cvplay            │ Play cached video track.   │
+│ /cvplayforce       │ Force cached video play.   │
+│ /queue             │ Show tracks in the queue.  │
+└────────────────────┴────────────────────────────┘</pre>
 
-<code>/playforce</code> / <code>/vplayforce</code> / <code>/cplayforce</code>
-Stop the current stream and immediately play the requested track.
+<i>Example: /play song name</i>""",
 
-<code>/cvplay</code>
-Play a cached video track.
+        "videochats": """🎬 <b>VIDEO CHATS MODULE</b>
 
-<code>/cvplayforce</code>
-Force-play a cached video track.
+Commands for playing video in an active voice/video chat.
 
-<code>/queue</code>
-Show the tracks waiting to be played.
+<b>Video Chat Commands</b>
 
-<i>Example: /play song name, /vplay video link</i>""",
+<pre>┌────────────────────┬────────────────────────────┐
+│ Command            │ Description                │
+├────────────────────┼────────────────────────────┤
+│ /vplay             │ Start video playback.      │
+│ /vplayforce        │ Force requested video.     │
+│ /cvplay            │ Play cached video.         │
+│ /cvplayforce       │ Force cached video.        │
+│ /channelplay       │ Connect channel to group.  │
+│ /channelplay dis.  │ Disable channel playback.  │
+└────────────────────┴────────────────────────────┘</pre>
 
-        "videochats": """🎬 <b>VIDEO CHAT COMMANDS</b>
+<i>Start a voice/video chat before using video playback.</i>""",
 
-<b>Commands for playing video in an active voice/video chat.</b>
+        "start": """🚀 <b>START MODULE</b>
 
-<code>/vplay</code>
-Start video playback for the requested track.
+Commands for opening and navigating the bot.
 
-<code>/vplayforce</code>
-Stop the current stream and force the requested video to play.
+<b>Start & Basic Commands</b>
 
-<code>/cvplay</code>
-Play a cached video track.
-
-<code>/cvplayforce</code>
-Force-play a cached video track.
-
-<code>/channelplay</code>
-Connect a Telegram channel to a group for channel playback.
-
-<code>/channelplay disable</code>
-Disable channel playback for the group.
-
-<i>Start a voice/video chat before using video playback commands.</i>""",
-
-        "start": """🚀 <b>START & BASIC COMMANDS</b>
-
-<b>Commands for opening and navigating the bot.</b>
-
-<code>/start</code>
-Open the bot welcome panel.
-
-<code>/help</code>
-Open the Help Center and command categories.
-
-<code>/settings</code>
-Open playback and bot settings.
-
-<code>/playmode</code>
-Change the playback mode for the current chat.
-
-<code>/ping</code>
-Check the bot's response time.
+<pre>┌────────────────────┬────────────────────────────┐
+│ Command            │ Description                │
+├────────────────────┼────────────────────────────┤
+│ /start             │ Open welcome panel.        │
+│ /help              │ Open Help Center.          │
+│ /settings          │ Open bot settings.         │
+│ /playmode          │ Change playback mode.      │
+│ /ping              │ Check response time.       │
+└────────────────────┴────────────────────────────┘</pre>
 
 <i>Use /start anytime to return to the main welcome panel.</i>""",
 
-        "autoplay": """▶️ <b>AUTO PLAY</b>
+        "autoplay": """▶️ <b>AUTO PLAY MODULE</b>
 
-<b>Automatically continue playback from the queue.</b>
+Automatically continue playback through the queue.
 
-<code>/play</code>
-Add a song, link, or playlist to the queue.
+<b>Auto Play Commands</b>
 
-<code>/queue</code>
-View tracks currently waiting in the queue.
+<pre>┌────────────────────┬────────────────────────────┐
+│ Command            │ Description                │
+├────────────────────┼────────────────────────────┤
+│ /play              │ Add track to the queue.    │
+│ /queue             │ View waiting tracks.       │
+└────────────────────┴────────────────────────────┘</pre>
 
 <b>How Auto Play works</b>
-When the current track finishes, the bot automatically continues with the next available track in the queue.
+When the current track finishes, the bot continues with the next available track in the queue.
 
-<i>There is no separate /autoplay command; Auto Play works through the normal queue and playback system.</i>""",
+<i>There is no separate /autoplay command.</i>""",
 
-        "sudo": """👑 <b>SUDO COMMANDS</b>
+        "sudo": """👑 <b>SUDO MODULE</b>
 
-<b>Restricted owner/sudo administration commands.</b>
+Restricted owner/sudo administration commands.
 
-<code>/broadcast</code>
-Send a broadcast message.
-
-<code>/gban</code>
-Globally ban a user.
-
-<code>/ungban</code>
-Remove a global ban.
-
-<code>/gbanlist</code>
-Show globally banned users.
-
-<code>/leave</code>
-Make the bot leave a chat.
-
-<code>/maintenance</code>
-Toggle maintenance mode.
-
-<code>/addsudo</code>
-Add a sudo user.
-
-<code>/delsudo</code>
-Remove a sudo user.
-
-<code>/listsudo</code>
-Show sudo users.
+<pre>┌────────────────────┬────────────────────────────┐
+│ Command            │ Description                │
+├────────────────────┼────────────────────────────┤
+│ /broadcast         │ Send a broadcast.          │
+│ /gban              │ Globally ban a user.       │
+│ /ungban            │ Remove global ban.         │
+│ /gbanlist          │ Show global bans.          │
+│ /leave             │ Make bot leave a chat.     │
+│ /maintenance       │ Toggle maintenance mode.   │
+│ /addsudo           │ Add a sudo user.           │
+│ /delsudo           │ Remove a sudo user.        │
+│ /listsudo          │ Show sudo users.           │
+└────────────────────┴────────────────────────────┘</pre>
 
 <i>Sudo commands are restricted to authorized users.</i>""",
     }
