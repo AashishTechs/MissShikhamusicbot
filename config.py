@@ -26,6 +26,7 @@ class Config:
         self.BOT_TOKEN: str = getenv("BOT_TOKEN", "")
         self.LOGGER_ID: int = int(getenv("LOGGER_ID", "0"))
         self.OWNER_ID: int = int(getenv("OWNER_ID", "0"))
+        self.OWNER_USERNAME: str = getenv("OWNER_USERNAME", "Aashish_Official").lstrip("@").lower()
 
         # Database
         self.MONGO_URL: str = self._sanitize_mongo_uri(getenv("MONGO_DB_URI", ""))
