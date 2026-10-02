@@ -423,34 +423,41 @@ class Inline:
         rows = [
             [
                 self.ikb(
-                    text=lang["add_me"],
+                    text="🚀 ᴄʀᴇᴀᴛᴇ ʏᴏᴜʀ ɢʀᴏᴜᴘ ↗",
                     url=f"https://t.me/{app.username}?startgroup=true",
                     style=ButtonStyle.PRIMARY,
                 )
             ],
             [
                 self.ikb(
-                    text=lang["help"],
-                    callback_data="help",
+                    text="👤 ᴏᴡɴᴇʀ ↗",
+                    url=f"tg://user?id={config.OWNER_ID}",
                     style=ButtonStyle.SUCCESS,
                 ),
                 self.ikb(
-                    text="ꜱᴏᴜʀᴄᴇ",
-                    url="https://github.com/AashishTechs/MissShikhamusicbot",
+                    text="🌐 ʟᴀɴɢᴜᴀɢᴇ ↗",
+                    callback_data="language",
                     style=ButtonStyle.SUCCESS,
                 ),
             ],
             [
                 self.ikb(
-                    text=lang["support"],
+                    text="🤝 ꜱᴜᴘᴘᴏʀᴛ ↗",
                     url=config.SUPPORT_CHAT,
                     style=ButtonStyle.PRIMARY,
                 ),
                 self.ikb(
-                    text=lang["channel"],
+                    text="📢 ᴜᴘᴅᴀᴛᴇꜱ ↗",
                     url=config.SUPPORT_CHANNEL,
                     style=ButtonStyle.PRIMARY,
                 ),
+            ],
+            [
+                self.ikb(
+                    text="⚙️ ʜᴇʟᴘ ᴀɴᴅ ᴄᴏᴍᴍᴀɴᴅꜱ ↗",
+                    callback_data="help",
+                    style=ButtonStyle.PRIMARY,
+                )
             ],
         ]
 
