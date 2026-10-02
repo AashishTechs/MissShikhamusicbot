@@ -240,7 +240,7 @@ class Inline:
                     style=ButtonStyle.SUCCESS,
                 ),
                 self.ikb(
-                    text="🌐 ʟᴀɴɢᴜᴀɢᴇ ↗",
+                    text="🌐 ʟᴀɴɢᴜᴀɢᴇ",
                     callback_data="language",
                     style=ButtonStyle.SUCCESS,
                 ),
