@@ -1,12 +1,12 @@
 # ==========================================================
-# Copyright (c) 2026 MissShikhamusicbot
+# Copyright (c) 2026 Apple Music <<3
 # All Rights Reserved.
 #
-# Project      : MissShikhamusicbot
-# Powered By   : MissShikhamusicbot
+# Project      : Apple Music Telegram Music Bot
+# Powered By   : Apple Music <<3
 # Type         : Telegram Music Bot
 #
-# Bot          : @MissShikhaMusicBot
+# Bot          : @AppleMusix_bot
 # 
 # GitHub       : https://github.com/AashishTechs/MissShikhamusicbot
 #
@@ -35,14 +35,12 @@ async def _help(_, m: types.Message):
             photo=config.START_IMG,  # Use same image as start command
             caption=m.lang["help_menu"],
             reply_markup=buttons.help_markup(m.lang),
-            quote=True,
         )
     except Exception:
         # Fallback to text if photo fails
         await m.reply_text(
             text=m.lang["help_menu"],
             reply_markup=buttons.help_markup(m.lang),
-            quote=True,
         )
 
 
@@ -92,14 +90,12 @@ async def start(_, message: types.Message):
             photo=config.START_IMG,
             caption=_text,
             reply_markup=key,
-            quote=not private,
         )
     except errors.ChatSendPhotosForbidden:
         # If photos are not allowed, send text only
         await message.reply_text(
             text=_text,
             reply_markup=key,
-            quote=not private,
         )
 
     # For private chats, add user to database if new
@@ -137,8 +133,7 @@ async def settings(_, message: types.Message):
         reply_markup=buttons.settings_markup(
             message.lang, admin_only, _language, message.chat.id
         ),
-        quote=True,
-    )
+        )
 
 
 @app.on_message(filters.new_chat_members, group=7)
