@@ -60,17 +60,17 @@ class Inline:
         if not remove:
             keyboard.append([
                 self.ikb(
-                    text="▶️",
+                    text="▷",
                     callback_data=f"controls resume {chat_id}",
                     style=ButtonStyle.SUCCESS,
                 ),
                 self.ikb(
-                    text="⏸",
+                    text="Ⅱ",
                     callback_data=f"controls pause {chat_id}",
                     style=ButtonStyle.PRIMARY,
                 ),
                 self.ikb(
-                    text="🔁",
+                    text="↻",
                     callback_data=f"controls loop {chat_id}",
                     style=ButtonStyle.PRIMARY,
                 ),
@@ -80,7 +80,7 @@ class Inline:
                     style=ButtonStyle.PRIMARY,
                 ),
                 self.ikb(
-                    text="⏹",
+                    text="□",
                     callback_data=f"controls close {chat_id}",
                     style=ButtonStyle.DANGER,
                 ),
@@ -254,12 +254,12 @@ class Inline:
         return self.ikm([
             [
                 self.ikb(
-                    text="▶️",
+                    text="▷",
                     callback_data=f"controls resume {chat_id}",
                     style=ButtonStyle.SUCCESS,
                 ),
                 self.ikb(
-                    text="⏸",
+                    text="Ⅱ",
                     callback_data=f"controls pause {chat_id}",
                     style=ButtonStyle.PRIMARY,
                 ),
@@ -269,7 +269,7 @@ class Inline:
                     style=ButtonStyle.PRIMARY,
                 ),
                 self.ikb(
-                    text="⏹",
+                    text="□",
                     callback_data=f"controls close {chat_id}",
                     style=ButtonStyle.DANGER,
                 ),
