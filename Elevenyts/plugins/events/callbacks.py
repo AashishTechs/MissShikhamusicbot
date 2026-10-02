@@ -94,7 +94,8 @@ async def _start_callback(_, query: types.CallbackQuery):
 
     _text = query.lang["start_pm"].format(
         query.from_user.first_name,
-        app.name
+        app.name,
+        query.from_user.id,
     )
 
     key = buttons.start_key(
