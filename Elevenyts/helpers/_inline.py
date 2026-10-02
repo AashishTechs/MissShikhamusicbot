@@ -207,7 +207,7 @@ class Inline:
                 ],
                 [
                     self.ikb(
-                        text="🚀 ᴄʀᴇᴀᴛᴇ ʏᴏᴜʀ ɢʀᴏᴜᴘ ↗",
+                        text="🚀 ᴄʀᴇᴀᴛᴇ ʏᴏᴜʀ ɢʀᴏᴜᴘ",
                         url=f"https://t.me/{app.username}?startgroup=true",
                         style=ButtonStyle.DANGER,
                     )
@@ -328,31 +328,31 @@ class Inline:
             ],
             [
                 self.ikb(
-                    text="👤 ᴏᴡɴᴇʀ ↗",
+                    text="👤 ᴏᴡɴᴇʀ",
                     url="https://t.me/Aashish_0fficial",
                     style=ButtonStyle.SUCCESS,
                 ),
                 self.ikb(
-                    text="🌐 ʟᴀɴɢᴜᴀɢᴇ ↗",
+                    text="🌐 ʟᴀɴɢᴜᴀɢᴇ",
                     callback_data="language",
                     style=ButtonStyle.SUCCESS,
                 ),
             ],
             [
                 self.ikb(
-                    text="🤝 ꜱᴜᴘᴘᴏʀᴛ ↗",
+                    text="🤝 ꜱᴜᴘᴘᴏʀᴛ",
                     url=config.SUPPORT_CHAT,
                     style=ButtonStyle.PRIMARY,
                 ),
                 self.ikb(
-                    text="📢 ᴜᴘᴅᴀᴛᴇꜱ ↗",
+                    text="📢 ᴜᴘᴅᴀᴛᴇꜱ",
                     url=config.SUPPORT_CHANNEL,
                     style=ButtonStyle.PRIMARY,
                 ),
             ],
             [
                 self.ikb(
-                    text="⚙️ ʜᴇʟᴘ ᴀɴᴅ ᴄᴏᴍᴍᴀɴᴅꜱ ↗",
+                    text="⚙️ ʜᴇʟᴘ ᴀɴᴅ ᴄᴏᴍᴍᴀɴᴅꜱ",
                     callback_data="help_main",
                     style=ButtonStyle.DANGER,
                 )
