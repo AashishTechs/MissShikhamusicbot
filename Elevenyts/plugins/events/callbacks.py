@@ -659,7 +659,7 @@ async def _help(_, query: types.CallbackQuery):
     help_menu = """🎧 <b>APPLE MUSIX • HELP CENTER</b>
 
 <b>CHOOSE THE CATEGORY FOR WHICH YOU WANT HELP.</b>
-ASK YOUR DOUBTS AT <a href="https://t.me/Dosto_ki_Mehfil786">SUPPORT CHAT</a>
+ASK YOUR DOUBTS AT <b>SUPPORT CHAT</b>
 
 ALL COMMANDS CAN BE USED WITH : /
 
