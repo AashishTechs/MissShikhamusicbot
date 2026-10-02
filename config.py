@@ -68,7 +68,7 @@ class Config:
         # Images
         self.DEFAULT_THUMB: str = getenv("DEFAULT_THUMB", "https://files.catbox.moe/iv2w0d.jpg")
         self.PING_IMG: str = getenv("PING_IMG", "https://files.catbox.moe/iv2w0d.jpg")
-        self.START_IMG: str = getenv("START_IMG", "https://raw.githubusercontent.com/AashishTechs/MissShikhamusicbot/main/Welcome.jpg")
+        self.START_IMG: str = "https://raw.githubusercontent.com/AashishTechs/MissShikhamusicbot/main/Welcome.jpg"
         self.RADIO_IMG: str = getenv("RADIO_IMG", "https://files.catbox.moe/iv2w0d.jpg")
 
         # Moderation
