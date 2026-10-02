@@ -65,17 +65,17 @@ class Inline:
                     style=ButtonStyle.PRIMARY,
                 ),
                 self.ikb(
-                    text="↻",
+                    text="🔁",
                     callback_data=f"controls loop {chat_id}",
                     style=ButtonStyle.PRIMARY,
                 ),
                 self.ikb(
-                    text="⏭",
+                    text="⏭️",
                     callback_data=f"controls skip {chat_id}",
                     style=ButtonStyle.PRIMARY,
                 ),
                 self.ikb(
-                    text="□",
+                    text="⏹️",
                     callback_data=f"controls close {chat_id}",
                     style=ButtonStyle.DANGER,
                 ),
@@ -162,22 +162,22 @@ class Inline:
     ) -> types.InlineKeyboardMarkup:
         return self.ikm([[
             self.ikb(
-                text="▷",
+                text="▶️",
                 callback_data=f"controls resume {chat_id}",
                 style=ButtonStyle.SUCCESS,
             ),
             self.ikb(
-                text="Ⅱ",
+                text="⏸️",
                 callback_data=f"controls pause {chat_id}",
                 style=ButtonStyle.PRIMARY,
             ),
             self.ikb(
-                text="⏭",
+                text="⏭️",
                 callback_data=f"controls skip {chat_id}",
                 style=ButtonStyle.PRIMARY,
             ),
             self.ikb(
-                text="□",
+                text="⏹️",
                 callback_data=f"controls close {chat_id}",
                 style=ButtonStyle.DANGER,
             ),
