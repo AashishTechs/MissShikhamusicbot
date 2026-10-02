@@ -55,12 +55,11 @@ async def start(_, message: types.Message):
     - Adds new users to database
     - Sends log to logger group for new users
     """
-    # Auto-delete command message in group chats
-    if message.chat.type != enums.ChatType.PRIVATE:
-        try:
-            await message.delete()
-        except Exception:
-            pass
+    # Auto-delete /start command so the welcome panel appears cleanly
+    try:
+        await message.delete()
+    except Exception:
+        pass
     
     # Skip if message from channel or anonymous admin
     if not message.from_user:
