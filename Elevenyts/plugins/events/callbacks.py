@@ -100,7 +100,8 @@ async def _start_callback(_, query: types.CallbackQuery):
 
     key = buttons.start_key(
         query.lang,
-        True
+        True,
+        show_help=query.from_user.id == config.OWNER_ID,
     )
 
     try:
@@ -633,7 +634,13 @@ async def handle_shuffle(
 )
 @safe_callback
 async def _help(_, query: types.CallbackQuery):
-    """Show the complete Apple Musix command help center."""
+    """Show the complete Apple Musix command help center - owner only."""
+
+    if not query.from_user or query.from_user.id != config.OWNER_ID:
+        return await query.answer(
+            "⛔ This Help Center is available to the owner only.",
+            show_alert=True,
+        )
 
     await query.answer()
 
