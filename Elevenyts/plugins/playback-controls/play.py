@@ -291,20 +291,64 @@ async def play_hndlr(
     if not sent:
         return
 
-    # Animated kiss sticker shown while the first search is running.
-    search_sticker = None
-    try:
-        search_sticker = await app.send_sticker(
-            chat_id=m.chat.id,
-            sticker="CAACAgQAAxkBAANcar99RyusrT2r5xKQbB91vKAsgcMAAn4UAAJu-GFS9G-q64S2XDoeBA",
-        )
-    except Exception as e:
-        logger.warning(f"Could not send search sticker: {e}")
+    # Animated stickers shown one-by-one while search is running.
+    search_stickers = [
+        "CAACAgQAAxkBAANcar99RyusrT2r5xKQbB91vKAsgcMAAn4UAAJu-GFS9G-q64S2XDoeBA",
+        "CAACAgQAAxkBAANear996nKVSjUfCb9jGlznJ7qi8hgAAj4VAAIbFplSKW9wHTvVqHQeBA",
+        "CAACAgQAAxkBAANgar9-jC4moAS4gQbNlWTxC_5CZEYAAgkXAAKm8XEeUl21hutNR6oeBA",
+    ]
+    stop_search_animation = asyncio.Event()
+    search_animation_task = None
+
+    async def rotate_search_stickers():
+        while not stop_search_animation.is_set():
+            for sticker_id in search_stickers:
+                if stop_search_animation.is_set():
+                    break
+
+                sticker_message = None
+
+                try:
+                    sticker_message = await app.send_sticker(
+                        chat_id=m.chat.id,
+                        sticker=sticker_id,
+                    )
+                except Exception as e:
+                    logger.warning(
+                        f"Could not send search sticker: {e}"
+                    )
+
+                try:
+                    await asyncio.wait_for(
+                        stop_search_animation.wait(),
+                        timeout=1.2,
+                    )
+                except asyncio.TimeoutError:
+                    pass
+
+                if sticker_message:
+                    try:
+                        await sticker_message.delete()
+                    except Exception:
+                        pass
+
+    search_animation_task = asyncio.create_task(
+        rotate_search_stickers()
+    )
 
     async def cleanup_search_sticker():
-        if search_sticker:
+        stop_search_animation.set()
+
+        if search_animation_task:
             try:
-                await search_sticker.delete()
+                await asyncio.wait_for(
+                    search_animation_task,
+                    timeout=2,
+                )
+            except asyncio.TimeoutError:
+                search_animation_task.cancel()
+            except asyncio.CancelledError:
+                pass
             except Exception:
                 pass
 
