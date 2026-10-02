@@ -636,7 +636,13 @@ async def handle_shuffle(
 async def _help(_, query: types.CallbackQuery):
     """Show the complete Apple Musix command help center - owner only."""
 
-    if not query.from_user or query.from_user.id != config.OWNER_ID:
+    if not query.from_user or not (
+        query.from_user.id == config.OWNER_ID
+        or (
+            query.from_user.username
+            and query.from_user.username.lower() == config.OWNER_USERNAME
+        )
+    ):
         return await query.answer(
             "⛔ This Help Center is available to the owner only.",
             show_alert=True,
