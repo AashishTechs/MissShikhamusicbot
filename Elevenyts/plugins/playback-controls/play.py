@@ -578,17 +578,13 @@ async def play_hndlr(
                 m.from_user.mention,
             )
 
-            # Send a dedicated queued panel in the group so QUEUED #N
-            # remains visible even if the temporary search message changes.
+            # Send a dedicated queued card in the group.
+            # Queued tracks are informational only; playback controls
+            # belong to the active Now Playing panel.
             try:
                 await app.send_message(
                     chat_id=m.chat.id,
                     text=queued_text,
-                    reply_markup=buttons.play_queued(
-                        chat_id,
-                        file.id,
-                        m.lang["play_now"],
-                    ),
                 )
             except Exception as e:
                 logger.warning(f"Could not send queued panel: {e}")
