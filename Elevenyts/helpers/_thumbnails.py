@@ -15,7 +15,6 @@ import os
 import re
 import asyncio
 import aiohttp
-import base64
 
 from PIL import (
     Image,
@@ -54,12 +53,6 @@ ICONS_Y = BAR_Y + 65
 
 MAX_TITLE_WIDTH = 850
 
-_f = "QXJ0aXN0Ym90cw=="
-
-
-def _decode_f():
-    decoded = base64.b64decode(_f).decode("utf-8")
-    return f"✦ {decoded} ✦"
 
 
 def trim_to_width(text: str, font, max_w: int) -> str:
@@ -93,16 +86,11 @@ class Thumbnail:
                 24
             )
 
-            self.signature_font = ImageFont.truetype(
-                "Elevenyts/helpers/Raleway-Bold.ttf",
-                28
-            )
 
         except OSError:
 
             self.title_font = ImageFont.load_default()
             self.regular_font = ImageFont.load_default()
-            self.signature_font = ImageFont.load_default()
 
     async def save_thumb(self, output_path: str, url: str):
 
@@ -120,7 +108,7 @@ class Thumbnail:
         try:
 
             temp = f"cache/temp_{song.id}.jpg"
-            output = f"cache/{song.id}_ultra.png"
+            output = f"cache/{song.id}_ultra_v2.png"
 
             if os.path.exists(output):
                 return output
@@ -208,13 +196,6 @@ class Thumbnail:
             )
 
             draw = ImageDraw.Draw(bg)
-
-            draw.text(
-                (45, 22),
-                _decode_f(),
-                fill=(255, 255, 255, 230),
-                font=self.signature_font
-            )
 
             thumb = base.resize((THUMB_W, THUMB_H))
 
