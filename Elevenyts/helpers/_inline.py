@@ -431,7 +431,7 @@ class Inline:
             [
                 self.ikb(
                     text="👤 ᴏᴡɴᴇʀ ↗",
-                    url=f"tg://user?id={config.OWNER_ID}",
+                    url="https://t.me/Aashish_0fficial",
                     style=ButtonStyle.SUCCESS,
                 ),
                 self.ikb(
