@@ -44,11 +44,14 @@ async def _queue_func(_, m: types.Message):
     _reply = await m.reply_text("Fetching queue...")
     _queue = queue.get_queue(chat_id)
     _media = _queue[0]
-    _thumb = (
-        await thumb.generate(_media)
-        if isinstance(_media, Track)
-        else config.DEFAULT_THUMB
-    )
+    # Show the actual thumbnail of the currently playing YouTube track.
+    if isinstance(_media, Track):
+        _thumb = (
+            getattr(_media, "thumbnail", None)
+            or f"https://i.ytimg.com/vi/{_media.id}/hqdefault.jpg"
+        )
+    else:
+        _thumb = config.DEFAULT_THUMB
     _text = f"Now Playing:\n{_media.title}\nDuration: {_media.duration}\nRequested by: {_media.user}"
     
     _queue.pop(0)
