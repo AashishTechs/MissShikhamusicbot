@@ -570,21 +570,28 @@ async def play_hndlr(
 
         if await db.get_call(chat_id):
 
-            await safe_edit(
-                sent,
-                m.lang["play_queued"].format(
-                    position,
-                    file.url,
-                    file.title,
-                    file.duration,
-                    m.from_user.mention,
-                ),
-                reply_markup=buttons.play_queued(
-                    chat_id,
-                    file.id,
-                    m.lang["play_now"],
-                ),
+            queued_text = m.lang["play_queued"].format(
+                position,
+                file.url,
+                file.title,
+                file.duration,
+                m.from_user.mention,
             )
+
+            # Send a dedicated queued panel in the group so QUEUED #N
+            # remains visible even if the temporary search message changes.
+            try:
+                await app.send_message(
+                    chat_id=m.chat.id,
+                    text=queued_text,
+                    reply_markup=buttons.play_queued(
+                        chat_id,
+                        file.id,
+                        m.lang["play_now"],
+                    ),
+                )
+            except Exception as e:
+                logger.warning(f"Could not send queued panel: {e}")
 
             # ------------------------------------------------
             # Add playlist tracks
