@@ -182,11 +182,6 @@ class Inline:
                         callback_data="help_admins",
                         style=ButtonStyle.PRIMARY,
                     ),
-                    self.ikb(
-                        text="ꜱᴜᴅᴏ",
-                        callback_data="help_sudo",
-                        style=ButtonStyle.PRIMARY,
-                    ),
                 ],
                 [
                     self.ikb(
