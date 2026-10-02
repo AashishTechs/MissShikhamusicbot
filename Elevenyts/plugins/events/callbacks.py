@@ -656,14 +656,25 @@ async def _help(_, query: types.CallbackQuery):
 
     await query.answer()
 
-    help_menu = """🎧 <b>APPLE MUSIX • HELP CENTER</b>
+    help_menu = """🎧 <b>APPLE MUSIX <<3 • HELP CENTER</b>
 
-<b>CHOOSE THE CATEGORY FOR WHICH YOU WANT HELP.</b>
-ASK YOUR DOUBTS AT <b>SUPPORT CHAT</b>
+╭──────────────────────────╮
+   ✨ <b>WELCOME TO HELP CENTER</b>
+╰──────────────────────────╯
 
-ALL COMMANDS CAN BE USED WITH : /
+📚 <b>CHOOSE A CATEGORY</b>
+Select any category below to explore
+commands, features & detailed guides.
 
-<i>Tap any category below to see its commands and explanations.</i>"""
+💡 <b>NEED HELP?</b>
+Ask your doubts in our <b>SUPPORT CHAT</b>
+and our team will help you out.
+
+⚡ <b>COMMAND FORMAT</b>
+All commands can be used with the <b>/</b> prefix.
+
+🎯 <i>Tap any category below to get
+complete command details & usage.</i>"""
 
     category = query.data.replace("help_", "")
 
