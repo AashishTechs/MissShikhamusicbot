@@ -101,6 +101,31 @@ class Bot(pyrogram.Client):
                 f"ᴘʟᴇᴀꜱᴇ ᴘʀᴏᴍᴏᴛᴇ ᴛʜᴇ ʙᴏᴛ ᴛᴏ ᴀᴅᴍɪɴɪꜱᴛʀᴀᴛᴏʀ ᴡɪᴛʜ ɴᴇᴄᴇꜱꜱᴀʀʏ ᴘᴇʀᴍɪꜱꜱɪᴏɴꜱ."
             )
 
+        # Register common commands so Telegram shows them when users type "/".
+        await self.set_bot_commands([
+            pyrogram.types.BotCommand("start", "Start the bot"),
+            pyrogram.types.BotCommand("play", "Play audio on voice chat"),
+            pyrogram.types.BotCommand("playforce", "Force play audio"),
+            pyrogram.types.BotCommand("vplay", "Play video on voice chat"),
+            pyrogram.types.BotCommand("vplayforce", "Force play video"),
+            pyrogram.types.BotCommand("queue", "Show the music queue"),
+            pyrogram.types.BotCommand("playing", "Show currently playing song"),
+            pyrogram.types.BotCommand("pause", "Pause the current song"),
+            pyrogram.types.BotCommand("resume", "Resume the current song"),
+            pyrogram.types.BotCommand("skip", "Skip to the next song"),
+            pyrogram.types.BotCommand("stop", "Stop playback"),
+            pyrogram.types.BotCommand("shuffle", "Shuffle the queue"),
+            pyrogram.types.BotCommand("loop", "Loop the current song"),
+            pyrogram.types.BotCommand("seek", "Seek to a position"),
+            pyrogram.types.BotCommand("seekback", "Seek backward"),
+            pyrogram.types.BotCommand("leave", "Leave the voice chat"),
+            pyrogram.types.BotCommand("ping", "Check bot response time"),
+            pyrogram.types.BotCommand("alive", "Check bot status"),
+            pyrogram.types.BotCommand("stats", "Show bot statistics"),
+            pyrogram.types.BotCommand("settings", "Open group settings"),
+            pyrogram.types.BotCommand("playmode", "Change playback mode"),
+        ])
+
         logger.info(f"🤖 Bot started successfully as @{self.username}")
 
     async def exit(self) -> None:
