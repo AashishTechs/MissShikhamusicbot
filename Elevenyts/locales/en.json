@@ -66,7 +66,7 @@
   "maintenance": "<blockquote>🛠️ <b>MAINTENANCE MODE</b></blockquote>\n\nThe music system is temporarily unavailable.\n\n✦ Please try again later.",
   "footer": "<blockquote>♛ <b>APPLE MUSIX</b>\n𝄞 Premium Telegram Music Experience</blockquote>",
   "restarting": "♻️ <b>RESTARTING APPLE MUSIX...</b>\n\nPlease wait a moment.",
-  "play_queued": "<blockquote>▶️ <b>QUEUED | #{0}</b> ❞</blockquote>\n<blockquote>🎧 <b>SONG :</b> <a href={1}>{2}</a> ❞</blockquote>\n<blockquote>⏱️ <b>LENGTH :</b> {3} MIN ❞</blockquote>\n<blockquote>👤 <b>USER :</b> {4} ❞</blockquote>",
+  "play_queued": "<blockquote>▶️ <b>QUEUED | #{0}</b> ❞</blockquote>\n<blockquote>🎧 <b>SONG :</b> <a href=\"{1}\">{2}</a> ❞</blockquote>\n<blockquote>⏱️ <b>LENGTH :</b> {3} MIN ❞</blockquote>\n<blockquote>👤 <b>USER :</b> {4} ❞</blockquote>",
   "start_pm": "<a href=\"tg://user?id={2}\">Hey {0}! 🎧</a>\n\n🍎 <b>Apple Music <<3 🎵</b>\n\nYour music. Your vibe. Your moment. ♡\n\n🎶 <b>High-Quality Music Streaming</b>\n⚡ <b>Fast & Smooth Playback</b>\n🔊 <b>24×7 Music in Voice Chat</b>\n\n━━━━━━━━━━━━━━\n\n🐼 <b>Ready to Feel the Music?</b>\n\n🔴 <b>Tap Help & Commands</b>\n🚀 <b>Explore my features & start listening!</b>\n\n👑 <b>Owner: @Aashish_0fficial</b>",
   "start_gp": "<blockquote><b>🍎 APPLE MUSIX</b></blockquote>\n\nUse /play <i>song name</i> to start music."
 }
