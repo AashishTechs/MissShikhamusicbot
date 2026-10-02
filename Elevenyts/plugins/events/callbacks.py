@@ -141,12 +141,7 @@ async def _controls(_, query: types.CallbackQuery):
     qaction = len(args) == 4
     user = query.from_user.mention
 
-    # ------------------------------------------------------
-    # CLOSE
-    # ------------------------------------------------------
-
     if action == "close":
-
         await query.answer()
 
         try:
@@ -156,23 +151,15 @@ async def _controls(_, query: types.CallbackQuery):
 
         return
 
-    # ------------------------------------------------------
-    # PERMISSION CHECK
-    # ------------------------------------------------------
-
     user_id = query.from_user.id
-
     has_permission = False
 
     if user_id in app.sudoers:
         has_permission = True
-
     elif await db.is_auth(chat_id, user_id):
         has_permission = True
-
     else:
         admins = await db.get_admins(chat_id)
-
         if user_id in admins:
             has_permission = True
 
@@ -182,29 +169,16 @@ async def _controls(_, query: types.CallbackQuery):
             show_alert=True
         )
 
-    # ------------------------------------------------------
-    # CALL CHECK
-    # ------------------------------------------------------
-
     if not await db.get_call(chat_id):
         return await query.answer(
             query.lang["not_playing"],
             show_alert=True
         )
 
-    # ------------------------------------------------------
-    # STATUS
-    # ------------------------------------------------------
-
     if action == "status":
         return await query.answer()
 
-    # ------------------------------------------------------
-    # SEEK
-    # ------------------------------------------------------
-
     if action.startswith("seek_"):
-
         return await handle_seek(
             query,
             chat_id,
@@ -212,24 +186,14 @@ async def _controls(_, query: types.CallbackQuery):
             user
         )
 
-    # ------------------------------------------------------
-    # LOOP
-    # ------------------------------------------------------
-
     if action == "loop":
-
         return await handle_loop(
             query,
             chat_id,
             user
         )
 
-    # ------------------------------------------------------
-    # SHUFFLE
-    # ------------------------------------------------------
-
     if action == "shuffle":
-
         return await handle_shuffle(
             query,
             chat_id,
@@ -241,28 +205,21 @@ async def _controls(_, query: types.CallbackQuery):
         show_alert=True
     )
 
-    # ------------------------------------------------------
-    # PAUSE
-    # ------------------------------------------------------
-
     if action == "pause":
 
         if not await db.playing(chat_id):
-
             return await query.answer(
                 query.lang["play_already_paused"],
                 show_alert=True
             )
 
         if not await tune.pause(chat_id):
-
             return await query.answer(
                 query.lang["not_playing"],
                 show_alert=True
             )
 
         if qaction:
-
             return await query.edit_message_reply_markup(
                 reply_markup=buttons.queue_markup(
                     chat_id,
@@ -272,33 +229,25 @@ async def _controls(_, query: types.CallbackQuery):
             )
 
         status = query.lang["paused"]
-
         reply = query.lang["play_paused"].format(user)
-
-    # ------------------------------------------------------
-    # RESUME
-    # ------------------------------------------------------
 
     elif action == "resume":
 
         status = query.lang["playing"]
 
         if await db.playing(chat_id):
-
             return await query.answer(
                 query.lang["play_not_paused"],
                 show_alert=True
             )
 
         if not await tune.resume(chat_id):
-
             return await query.answer(
                 query.lang["not_playing"],
                 show_alert=True
             )
 
         if qaction:
-
             return await query.edit_message_reply_markup(
                 reply_markup=buttons.queue_markup(
                     chat_id,
@@ -309,21 +258,12 @@ async def _controls(_, query: types.CallbackQuery):
 
         reply = query.lang["play_resumed"].format(user)
 
-    # ------------------------------------------------------
-    # SKIP
-    # ------------------------------------------------------
-
     elif action == "skip":
 
         await tune.play_next(chat_id)
 
         status = query.lang["skipped"]
-
         reply = query.lang["play_skipped"].format(user)
-
-    # ------------------------------------------------------
-    # FORCE PLAY
-    # ------------------------------------------------------
 
     elif action == "force":
 
@@ -333,18 +273,12 @@ async def _controls(_, query: types.CallbackQuery):
         )
 
         if not media or pos == -1:
-
             return await query.edit_message_text(
                 query.lang["play_expired"]
             )
 
         current = queue.get_current(chat_id)
-
-        m_id = (
-            current.message_id
-            if current
-            else None
-        )
+        m_id = current.message_id if current else None
 
         queue.force_add(
             chat_id,
@@ -353,18 +287,12 @@ async def _controls(_, query: types.CallbackQuery):
         )
 
         try:
-
             await app.delete_messages(
                 chat_id=chat_id,
-                message_ids=[
-                    m_id,
-                    media.message_id
-                ],
+                message_ids=[m_id, media.message_id],
                 revoke=True
             )
-
             media.message_id = None
-
         except Exception:
             pass
 
@@ -373,27 +301,15 @@ async def _controls(_, query: types.CallbackQuery):
             text=query.lang["play_next"]
         )
 
-        # --------------------------------------------------
-        # DIRECT STREAM
-        # --------------------------------------------------
-        # OLD:
-        # media.file_path = await yt.download(...)
-        #
-        # NEW:
-        # Fresh direct stream URL.
-        # --------------------------------------------------
-
         stream_url = await get_direct_stream(media)
 
         if not stream_url:
-
             try:
                 await msg.edit_text(
                     "❌ Unable to get direct stream for this track."
                 )
             except Exception:
                 pass
-
             return
 
         media.message_id = msg.id
@@ -404,37 +320,22 @@ async def _controls(_, query: types.CallbackQuery):
             media
         )
 
-    # ------------------------------------------------------
-    # REPLAY
-    # ------------------------------------------------------
-
     elif action == "replay":
 
         media = queue.get_current(chat_id)
-
         media.user = user
 
         await tune.replay(chat_id)
 
         status = query.lang["replayed"]
-
         reply = query.lang["play_replayed"].format(user)
-
-    # ------------------------------------------------------
-    # STOP
-    # ------------------------------------------------------
 
     elif action == "stop":
 
         await tune.stop(chat_id)
 
         status = query.lang["stopped"]
-
         reply = query.lang["play_stopped"].format(user)
-
-    # ------------------------------------------------------
-    # MESSAGE UPDATE
-    # ------------------------------------------------------
 
     try:
 
@@ -443,7 +344,6 @@ async def _controls(_, query: types.CallbackQuery):
             sent_msg = None
 
             try:
-
                 sent_msg = await query.message.reply_text(
                     reply,
                     quote=False
@@ -454,12 +354,10 @@ async def _controls(_, query: types.CallbackQuery):
                 await asyncio.sleep(e.value)
 
                 try:
-
                     sent_msg = await query.message.reply_text(
                         reply,
                         quote=False
                     )
-
                 except Exception:
                     pass
 
@@ -471,9 +369,7 @@ async def _controls(_, query: types.CallbackQuery):
             except Exception:
                 pass
 
-            # Auto-delete reply after 5 seconds
             if sent_msg:
-
                 await asyncio.sleep(5)
 
                 try:
@@ -496,8 +392,6 @@ async def _controls(_, query: types.CallbackQuery):
             status=status if action != "resume" else None
         )
 
-        # Player cards are photos, so update the caption first.
-        # Text fallback keeps compatibility with text-only messages.
         updated_text = f"{mtext}\n\n<blockquote>{reply}</blockquote>"
 
         try:
@@ -516,7 +410,6 @@ async def _controls(_, query: types.CallbackQuery):
         await asyncio.sleep(e.value)
 
         try:
-
             try:
                 await query.edit_message_caption(
                     caption=updated_text,
@@ -527,7 +420,6 @@ async def _controls(_, query: types.CallbackQuery):
                     updated_text,
                     reply_markup=keyboard,
                 )
-
         except Exception:
             pass
 
@@ -546,52 +438,36 @@ async def handle_seek(
     media = queue.get_current(chat_id)
 
     if not media or media.is_live:
-
         return await query.answer(
             "⚠️ Cannot seek in live streams!",
             show_alert=True
         )
 
     if not media.duration_sec or media.duration_sec == 0:
-
         return await query.answer(
             "⚠️ Cannot seek in this track!",
             show_alert=True
         )
 
-    # Determine seek amount
     if action == "seek_back_10":
-
         seconds = -10
         label = "« 10s"
-
     elif action == "seek_back_30":
-
         seconds = -30
         label = "« 30s"
-
     elif action == "seek_forward_10":
-
         seconds = 10
         label = "10s »"
-
     elif action == "seek_forward_30":
-
         seconds = 30
         label = "30s »"
-
     else:
-
         return await query.answer(
             "⚠️ Invalid seek action!",
             show_alert=True
         )
 
-    current_time = getattr(
-        media,
-        "time",
-        0
-    )
+    current_time = getattr(media, "time", 0)
 
     new_time = max(
         0,
@@ -602,7 +478,6 @@ async def handle_seek(
     )
 
     if new_time == 0 and seconds < 0:
-
         return await query.answer(
             "⏮️ Already at the beginning!",
             show_alert=True
@@ -612,7 +487,6 @@ async def handle_seek(
         new_time >= media.duration_sec - 5
         and seconds > 0
     ):
-
         return await query.answer(
             "⏭️ Too close to the end!",
             show_alert=True
@@ -628,14 +502,11 @@ async def handle_seek(
         import time as time_module
 
         if media.duration_sec >= 3600:
-
             time_str = time_module.strftime(
                 "%H:%M:%S",
                 time_module.gmtime(new_time)
             )
-
         else:
-
             time_str = time_module.strftime(
                 "%M:%S",
                 time_module.gmtime(new_time)
@@ -647,7 +518,6 @@ async def handle_seek(
         )
 
         try:
-
             sent_msg = await query.message.reply_text(
                 f"✅ Seeked to {time_str}\n\n"
                 f"<blockquote>By {user}</blockquote>",
@@ -663,7 +533,6 @@ async def handle_seek(
 
         except FloodWait:
             pass
-
         except Exception:
             pass
 
@@ -677,44 +546,20 @@ async def handle_loop(
 
     current_loop = await db.get_loop(chat_id)
 
-    # 0 -> 1 -> 10 -> 0
     if current_loop == 0:
-
         new_loop = 1
-
         text = "🔂 Loop: Single Track"
-
-        message = (
-            "🔂 Loop mode set to "
-            "<b>Single Track</b>"
-        )
-
+        message = "🔂 Loop mode set to <b>Single Track</b>"
     elif current_loop == 1:
-
         new_loop = 10
-
         text = "🔁 Loop: Queue"
-
-        message = (
-            "🔁 Loop mode set to "
-            "<b>Queue</b>"
-        )
-
+        message = "🔁 Loop mode set to <b>Queue</b>"
     else:
-
         new_loop = 0
-
         text = "➡️ Loop: Off"
+        message = "➡️ Loop mode <b>Disabled</b>"
 
-        message = (
-            "➡️ Loop mode "
-            "<b>Disabled</b>"
-        )
-
-    await db.set_loop(
-        chat_id,
-        new_loop
-    )
+    await db.set_loop(chat_id, new_loop)
 
     await query.answer(
         text,
@@ -739,26 +584,15 @@ async def handle_shuffle(
     items = queue.get_queue(chat_id)
 
     if not items or len(items) <= 1:
-
         return await query.answer(
             "⚠️ Queue is empty or has only one track!",
             show_alert=True
         )
 
-    current = (
-        items[0]
-        if items
-        else None
-    )
-
-    remaining = (
-        items[1:]
-        if len(items) > 1
-        else []
-    )
+    current = items[0] if items else None
+    remaining = items[1:] if len(items) > 1 else []
 
     if not remaining:
-
         return await query.answer(
             "⚠️ No tracks to shuffle!",
             show_alert=True
@@ -775,7 +609,6 @@ async def handle_shuffle(
         )
 
     for item in remaining:
-
         queue.add(
             chat_id,
             item
@@ -878,8 +711,6 @@ async def _help(_, query: types.CallbackQuery):
 
     category = query.data.replace("help_", "")
 
-    # Existing command buttons use category callbacks.  Every one now has
-    # a real description instead of falling back to the admin help text.
     help_texts = {
         "play": "🎵 <b>/play</b>\n\nPlay a song, YouTube link, or playlist in the voice chat.\n\n<b>Aliases:</b> /playforce /cplay /cplayforce /vplay /vplayforce /cvplay /cvplayforce",
         "queue": "📋 <b>/queue</b>\n\nShow the current playing track and queued songs.\n\n<b>Aliases:</b> /playing /cqueue /cplaying",
@@ -907,23 +738,89 @@ async def _help(_, query: types.CallbackQuery):
     if query.data in ("help", "help_main"):
         help_text = help_menu
         markup = buttons.help_markup({})
-    else:
-        help_text = help_texts.get(category, help_menu)
-        markup = buttons.help_markup({}, True)
 
-    try:
-        await query.edit_message_caption(
-            caption=help_text,
-            reply_markup=markup,
-        )
-    except Exception:
+        # Telegram captions are limited to 1024 characters.  The complete
+        # Help Center is intentionally longer, so never try to put it in a
+        # photo caption.  Convert the welcome photo into a normal text
+        # message, then all category/back callbacks can safely edit text.
         try:
+            if query.message and query.message.photo:
+                sent = await query.message.reply_text(
+                    help_text,
+                    reply_markup=markup,
+                    quote=False,
+                )
+                try:
+                    await query.message.delete()
+                except Exception:
+                    pass
+                return
+
             await query.edit_message_text(
                 text=help_text,
                 reply_markup=markup,
             )
+            return
+
+        except Exception as e:
+            logger.error(
+                f"Help Center main message update failed: {e}",
+                exc_info=True,
+            )
+
+            # If editing fails for any reason, send a fresh text message.
+            try:
+                sent = await app.send_message(
+                    chat_id=query.message.chat.id,
+                    text=help_text,
+                    reply_markup=markup,
+                    reply_to_message_id=query.message.id,
+                )
+                try:
+                    await query.message.delete()
+                except Exception:
+                    pass
+                return
+            except Exception:
+                raise
+
+    help_text = help_texts.get(category, help_menu)
+    markup = buttons.help_markup({}, True)
+
+    # Category descriptions are short enough for a Telegram caption, but
+    # support both media and text messages so the Back button is reliable.
+    try:
+        if query.message and query.message.photo:
+            await query.edit_message_caption(
+                caption=help_text,
+                reply_markup=markup,
+            )
+        else:
+            await query.edit_message_text(
+                text=help_text,
+                reply_markup=markup,
+            )
+    except Exception as e:
+        logger.error(
+            f"Help Center category update failed for {query.data}: {e}",
+            exc_info=True,
+        )
+
+        # Last-resort recovery: create a text Help Center message instead
+        # of silently swallowing the error.
+        try:
+            await app.send_message(
+                chat_id=query.message.chat.id,
+                text=help_text,
+                reply_markup=markup,
+                reply_to_message_id=query.message.id,
+            )
+            try:
+                await query.message.delete()
+            except Exception:
+                pass
         except Exception:
-            pass
+            raise
 
 
 @app.on_callback_query(
