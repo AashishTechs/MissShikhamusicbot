@@ -58,6 +58,23 @@ async def safe_edit(message, text, **kwargs):
         return False
 
 
+@app.on_message(filters.private & filters.sticker)
+async def sticker_id_hndlr(_, m: types.Message):
+    """Return a sticker's Telegram file ID in private chat."""
+    try:
+        sticker = m.sticker
+        if not sticker:
+            return
+
+        await m.reply_text(
+            "<blockquote>🆔 <b>STICKER FILE ID</b>\n\n"
+            f"<code>{sticker.file_id}</code>\n\n"
+            "Copy this ID and send it to the developer.</blockquote>"
+        )
+    except Exception as e:
+        logger.warning(f"Could not return sticker file ID: {e}")
+
+
 async def safe_reply(message, text, **kwargs):
     """
     Safely send a reply message.
