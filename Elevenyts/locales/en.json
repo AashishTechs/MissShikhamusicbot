@@ -20,7 +20,7 @@
   "play_invite": "<blockquote>♛ <b>ASSISTANT REQUIRED</b></blockquote>\n\nPlease wait while I invite the assistant to your chat.\n\n✦ <i>Preparing your premium music session...</i>",
   "play_searching": "<blockquote>⌕ <b>SEARCHING MUSIC</b></blockquote>\n\n𝄞 {0}",
   "play_usage": "<blockquote>⚠ <b>USAGE</b></blockquote>\n\nPlease give me a song name or a link after the command.\n\n<b>Example</b>  •  <code>/play tum hi ho</code>",
-  "play_media": "<blockquote><b>🎵 NOW PLAYING</b></blockquote>\n\n<blockquote>🎵 <b>TRACK :</b> <a href={0}>{1}</a>\n⏱ <b>LENGTH :</b> {2} MIN\n👤 <b>USER :</b> {3}</blockquote>",
+  "play_media": "<blockquote>🔴 <b>NOW PLAYING</b> ❞</blockquote>\n\n<blockquote>🎵 <b>TRACK :</b> <a href={0}>{1}</a> ❞</blockquote>\n\n<blockquote>⏱️ <b>LENGTH :</b> {2} MIN ❞</blockquote>\n\n<blockquote>👤 <b>USER :</b> {3} ❞</blockquote>",
   "play_admin": "<blockquote><b>♛ ADMIN ONLY PLAY</b></blockquote>\n\nOnly administrators are allowed to play music in this chat.",
   "play_banned": "<blockquote><b>⛔ ASSISTANT BANNED</b></blockquote>\n\n<b>ID:</b> <code>{1}</code>\n<b>Name:</b> {2}\n<b>Username:</b> {3}",
   "play_paused": "<blockquote>⏸️ <b>STREAM PAUSED</b></blockquote>\n\n✦ Paused by <b>{0}</b>",
@@ -66,7 +66,7 @@
   "maintenance": "<blockquote>🛠️ <b>MAINTENANCE MODE</b></blockquote>\n\nThe music system is temporarily unavailable.\n\n✦ Please try again later.",
   "footer": "<blockquote>♛ <b>APPLE MUSIX</b>\n𝄞 Premium Telegram Music Experience</blockquote>",
   "restarting": "♻️ <b>RESTARTING APPLE MUSIX...</b>\n\nPlease wait a moment.",
-  "play_queued": "<blockquote><b>▶️ QUEUED | #{0}</b></blockquote>\n\n<blockquote>▶️ <b>TRACK :</b> <a href={1}>{2}</a>\n⏱ <b>LENGTH :</b> {3} MIN\n👤 <b>USER :</b> {4}</blockquote>",
+  "play_queued": "<blockquote>▶️ <b>QUEUED | #{0}</b> ❞</blockquote>\n\n<blockquote>🎵 <b>TRACK :</b> <a href={1}>{2}</a> ❞</blockquote>\n\n<blockquote>⏱️ <b>LENGTH :</b> {3} MIN ❞</blockquote>\n\n<blockquote>👤 <b>USER :</b> {4} ❞</blockquote>",
   "start_pm": "<a href=\"tg://user?id={2}\">Hey {0}! 🎧</a>\n\n🍎 <b>Apple Music <<3 🎵</b>\n\nYour music. Your vibe. Your moment. ♡\n\n🎶 <b>High-Quality Music Streaming</b>\n⚡ <b>Fast & Smooth Playback</b>\n🔊 <b>24×7 Music in Voice Chat</b>\n\n━━━━━━━━━━━━━━\n\n🐼 <b>Ready to Feel the Music?</b>\n\n🔴 <b>Tap Help & Commands</b>\n🚀 <b>Explore my features & start listening!</b>\n\n👑 <b>Owner: @Aashish_0fficial</b>",
   "start_gp": "<blockquote><b>🍎 APPLE MUSIX</b></blockquote>\n\nUse /play <i>song name</i> to start music."
 }
