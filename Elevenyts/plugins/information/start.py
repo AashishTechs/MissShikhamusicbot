@@ -23,14 +23,8 @@ from Elevenyts.helpers import buttons, utils
 @app.on_message(filters.command(["help"]) & filters.private & ~app.bl_users)
 @lang.language()
 async def _help(_, m: types.Message):
-    """Handle /help command in private chats - owner only."""
-    if not m.from_user or not (
-        m.from_user.id == config.OWNER_ID
-        or (
-            m.from_user.username
-            and m.from_user.username.lower() == config.OWNER_USERNAME
-        )
-    ):
+    """Handle /help command in private chats - available to all users."""
+    if not m.from_user:
         return
     # Auto-delete command message
     try:
@@ -94,13 +88,7 @@ async def start(_, message: types.Message):
     key = buttons.start_key(
         message.lang,
         private,
-        show_help=(
-            message.from_user.id == config.OWNER_ID
-            or (
-                message.from_user.username
-                and message.from_user.username.lower() == config.OWNER_USERNAME
-            )
-        ),
+        show_help=True,
     )
     try:
         await message.reply_photo(
