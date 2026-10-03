@@ -50,7 +50,9 @@ async def _skip(_, m: types.Message):
         except (ChatSendPlainForbidden, ChatWriteForbidden):
             return
 
-    await tune.play_next(chat_id)
+    # /skip must always advance to the next track, even when
+    # single-track loop mode is enabled.
+    await tune.play_next(chat_id, force_skip=True)
     try:
         sent_msg = await m.reply_text(f"Skipped by {m.from_user.mention}")
     except (ChatSendPlainForbidden, ChatWriteForbidden):
