@@ -26,6 +26,15 @@ async def _help(_, m: types.Message):
     """Handle /help command in private chats - available to all users."""
     if not m.from_user:
         return
+
+    is_owner = (
+        m.from_user.id == config.OWNER_ID
+        or (
+            m.from_user.username
+            and m.from_user.username.lower() == config.OWNER_USERNAME
+        )
+    )
+
     # Auto-delete command message
     try:
         await m.delete()
@@ -36,7 +45,7 @@ async def _help(_, m: types.Message):
         await m.reply_photo(
             photo=config.START_IMG,  # Use same image as start command
             caption=m.lang["help_menu"],
-            reply_markup=buttons.help_markup(m.lang),
+            reply_markup=buttons.help_markup(m.lang, show_sudo=is_owner),
         )
     except Exception:
         # Fallback to text if photo fails
