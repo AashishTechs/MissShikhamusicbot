@@ -1312,6 +1312,7 @@ class TgCall(PyTgCalls):
     async def play_next(
         self,
         chat_id: int,
+        force_skip: bool = False,
     ) -> None:
 
         if chat_id not in self._play_next_locks:
@@ -1389,7 +1390,7 @@ class TgCall(PyTgCalls):
                 # Loop current track
                 # ==================================================
 
-                if loop_mode == 1:
+                if loop_mode == 1 and not force_skip:
 
                     media = queue.get_current(
                         chat_id
