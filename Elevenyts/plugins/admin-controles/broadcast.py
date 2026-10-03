@@ -26,7 +26,7 @@ from Elevenyts import app, db, lang
 broadcasting: bool = False
 
 
-@app.on_message(filters.command(["broadcast"]) & app.sudo_filter)
+@app.on_message(filters.command(["broadcast"]) & filters.user(app.owner))
 @lang.language()
 async def broadcast_message(_, message: types.Message) -> None:
     """
@@ -109,7 +109,7 @@ async def broadcast_message(_, message: types.Message) -> None:
     )
 
 
-@app.on_message(filters.command(["stop_gcast", "stop_broadcast"]) & app.sudo_filter)
+@app.on_message(filters.command(["stop_gcast", "stop_broadcast"]) & filters.user(app.owner))
 @lang.language()
 async def stop_broadcast(_, message: types.Message) -> None:
     """
