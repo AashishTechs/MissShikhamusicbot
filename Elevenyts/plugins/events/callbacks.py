@@ -868,7 +868,14 @@ Owner/sudo administration commands.
 
     if query.data in ("help", "help_main"):
         help_text = help_menu
-        markup = buttons.help_markup({})
+        is_owner = (
+            query.from_user.id == config.OWNER_ID
+            or (
+                query.from_user.username
+                and query.from_user.username.lower() == config.OWNER_USERNAME
+            )
+        )
+        markup = buttons.help_markup({}, show_sudo=is_owner)
 
         # Telegram captions are limited to 1024 characters.  The complete
         # Help Center is intentionally longer, so never try to put it in a
@@ -914,6 +921,20 @@ Owner/sudo administration commands.
                 return
             except Exception:
                 raise
+
+    if category == "sudo":
+        is_owner = (
+            query.from_user.id == config.OWNER_ID
+            or (
+                query.from_user.username
+                and query.from_user.username.lower() == config.OWNER_USERNAME
+            )
+        )
+        if not is_owner:
+            return await query.answer(
+                "⛔ SUDO commands are available to the owner only.",
+                show_alert=True,
+            )
 
     help_text = help_texts.get(category, help_menu)
     markup = buttons.help_markup({}, True)
