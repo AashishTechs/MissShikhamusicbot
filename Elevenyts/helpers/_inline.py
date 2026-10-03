@@ -137,11 +137,8 @@ class Inline:
                 ])
 
             rows.append([
-                # Back: red
-                [
-                    self.ikb(text="ʙᴀᴄᴋ", callback_data="start", style=ButtonStyle.DANGER)
-                ],
-            ]
+                self.ikb(text="ʙᴀᴄᴋ", callback_data="start", style=ButtonStyle.DANGER)
+            ])
 
         return self.ikm(rows)
 
