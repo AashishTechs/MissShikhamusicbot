@@ -93,6 +93,7 @@ class Inline:
         self,
         _lang: dict,
         back: bool = False,
+        show_sudo: bool = False,
     ) -> types.InlineKeyboardMarkup:
 
         if back:
@@ -123,6 +124,19 @@ class Inline:
                     self.ikb(text="ꜱᴛᴀʀᴛ", callback_data="help_start", style=ButtonStyle.SUCCESS),
                     self.ikb(text="ᴀᴜᴛᴏ ᴘʟᴀʏ", callback_data="help_autoplay", style=ButtonStyle.SUCCESS),
                 ],
+            ]
+
+            # SUDO is intentionally visible only to the owner.
+            if show_sudo:
+                rows.append([
+                    self.ikb(
+                        text="👑 ꜱᴜᴅᴏ",
+                        callback_data="help_sudo",
+                        style=ButtonStyle.DANGER,
+                    )
+                ])
+
+            rows.append([
                 # Back: red
                 [
                     self.ikb(text="ʙᴀᴄᴋ", callback_data="start", style=ButtonStyle.DANGER)
