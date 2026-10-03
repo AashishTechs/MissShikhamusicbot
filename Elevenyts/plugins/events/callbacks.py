@@ -347,8 +347,7 @@ async def _controls(_, query: types.CallbackQuery):
 
             try:
                 sent_msg = await query.message.reply_text(
-                    reply,
-                    quote=False
+                    reply
                 )
 
             except FloodWait as e:
@@ -357,8 +356,7 @@ async def _controls(_, query: types.CallbackQuery):
 
                 try:
                     sent_msg = await query.message.reply_text(
-                        reply,
-                        quote=False
+                        reply
                     )
                 except Exception:
                     pass
@@ -522,8 +520,7 @@ async def handle_seek(
         try:
             sent_msg = await query.message.reply_text(
                 f"✅ Seeked to {time_str}\n\n"
-                f"<blockquote>By {user}</blockquote>",
-                quote=False
+                f"<blockquote>By {user}</blockquote>"
             )
 
             await asyncio.sleep(5)
@@ -569,8 +566,7 @@ async def handle_loop(
     )
 
     await query.message.reply_text(
-        message,
-        quote=False
+        message
     )
 
 
@@ -623,8 +619,7 @@ async def handle_shuffle(
 
     await query.message.reply_text(
         f"🔀 Queue <b>shuffled</b> "
-        f"({len(remaining)} tracks)",
-        quote=False
+        f"({len(remaining)} tracks)"
     )
 
 
@@ -886,7 +881,6 @@ Owner/sudo administration commands.
                 sent = await query.message.reply_text(
                     help_text,
                     reply_markup=markup,
-                    quote=False,
                 )
                 try:
                     await query.message.delete()
