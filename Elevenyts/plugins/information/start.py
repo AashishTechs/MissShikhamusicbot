@@ -19,6 +19,10 @@ from Elevenyts.helpers import buttons, utils
 
 
 WELCOME_IMAGE = "Welcome.jpg"
+HELP_TEXT = (
+    "<blockquote><b>🎧 APPLE MUSIX • HELP & COMMANDS</b></blockquote>\n\n"
+    "Select a category below to explore available commands."
+)
 
 
 def welcome_text(message):
@@ -55,13 +59,13 @@ async def _help(_, m: types.Message):
     try:
         await m.reply_photo(
             photo=WELCOME_IMAGE,
-            caption=m.lang["help_menu"],
+            caption=HELP_TEXT,
             reply_markup=buttons.help_markup(m.lang),
             quote=True,
         )
     except Exception:
         await m.reply_text(
-            text=m.lang["help_menu"],
+            text=HELP_TEXT,
             reply_markup=buttons.help_markup(m.lang),
             quote=True,
         )
