@@ -152,7 +152,7 @@ class Inline:
                 ],
                 [
                     self.ikb(text="SUDO", callback_data="help_sudo", style=ButtonStyle.SUCCESS),
-                    self.ikb(text="VIDEOCHATS", callback_data="help_videochats", style=ButtonStyle.SUCCESS),
+                    self.ikb(text="VIDEO CHAT", callback_data="help_videochats", style=ButtonStyle.SUCCESS),
                     self.ikb(text="START", callback_data="help_start", style=ButtonStyle.SUCCESS),
                 ],
                 [
