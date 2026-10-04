@@ -93,10 +93,7 @@ async def start(_, message: types.Message):
 
     private = message.chat.type == enums.ChatType.PRIVATE
 
-    if private or (message.command and message.command[0].lower() == "startv"):
-        _text = welcome_text(message)
-    else:
-        _text = message.lang["start_gp"].format(app.name)
+    _text = welcome_text(message)
 
     key = buttons.start_key(message.lang, private)
 
