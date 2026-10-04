@@ -513,10 +513,10 @@ async def play_hndlr(
         if already_has_track or call_active or position > 0:
 
             queued_text = (
-                f"<blockquote>➕ <b>QUEUED | #{position}</b>  ”</blockquote>\n\n"
-                f"<blockquote>🟢 <b>SONG</b> : "
-                f"<a href='{file.url}'>{file.title}</a>  ”</blockquote>\n\n"
-                f"<blockquote>⏱️ <b>LENGTH</b> : {file.duration} MIN  ”</blockquote>\n\n"
+                f"<blockquote>➕ <b>QUEUED | #{position}</b>  ”</blockquote>\n"
+                f"<blockquote>▶️ <b>SONG</b> : "
+                f"<a href='{file.url}'>{file.title}</a>  ”</blockquote>\n"
+                f"<blockquote>⏱️ <b>LENGTH</b> : {file.duration} MIN  ”</blockquote>\n"
                 f"<blockquote>👤 <b>USER</b> : {m.from_user.mention}  ”</blockquote>"
             )
 
