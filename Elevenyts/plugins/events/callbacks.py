@@ -807,115 +807,113 @@ async def handle_shuffle(
     & ~app.bl_users
 )
 @lang.language()
+@safe_callback
 async def _help(_, query: types.CallbackQuery):
 
     await query.answer()
 
-    # Main help menu
-    if query.data == "help":
-
-        try:
-
-            await query.edit_message_caption(
-                caption=query.lang["help_menu"],
-                reply_markup=buttons.help_markup(
-                    query.lang
-                )
-            )
-
-        except Exception:
-
-            try:
-
-                await query.edit_message_text(
-                    text=query.lang["help_menu"],
-                    reply_markup=buttons.help_markup(
-                        query.lang
-                    )
-                )
-
-            except Exception:
-                pass
-
-        return
-
-    category = query.data.replace(
-        "help_",
-        ""
+    help_main = (
+        "<blockquote><b>🎧 APPLE MUSIX • HELP & COMMANDS</b></blockquote>\n\n"
+        "Select a category below to explore available commands."
     )
-
-    if category == "main":
-
-        try:
-
-            await query.edit_message_caption(
-                caption=query.lang["help_menu"],
-                reply_markup=buttons.help_markup(
-                    query.lang
-                )
-            )
-
-        except Exception:
-
-            try:
-
-                await query.edit_message_text(
-                    text=query.lang["help_menu"],
-                    reply_markup=buttons.help_markup(
-                        query.lang
-                    )
-                )
-
-            except Exception:
-                pass
-
-        return
 
     help_texts = {
-        "admins": query.lang["help_admins"],
-        "auth": query.lang["help_auth"],
-        "broadcast": query.lang["help_sudo"],
-        "blchat": query.lang["help_blchat"],
-        "bluser": query.lang["help_bluser"],
-        "gban": query.lang["help_gban"],
-        "loop": query.lang["help_loop"],
-        "play": query.lang["help_play"],
-        "queue": query.lang["help_queue"],
-        "seek": query.lang["help_seek"],
-        "shuffle": query.lang["help_shuffle"],
-        "ping": query.lang["help_ping"],
-        "stats": query.lang["help_stats"],
-        "sudo": query.lang["help_sudo"],
-        "maintenance": query.lang["help_maintenance"],
+        "admin": (
+            "<blockquote><b>ADMIN COMMANDS</b></blockquote>\n\n"
+            "<code>/admincache</code> — refresh admin cache\n"
+            "<code>/reload</code> — reload admin cache\n"
+            "<code>/leave</code> — leave the current chat\n"
+            "<code>/autoleave</code> — auto-leave settings\n"
+            "<code>/maintenance</code> — maintenance mode"
+        ),
+        "auth": (
+            "<blockquote><b>AUTH COMMANDS</b></blockquote>\n\n"
+            "<code>/auth</code> — authorize a user\n"
+            "<code>/unauth</code> — remove authorization\n"
+            "<code>/authlist</code> — show authorized users"
+        ),
+        "blacklist": (
+            "<blockquote><b>BLACKLIST COMMANDS</b></blockquote>\n\n"
+            "<code>/blacklistchat</code> — blacklist a chat\n"
+            "<code>/whitelistchat</code> — remove chat blacklist\n"
+            "<code>/blacklistedchat</code> — list blacklisted chats\n"
+            "<code>/block</code> — block a user\n"
+            "<code>/unblock</code> — unblock a user\n"
+            "<code>/blockedusers</code> — list blocked users"
+        ),
+        "broadcast": (
+            "<blockquote><b>BROADCAST COMMANDS</b></blockquote>\n\n"
+            "<code>/broadcast</code> — broadcast a message\n"
+            "<code>/stop_broadcast</code> — stop broadcast\n"
+            "<code>/stop_gcast</code> — stop broadcast"
+        ),
+        "ping": (
+            "<blockquote><b>PING COMMAND</b></blockquote>\n\n"
+            "<code>/ping</code> — check bot status and system health"
+        ),
+        "play": (
+            "<blockquote><b>PLAYBACK COMMANDS</b></blockquote>\n\n"
+            "<code>/play</code> — play a song\n"
+            "<code>/playforce</code> — force play\n"
+            "<code>/cplay</code> — play through channel\n"
+            "<code>/cplayforce</code> — force channel play\n"
+            "<code>/vplay</code> — video play\n"
+            "<code>/vplayforce</code> — force video play\n"
+            "<code>/cvplay</code> — channel video play\n"
+            "<code>/cvplayforce</code> — force channel video play\n"
+            "<code>/pause</code> — pause playback\n"
+            "<code>/resume</code> — resume playback\n"
+            "<code>/skip</code> — skip track\n"
+            "<code>/stop</code> — stop playback\n"
+            "<code>/replay</code> — replay current track\n"
+            "<code>/queue</code> — show queue\n"
+            "<code>/loop</code> — loop mode\n"
+            "<code>/shuffle</code> — shuffle queue\n"
+            "<code>/seek</code> — seek playback"
+        ),
+        "sudo": (
+            "<blockquote><b>SUDO COMMANDS</b></blockquote>\n\n"
+            "<code>/addsudo</code> — add sudo user\n"
+            "<code>/delsudo</code> — remove sudo user\n"
+            "<code>/listsudo</code> — list sudo users"
+        ),
+        "videochats": (
+            "<blockquote><b>VIDEO CHATS</b></blockquote>\n\n"
+            "<code>/vplay</code> — start video playback\n"
+            "<code>/vplayforce</code> — force video playback\n"
+            "<code>/cvplay</code> — channel video playback\n"
+            "<code>/cvplayforce</code> — force channel video playback"
+        ),
+        "start": (
+            "<blockquote><b>START COMMANDS</b></blockquote>\n\n"
+            "<code>/start</code> — open the welcome panel\n"
+            "<code>/help</code> — open Help & Commands"
+        ),
+        "autoplay": (
+            "<blockquote><b>AUTO PLAY</b></blockquote>\n\n"
+            "<code>/autoplay</code> — automatic playback feature"
+        ),
     }
 
-    help_text = help_texts.get(
-        category,
-        query.lang["help_admins"]
-    )
+    if query.data in ("help", "help_main"):
+        text = help_main
+        markup = buttons.help_markup(query.lang)
+    else:
+        category = query.data.removeprefix("help_")
+        text = help_texts.get(category, help_main)
+        markup = buttons.help_markup(query.lang, True)
 
     try:
-
         await query.edit_message_caption(
-            caption=help_text,
-            reply_markup=buttons.help_markup(
-                query.lang,
-                True
-            )
+            caption=text,
+            reply_markup=markup,
         )
-
     except Exception:
-
         try:
-
             await query.edit_message_text(
-                text=help_text,
-                reply_markup=buttons.help_markup(
-                    query.lang,
-                    True
-                )
+                text=text,
+                reply_markup=markup,
             )
-
         except Exception:
             pass
 
