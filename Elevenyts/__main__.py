@@ -102,7 +102,7 @@ async def main():
         app.sudo_filter.update(sudoers)  # Add sudo users to filter
         app.bl_users.update(await db.get_blacklisted())  # Add blacklisted users to filter
         logger.info(f"👑 Loaded {len(app.sudoers)} sudo users.")
-        logger.info("\n🎉 Bot started successfully! Ready to play music! 🎵\n")
+        logger.info("🎧 𝗔ᴘᴘʟᴇ 𝗠ᴜsɪᴄ ‹‹𝟹 • ᴏɴʟɪɴᴇ")
 
         # Step 9: Keep the bot running (press Ctrl+C to stop)
         try:
