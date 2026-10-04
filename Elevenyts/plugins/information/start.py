@@ -71,7 +71,7 @@ async def _help(_, m: types.Message):
         )
 
 
-@app.on_message(filters.command(["start"]))
+@app.on_message(filters.command(["start", "startv"]))
 @lang.language()
 async def start(_, message: types.Message):
     """Handle /start command."""
@@ -93,7 +93,7 @@ async def start(_, message: types.Message):
 
     private = message.chat.type == enums.ChatType.PRIVATE
 
-    if private:
+    if private or (message.command and message.command[0].lower() == "startv"):
         _text = welcome_text(message)
     else:
         _text = message.lang["start_gp"].format(app.name)
