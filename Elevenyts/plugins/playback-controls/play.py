@@ -526,7 +526,7 @@ async def play_hndlr(
                 reply_markup=buttons.play_queued(
                     chat_id,
                     file.id,
-                    m.lang["play_now"],
+                    m.lang["play"],
                 ),
             )
 
