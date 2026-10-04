@@ -872,10 +872,7 @@ class TgCall(PyTgCalls):
                         f"{total_time}"
                     )
 
-                    keyboard = buttons.controls(
-                        chat_id,
-                        timer=timer_text,
-                    )
+                    keyboard = buttons.controls(chat_id)
 
                 else:
 
