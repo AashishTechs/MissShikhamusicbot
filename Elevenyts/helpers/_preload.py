@@ -234,15 +234,19 @@ class PreloadManager:
                 if not media_id:
                     continue
 
-                # Direct streaming architecture me
-                # file_path ko download result se fill nahi karna.
-                #
-                # Actual stream URL playback ke time
-                # generate hoga.
-
+                # Keep a valid prefetched direct stream URL.
+                # Clearing it here would defeat the whole preload
+                # system and force play_next() to extract again.
                 if getattr(media, "file_path", None):
-                    # Agar accidentally old cached file path hai,
-                    # direct-stream mode me remove kar do.
+                    try:
+                        age = time.monotonic() - float(
+                            getattr(media, "_stream_url_at", time.monotonic())
+                        )
+                        if age < 240:
+                            continue
+                    except Exception:
+                        pass
+
                     media.file_path = None
 
                 await self.preload_next(
