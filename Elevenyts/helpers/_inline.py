@@ -143,21 +143,19 @@ class Inline:
                 [
                     self.ikb(text="ADMIN", callback_data="help_admin", style=ButtonStyle.SUCCESS),
                     self.ikb(text="AUTH", callback_data="help_auth", style=ButtonStyle.SUCCESS),
-                ],
-                [
                     self.ikb(text="BLACKLIST", callback_data="help_blacklist", style=ButtonStyle.SUCCESS),
-                    self.ikb(text="BROADCAST", callback_data="help_broadcast", style=ButtonStyle.PRIMARY),
                 ],
                 [
+                    self.ikb(text="BROADCAST", callback_data="help_broadcast", style=ButtonStyle.PRIMARY),
                     self.ikb(text="PING", callback_data="help_ping", style=ButtonStyle.PRIMARY),
                     self.ikb(text="PLAY", callback_data="help_play", style=ButtonStyle.PRIMARY),
                 ],
                 [
                     self.ikb(text="SUDO", callback_data="help_sudo", style=ButtonStyle.SUCCESS),
                     self.ikb(text="VIDEOCHATS", callback_data="help_videochats", style=ButtonStyle.SUCCESS),
+                    self.ikb(text="START", callback_data="help_start", style=ButtonStyle.SUCCESS),
                 ],
                 [
-                    self.ikb(text="START", callback_data="help_start", style=ButtonStyle.SUCCESS),
                     self.ikb(text="AUTO PLAY", callback_data="help_autoplay", style=ButtonStyle.PRIMARY),
                 ],
                 [
