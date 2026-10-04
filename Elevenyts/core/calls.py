@@ -782,6 +782,7 @@ class TgCall(PyTgCalls):
                     media.title,
                     media.duration,
                     media.user,
+                    "VIDEO" if getattr(media, "video", False) else "AUDIO",
                 )
 
                 # ------------------------------------------------
