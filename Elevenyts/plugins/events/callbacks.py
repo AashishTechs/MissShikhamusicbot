@@ -969,38 +969,54 @@ async def _help(_, query: types.CallbackQuery):
         text = help_main
         markup = buttons.help_markup(query.lang)
 
-        # The main Help panel uses the Welcome.jpg photo.
-        # If we are coming back from a text-only category, replace that
-        # message with the photo panel.
-        try:
-            await query.message.delete()
-        except Exception:
-            pass
-
         from pathlib import Path
         welcome_image = str(Path(__file__).resolve().parents[3] / "Welcome.jpg")
-        await query.message.reply_photo(
-            photo=welcome_image,
-            caption=text,
-            reply_markup=markup,
-        )
-        return
+
+        # Send the next panel first so the UI changes immediately.
+        # Delete the previous panel only after the new one is visible.
+        try:
+            new_message = await query.message.reply_photo(
+                photo=welcome_image,
+                caption=text,
+                reply_markup=markup,
+            )
+            try:
+                await query.message.delete()
+            except Exception:
+                pass
+            return new_message
+        except Exception:
+            try:
+                new_message = await query.message.reply_text(
+                    text=text,
+                    reply_markup=markup,
+                )
+                try:
+                    await query.message.delete()
+                except Exception:
+                    pass
+                return new_message
+            except Exception:
+                return
 
     category = query.data.removeprefix("help_")
     text = help_texts.get(category, help_main)
     markup = buttons.help_markup(query.lang, True)
 
-    # Category pages must be text-only: remove the photo message and
-    # send the command list as a normal text message.
+    # Send the category first, then remove the old panel.
+    # This avoids waiting for the delete request before the new page appears.
     try:
-        await query.message.delete()
+        new_message = await query.message.reply_text(
+            text=text,
+            reply_markup=markup,
+        )
+        try:
+            await query.message.delete()
+        except Exception:
+            pass
+        return new_message
     except Exception:
-        pass
-
-    await query.message.reply_text(
-        text=text,
-        reply_markup=markup,
-    )
+        return
 
 
 @app.on_callback_query(
