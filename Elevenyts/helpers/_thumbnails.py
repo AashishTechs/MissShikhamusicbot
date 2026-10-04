@@ -121,7 +121,7 @@ class Thumbnail:
         try:
 
             temp = f"cache/temp_{song.id}.jpg"
-            output = f"cache/{song.id}_ultra.png"
+            output = f"cache/{song.id}_full.png"
 
             if os.path.exists(output):
                 return output
