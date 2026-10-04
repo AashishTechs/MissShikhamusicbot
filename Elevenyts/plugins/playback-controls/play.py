@@ -77,6 +77,14 @@ async def safe_reply(message, text, **kwargs):
         return None
 
 
+
+
+async def safe_status(message, source, text, **kwargs):
+    """Edit an existing status message or send a fresh status message."""
+    if source is not None:
+        return await safe_edit(source, text, **kwargs)
+    return await safe_reply(message, text, **kwargs)
+
 def playlist_to_queue(chat_id: int, tracks: list) -> str:
     """
     Add playlist tracks to queue.
@@ -391,7 +399,8 @@ async def play_hndlr(
 
         if not file:
 
-            await safe_edit(
+            await safe_status(
+                m,
                 sent,
                 m.lang["play_not_found"].format(
                     config.SUPPORT_CHAT
@@ -456,7 +465,8 @@ async def play_hndlr(
         and file.duration_sec > config.DURATION_LIMIT
     ):
 
-        await safe_edit(
+        await safe_status(
+            m,
             sent,
             m.lang["play_duration_limit"].format(
                 config.DURATION_LIMIT // 60
@@ -524,7 +534,8 @@ async def play_hndlr(
                 f"<blockquote>👤 <b>USER</b> : {m.from_user.mention}  ”</blockquote>"
             )
 
-            await safe_edit(
+            queued_msg = await safe_status(
+                m,
                 sent,
                 queued_text,
                 reply_markup=buttons.play_queued(
@@ -533,6 +544,9 @@ async def play_hndlr(
                     m.lang["play"],
                 ),
             )
+
+            if queued_msg:
+                file.message_id = queued_msg.id
 
             # ------------------------------------------------
             # Add playlist tracks
@@ -600,7 +614,8 @@ async def play_hndlr(
 
         if not stream_url:
 
-            await safe_edit(
+            await safe_status(
+                m,
                 sent,
                 "<blockquote>"
                 "❌ Failed to get direct stream.\n\n"
