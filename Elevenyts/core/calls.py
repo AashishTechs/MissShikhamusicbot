@@ -1473,14 +1473,14 @@ class TgCall(PyTgCalls):
                     for item in queue_snapshot:
                         queue.add(chat_id, item)
 
-                    media = queue.get_next(
+                    # Keep the first track as the current track.
+                    # Do not pop it here; play_media/replay expect the
+                    # current item to remain at queue position 0.
+                    media = queue.get_current(
                         chat_id
                     )
 
                     if media:
-                        # Put the restarted track at the end so every
-                        # track remains part of the next loop cycle.
-                        queue.add(chat_id, media)
                         logger.info(
                             f"🔁 Queue loop restarting in {chat_id}"
                         )
