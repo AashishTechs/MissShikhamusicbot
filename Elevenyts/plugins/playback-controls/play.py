@@ -424,7 +424,8 @@ async def play_hndlr(
 
         if not file:
 
-            await safe_edit(
+            await safe_status(
+                m,
                 sent,
                 m.lang["play_not_found"].format(
                     config.SUPPORT_CHAT
