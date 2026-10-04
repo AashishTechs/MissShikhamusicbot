@@ -506,7 +506,7 @@ async def play_hndlr(
             queued_text = (
                 f"<blockquote>➕ <b>QUEUED | #{position}</b>  ”</blockquote>\n\n"
                 f"<blockquote>🟢 <b>SONG</b> : "
-                f"<a href="{file.url}">{file.title}</a>  ”</blockquote>\n\n"
+                f"<a href='{file.url}'>{file.title}</a>  ”</blockquote>\n\n"
                 f"<blockquote>⏱️ <b>LENGTH</b> : {file.duration} MIN  ”</blockquote>\n\n"
                 f"<blockquote>👤 <b>USER</b> : {m.from_user.mention}  ”</blockquote>"
             )
