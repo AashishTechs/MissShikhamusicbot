@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://files.catbox.moe/iv2w0d.jpg" alt="Apple Music" width="400"/>
+<img src="./Welcome.jpg" alt="Apple Music" width="400"/>
 
 # 🎵 𝗔ᴘᴘʟᴇ 𝗠ᴜsɪᴄ <<3
 
