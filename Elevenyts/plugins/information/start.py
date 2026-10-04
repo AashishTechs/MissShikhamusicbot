@@ -63,7 +63,6 @@ async def _help(_, m: types.Message):
             photo=WELCOME_IMAGE,
             caption=HELP_TEXT,
             reply_markup=buttons.help_markup(m.lang),
-            quote=True,
         )
     except Exception:
         await m.reply_text(
@@ -104,7 +103,6 @@ async def start(_, message: types.Message):
             photo=WELCOME_IMAGE,
             caption=_text,
             reply_markup=key,
-            quote=not private,
         )
     except (errors.ChatSendPhotosForbidden, OSError, ValueError):
         await message.reply_text(
