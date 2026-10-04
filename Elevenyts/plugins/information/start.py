@@ -21,6 +21,7 @@ from Elevenyts.helpers import buttons, utils
 
 
 WELCOME_IMAGE = str(Path(__file__).resolve().parents[3] / "Welcome.jpg")
+WELCOME_FILE_ID = None
 HELP_TEXT = (
     "<blockquote><b>🎧 APPLE MUSIX • HELP & COMMANDS</b></blockquote>\n\n"
     "Select a category below to explore available commands."
@@ -98,12 +99,20 @@ async def start(_, message: types.Message):
 
     key = buttons.start_key(message.lang, private)
 
+    global WELCOME_FILE_ID
+
     try:
-        await message.reply_photo(
-            photo=WELCOME_IMAGE,
+        sent = await message.reply_photo(
+            photo=WELCOME_FILE_ID or WELCOME_IMAGE,
             caption=_text,
             reply_markup=key,
         )
+
+        # Cache Telegram's file_id after the first upload.
+        # Future /start requests reuse it and avoid re-uploading Welcome.jpg.
+        if WELCOME_FILE_ID is None and sent.photo:
+            WELCOME_FILE_ID = sent.photo.file_id
+
     except (errors.ChatSendPhotosForbidden, OSError, ValueError):
         await message.reply_text(
             text=_text,
