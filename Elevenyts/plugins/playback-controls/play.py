@@ -503,15 +503,17 @@ async def play_hndlr(
 
         if await db.get_call(chat_id):
 
+            queued_text = (
+                f"<blockquote>➕ <b>QUEUED | #{position}</b>  ”</blockquote>\n\n"
+                f"<blockquote>🟢 <b>SONG</b> : "
+                f"<a href="{file.url}">{file.title}</a>  ”</blockquote>\n\n"
+                f"<blockquote>⏱️ <b>LENGTH</b> : {file.duration} MIN  ”</blockquote>\n\n"
+                f"<blockquote>👤 <b>USER</b> : {m.from_user.mention}  ”</blockquote>"
+            )
+
             await safe_edit(
                 sent,
-                m.lang["play_queued"].format(
-                    position,
-                    file.url,
-                    file.title,
-                    file.duration,
-                    m.from_user.mention,
-                ),
+                queued_text,
                 reply_markup=buttons.play_queued(
                     chat_id,
                     file.id,
