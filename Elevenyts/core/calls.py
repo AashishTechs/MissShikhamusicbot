@@ -1455,6 +1455,11 @@ class TgCall(PyTgCalls):
                 # Queue loop mode
                 # ==================================================
 
+                # Keep a snapshot before advancing. When the last
+                # track finishes, rebuild the queue from that snapshot
+                # so queue-loop can cycle indefinitely.
+                queue_snapshot = queue.get_all(chat_id)
+
                 media = queue.get_next(
                     chat_id
                 )
@@ -1462,77 +1467,22 @@ class TgCall(PyTgCalls):
                 if (
                     not media
                     and loop_mode == 10
+                    and queue_snapshot
                 ):
 
-                    all_items = queue.get_all(
+                    for item in queue_snapshot:
+                        queue.add(chat_id, item)
+
+                    media = queue.get_next(
                         chat_id
                     )
 
-                    if all_items:
-
-                        first_track = all_items[0]
-
-                        _lang = await lang.get_lang(
-                            chat_id
+                    if media:
+                        logger.info(
+                            f"🔁 Queue loop restarting in {chat_id}"
                         )
 
-                        try:
-
-                            msg = await app.send_message(
-                                chat_id=target_chat,
-                                text="🔁 Looping queue...",
-                            )
-
-                            # ------------------------------------------------
-                            # Direct streaming.
-                            #
-                            # NEVER download the track.
-                            # Generate a fresh temporary stream URL.
-                            # ------------------------------------------------
-
-                            first_track.file_path = None
-
-                            stream_url = (
-                                await self._get_stream_url(
-                                    first_track
-                                )
-                            )
-
-                            if not stream_url:
-
-                                logger.error(
-                                    f"Could not get direct "
-                                    f"stream URL for "
-                                    f"{first_track.id}"
-                                )
-
-                                return
-
-                            first_track.message_id = msg.id
-
-                            await self.play_media(
-                                chat_id,
-                                msg,
-                                first_track,
-                                message_chat_id=message_chat_id,
-                            )
-
-                        except errors.ChannelPrivate:
-
-                            logger.warning(
-                                f"Bot removed from "
-                                f"{chat_id}, cleaning up"
-                            )
-
-                            await self.leave_call(
-                                chat_id
-                            )
-
-                            await db.rm_chat(
-                                chat_id
-                            )
-
-                    return
+                # Continue below with the normal next-track flow.
 
                 # ==================================================
                 # Delete previous playback message
