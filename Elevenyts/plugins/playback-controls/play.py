@@ -492,21 +492,25 @@ async def play_hndlr(
 
     else:
 
+        # IMPORTANT: check the queue BEFORE adding this track.
+        # The first track is the current track; every later request
+        # must be treated as queued even if db.get_call() has not
+        # been written yet (there can be a small playback race).
+        existing_queue = queue.get_queue(chat_id)
+        already_has_track = bool(existing_queue)
+
         position = queue.add(
             chat_id,
             file,
         )
 
         # --------------------------------------------------
-        # Call already active
+        # Call already active / another track already exists
         # --------------------------------------------------
 
-        # If another track is already in the queue, this request
-        # must always use the queued panel.  Queue positions are
-        # zero-based, so position > 0 means a track is already playing.
         call_active = await db.get_call(chat_id)
 
-        if call_active or position > 0:
+        if already_has_track or call_active or position > 0:
 
             queued_text = (
                 f"<blockquote>➕ <b>QUEUED | #{position}</b>  ”</blockquote>\n\n"
