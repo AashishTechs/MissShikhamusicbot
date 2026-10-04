@@ -1644,88 +1644,19 @@ class TgCall(PyTgCalls):
                     return
 
                 # ==================================================
-                # Playback status message
+                # Start the queued track directly.
+                # No temporary "PLAYING NEXT" status message is sent.
+                # play_media() sends the normal playback card.
                 # ==================================================
 
-                try:
+                media.message_id = 0
 
-                    msg = await app.send_message(
-                        chat_id=target_chat,
-                        text=_lang["play_next"],
-                    )
-
-                except errors.FloodWait as fw:
-
-                    logger.warning(
-                        f"FloodWait in play_next for "
-                        f"{chat_id}: skipping status "
-                        f"message ({fw.value}s)"
-                    )
-
-                    msg = None
-
-                except errors.ChannelPrivate:
-
-                    logger.warning(
-                        f"Bot removed from "
-                        f"{chat_id}, cleaning up"
-                    )
-
-                    await self.leave_call(
-                        chat_id
-                    )
-
-                    await db.rm_chat(
-                        chat_id
-                    )
-
-                    return
-
-                except Exception as e:
-
-                    logger.error(
-                        f"Failed to send play_next "
-                        f"message for {chat_id}: {e}"
-                    )
-
-                    msg = None
-
-                # ==================================================
-                # Save message ID
-                # ==================================================
-
-                media.message_id = (
-                    msg.id
-                    if msg
-                    else 0
+                await self.play_media(
+                    chat_id,
+                    None,
+                    media,
+                    message_chat_id=message_chat_id,
                 )
-
-                # ==================================================
-                # Start playback
-                # ==================================================
-
-                if msg:
-
-                    await self.play_media(
-                        chat_id,
-                        msg,
-                        media,
-                        message_chat_id=message_chat_id,
-                    )
-
-                else:
-
-                    logger.info(
-                        f"Playing next track for "
-                        f"{chat_id} without message update"
-                    )
-
-                    await self.play_media(
-                        chat_id,
-                        None,
-                        media,
-                        message_chat_id=message_chat_id,
-                    )
 
                 # ==================================================
                 # Start no-download preload manager
