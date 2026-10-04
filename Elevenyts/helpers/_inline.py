@@ -158,9 +158,9 @@ class Inline:
         else:
             rows = [
                 [
-                    self.ikb(text="ADMIN", callback_data="help_admin", style=ButtonStyle.PRIMARY),
-                    self.ikb(text="AUTH", callback_data="help_auth", style=ButtonStyle.PRIMARY),
-                    self.ikb(text="BLACKLIST", callback_data="help_blacklist", style=ButtonStyle.PRIMARY),
+                    self.ikb(text="ADMIN", callback_data="help_admin", style=ButtonStyle.SUCCESS),
+                    self.ikb(text="AUTH", callback_data="help_auth", style=ButtonStyle.SUCCESS),
+                    self.ikb(text="BLACKLIST", callback_data="help_blacklist", style=ButtonStyle.SUCCESS),
                 ],
                 [
                     self.ikb(text="BROADCAST", callback_data="help_broadcast", style=ButtonStyle.PRIMARY),
