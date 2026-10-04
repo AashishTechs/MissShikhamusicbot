@@ -116,36 +116,6 @@ class Inline:
                 ]
             )
 
-            # --------------------------------------------------
-            # CLICK ME / SUPPORT
-            # --------------------------------------------------
-
-            keyboard.append(
-                [
-                    self.ikb(
-                        text="✨ CLICK ME ↗",
-                        url=config.SUPPORT_CHANNEL,
-                    ),
-                    self.ikb(
-                        text="💬 SUPPORT ↗",
-                        url=config.SUPPORT_CHAT,
-                    ),
-                ]
-            )
-
-            # --------------------------------------------------
-            # CLOSE PLAYER
-            # --------------------------------------------------
-
-            keyboard.append(
-                [
-                    self.ikb(
-                        text="✕ CLOSE",
-                        callback_data=f"controls close {chat_id}",
-                    )
-                ]
-            )
-
         return self.ikm(keyboard)
 
     # ======================================================
