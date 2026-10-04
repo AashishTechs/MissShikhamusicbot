@@ -89,16 +89,29 @@ class Inline:
             keyboard.append(
                 [
                     self.ikb(
-                        text="⏪ 10",
-                        callback_data=f"controls seek_back_10 {chat_id}",
+                        text="▷",
+                        callback_data=f"controls resume {chat_id}",
+                        style=ButtonStyle.SUCCESS,
                     ),
                     self.ikb(
-                        text="⏸",
+                        text="Ⅱ",
                         callback_data=f"controls pause {chat_id}",
+                        style=ButtonStyle.PRIMARY,
                     ),
                     self.ikb(
-                        text="⏩ 10",
+                        text="↻",
+                        callback_data=f"controls loop {chat_id}",
+                        style=ButtonStyle.PRIMARY,
+                    ),
+                    self.ikb(
+                        text="▶|",
                         callback_data=f"controls skip {chat_id}",
+                        style=ButtonStyle.PRIMARY,
+                    ),
+                    self.ikb(
+                        text="□",
+                        callback_data=f"controls stop {chat_id}",
+                        style=ButtonStyle.DANGER,
                     ),
                 ]
             )
