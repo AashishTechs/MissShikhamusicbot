@@ -969,15 +969,10 @@ async def _help(_, query: types.CallbackQuery):
         text = help_main
         markup = buttons.help_markup(query.lang)
 
-        from pathlib import Path
-        welcome_image = str(Path(__file__).resolve().parents[3] / "Welcome.jpg")
-
-        # Send the next panel first so the UI changes immediately.
-        # Delete the previous panel only after the new one is visible.
+        # Text-only Help panel. Keep the existing button layout/colors.
         try:
-            new_message = await query.message.reply_photo(
-                photo=welcome_image,
-                caption=text,
+            new_message = await query.message.reply_text(
+                text=text,
                 reply_markup=markup,
             )
             try:
@@ -986,26 +981,12 @@ async def _help(_, query: types.CallbackQuery):
                 pass
             return new_message
         except Exception:
-            try:
-                new_message = await query.message.reply_text(
-                    text=text,
-                    reply_markup=markup,
-                )
-                try:
-                    await query.message.delete()
-                except Exception:
-                    pass
-                return new_message
-            except Exception:
-                return
+            return
 
     category = query.data.removeprefix("help_")
     text = help_texts.get(category, help_main)
     markup = buttons.help_markup(query.lang, True)
 
-    # Keep every help category in the same visual format as the
-    # main Help panel: same Welcome image, boxed title, content,
-    # and BACK button.
     category_titles = {
         "admin": "ADMIN",
         "auth": "AUTH",
@@ -1025,14 +1006,10 @@ async def _help(_, query: types.CallbackQuery):
             + text
         )
 
-    from pathlib import Path
-    welcome_image = str(Path(__file__).resolve().parents[3] / "Welcome.jpg")
-
-    # Send the new panel first, then remove the previous panel.
+    # Text-only category panel. Keep the existing button layout/colors.
     try:
-        new_message = await query.message.reply_photo(
-            photo=welcome_image,
-            caption=text,
+        new_message = await query.message.reply_text(
+            text=text,
             reply_markup=markup,
         )
         try:
@@ -1041,18 +1018,7 @@ async def _help(_, query: types.CallbackQuery):
             pass
         return new_message
     except Exception:
-        try:
-            new_message = await query.message.reply_text(
-                text=text,
-                reply_markup=markup,
-            )
-            try:
-                await query.message.delete()
-            except Exception:
-                pass
-            return new_message
-        except Exception:
-            return
+        return
 
 
 @app.on_callback_query(
