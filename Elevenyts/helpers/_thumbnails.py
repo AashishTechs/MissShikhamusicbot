@@ -22,7 +22,8 @@ from PIL import (
     ImageDraw,
     ImageEnhance,
     ImageFilter,
-    ImageFont
+    ImageFont,
+    ImageOps
 )
 
 from Elevenyts import config
@@ -154,7 +155,10 @@ class Thumbnail:
             # while the rest of the player UI is rendered locally.
             # --------------------------------------------------
             with Image.open(temp) as temp_img:
-                base = temp_img.convert("RGB").resize(size)
+                source = temp_img.convert("RGB")
+                # Keep the original thumbnail aspect ratio so the full
+                # song image is visible without stretching or cropping.
+                base = ImageOps.fit(source, size, method=Image.Resampling.LANCZOS)
 
             # Blurred background.
             bg = base.filter(ImageFilter.GaussianBlur(32))
@@ -174,17 +178,26 @@ class Thumbnail:
 
             draw = ImageDraw.Draw(bg)
 
-            # Album art.
-            art_size = 430
+            # Album/video art: preserve the complete source image.
+            art_w, art_h = 500, 282
             art_x, art_y = 105, 145
-            art = base.resize((art_size, art_size))
-            art_mask = Image.new("L", art.size, 0)
+            art = ImageOps.contain(
+                source,
+                (art_w, art_h),
+                method=Image.Resampling.LANCZOS,
+            )
+            art_canvas = Image.new("RGB", (art_w, art_h), (18, 25, 34))
+            art_canvas.paste(
+                art,
+                ((art_w - art.width) // 2, (art_h - art.height) // 2),
+            )
+            art_mask = Image.new("L", art_canvas.size, 0)
             ImageDraw.Draw(art_mask).rounded_rectangle(
-                (0, 0, art_size - 1, art_size - 1),
+                (0, 0, art_w - 1, art_h - 1),
                 radius=26,
                 fill=255,
             )
-            bg.paste(art, (art_x, art_y), art_mask)
+            bg.paste(art_canvas, (art_x, art_y), art_mask)
 
             # Fonts.
             title_font = self.title_font
@@ -226,7 +239,7 @@ class Thumbnail:
             # Progress bar.
             bar_x = text_x
             bar_y = 345
-            bar_w = 540
+            bar_w = 470
 
             draw.rounded_rectangle(
                 (bar_x, bar_y, bar_x + bar_w, bar_y + 7),
