@@ -273,23 +273,14 @@ async def play_hndlr(
                 )
 
     # ------------------------------------------------------
-    # Searching message
+    # Search status
     # ------------------------------------------------------
-
-    play_emoji = m.lang["play_emoji"]
-
-    try:
-
-        sent = await safe_reply(
-            m,
-            m.lang["play_searching"].format(play_emoji),
-        )
-
-    except Exception:
-        return
-
-    if not sent:
-        return
+    # Do not send a Telegram "SEARCHING MUSIC" message before
+    # the YouTube search. That extra API round-trip makes playback
+    # feel slower. For normal song searches we search first and
+    # create the playback/queue message only after a result exists.
+    # Telegram media still needs a progress message while downloading.
+    sent = None
 
     # ------------------------------------------------------
     # User / media
@@ -311,6 +302,14 @@ async def play_hndlr(
     # ------------------------------------------------------
 
     if media:
+
+        sent = await safe_reply(
+            m,
+            "<blockquote>🎧 <b>PREPARING MUSIC</b></blockquote>",
+        )
+
+        if not sent:
+            return
 
         setattr(sent, "lang", m.lang)
 
@@ -408,7 +407,7 @@ async def play_hndlr(
 
         file = await yt.search(
             query,
-            sent.id,
+            m.id,
         )
 
         if not file:
@@ -428,6 +427,18 @@ async def play_hndlr(
 
     if not file:
         return
+
+    # Search succeeded. Create the message now, after the search,
+    # instead of making the user wait through a visible search panel.
+    if sent is None:
+
+        sent = await safe_reply(
+            m,
+            "<blockquote>🎧 <b>PREPARING PLAYER</b></blockquote>",
+        )
+
+        if not sent:
+            return
 
     # ------------------------------------------------------
     # Video flag
