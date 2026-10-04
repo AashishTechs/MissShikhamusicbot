@@ -1478,6 +1478,9 @@ class TgCall(PyTgCalls):
                     )
 
                     if media:
+                        # Put the restarted track at the end so every
+                        # track remains part of the next loop cycle.
+                        queue.add(chat_id, media)
                         logger.info(
                             f"🔁 Queue loop restarting in {chat_id}"
                         )
