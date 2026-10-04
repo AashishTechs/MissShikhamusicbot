@@ -1,132 +1,70 @@
 {
   "start": "<blockquote><b>♛  WELCOME TO APPLE MUSIX</b></blockquote>\n\n<blockquote>𝄞 <b>Your Premium Telegram Music Player</b>\n\n✦ Search and stream your favourite music\n✦ Fast and smooth playback\n✦ Powerful queue controls\n✦ Premium music experience</blockquote>\n\n<blockquote>♛ <b>APPLE MUSIX</b> • Music Beyond Limits</blockquote>",
-
   "help": "🎧 <b>APPLE MUSIX • HELP CENTER</b>\n\nSelect a category below to explore available commands.",
-
   "add_me": "➕ ᴀᴅᴅ ᴍᴇ ᴛᴏ ɢʀᴏᴜᴘ",
-
   "support": "🆘 ꜱᴜᴘᴘᴏʀᴛ",
-
   "channel": "📢 ᴄʜᴀɴɴᴇʟ",
-
   "play": "🎵 ᴘʟᴀʏ",
-
   "queue": "📜 ǫᴜᴇᴜᴇ",
-
   "pause": "⏸️ ᴘᴀᴜꜱᴇ",
-
   "resume": "▶️ ʀᴇꜱᴜᴍᴇ",
-
   "skip": "⏭️ ꜱᴋɪᴘ",
-
   "stop": "⏹️ ꜱᴛᴏᴘ",
-
   "replay": "↻ ʀᴇᴘʟᴀʏ",
-
   "shuffle": "🔀 ꜱʜᴜꜰꜰʟᴇ",
-
   "loop": "🔁 ʟᴏᴏᴘ",
-
   "seek": "⏩ ꜱᴇᴇᴋ",
-
   "delete": "✕ ᴄʟᴏꜱᴇ",
-
   "back": "‹ ʙᴀᴄᴋ",
-
   "play_emoji": "𝄞",
-
   "play_invite": "<blockquote>♛ <b>ASSISTANT REQUIRED</b></blockquote>\n\nPlease wait while I invite the assistant to your chat.\n\n✦ <i>Preparing your premium music session...</i>",
-
   "play_searching": "<blockquote>⌕ <b>SEARCHING MUSIC</b></blockquote>\n\n𝄞 {0}\n\n<blockquote>✦ Finding the best available result...</blockquote>",
-
   "play_usage": "<blockquote>⚠ <b>USAGE</b></blockquote>\n\nPlease give me a song name or a link after the command.\n\n<b>Example</b>  •  <code>/play tum hi ho</code>",
-
   "play_media": "<blockquote>🎵 <b>NOW PLAYING</b>  ”</blockquote>\n<blockquote>🎵 <b>TRACK</b> : <a href={0}>{1}</a>\n🎬 <b>{4}</b></blockquote>\n<blockquote>⏱️ <b>LENGTH</b> : {2} MIN</blockquote>\n<blockquote>👤 <b>USER</b> : {3}</blockquote>",
   "play_admin": "<blockquote><b>♛ ADMIN ONLY PLAY</b></blockquote>\n\nOnly administrators are allowed to play music in this chat.",
-
   "play_banned": "<blockquote><b>⛔ ASSISTANT BANNED</b></blockquote>\n\n<b>ID:</b> <code>{1}</code>\n<b>Name:</b> {2}\n<b>Username:</b> {3}",
-
   "play_paused": "<blockquote>⏸️ <b>STREAM PAUSED</b></blockquote>\n\n✦ Paused by <b>{0}</b>",
-
   "play_resumed": "<blockquote>▶️ <b>STREAM RESUMED</b></blockquote>\n\n✦ Resumed by <b>{0}</b>",
-
   "play_replayed": "<blockquote>↻ <b>STREAM REPLAYED</b></blockquote>\n\n✦ Replayed by <b>{0}</b>",
-
   "play_skipped": "<blockquote>⏭️ <b>STREAM SKIPPED</b></blockquote>\n\n✦ Skipped by <b>{0}</b>",
-
   "play_stopped": "<blockquote>⏹️ <b>STREAM ENDED</b></blockquote>\n\n✦ Stopped by <b>{0}</b>",
-
   "play_seeked": "<blockquote>⏩ <b>STREAM SEEKED</b></blockquote>\n\n✦ Moved <b>{0}</b>\n✦ Started from <b>{1}</b> seconds\n✦ Action by <b>{2}</b>",
-
   "play_expired": "<blockquote>⌛ <b>BUTTON EXPIRED</b></blockquote>\n\nThis player control has expired. Please start a new playback session.",
-
   "play_not_found": "<blockquote>❌ <b>MUSIC NOT FOUND</b></blockquote>\n\nI couldn't find a playable result for your request.\n\n✦ Try another song or search query.",
-
   "play_error": "<blockquote>⚠️ <b>PLAYBACK ERROR</b></blockquote>\n\nSomething went wrong while starting the stream.\n\n✦ Please try again in a moment.",
-
   "play_limit": "<blockquote>⚠️ <b>DURATION LIMIT</b></blockquote>\n\nThis track is longer than the configured playback limit.",
-
   "stream_ended": "<blockquote>♛ <b>PLAYBACK COMPLETE</b></blockquote>\n\n𝄞 The current track has finished.\n\n✦ Checking the queue for the next track...",
-
   "queue_empty": "<blockquote>📭 <b>QUEUE EMPTY</b></blockquote>\n\nThere are no more tracks waiting in the queue.",
-
   "queue_title": "<blockquote>📜 <b>UP NEXT</b></blockquote>\n\n",
-
   "queue_cleared": "<blockquote>🗑️ <b>QUEUE CLEARED</b></blockquote>\n\n✦ All pending tracks have been removed.",
-
   "loop_off": "<blockquote>🔁 <b>LOOP DISABLED</b></blockquote>\n\n✦ Normal playback mode is active.",
-
   "loop_song": "<blockquote>🔂 <b>SONG LOOP ENABLED</b></blockquote>\n\n✦ The current track will repeat.",
-
   "loop_queue": "<blockquote>🔁 <b>QUEUE LOOP ENABLED</b></blockquote>\n\n✦ The current queue will repeat.",
-
   "shuffle_on": "<blockquote>🔀 <b>QUEUE SHUFFLED</b></blockquote>\n\n✦ Your remaining tracks have been randomized.",
-
   "shuffle_off": "<blockquote>🔀 <b>SHUFFLE DISABLED</b></blockquote>\n\n✦ Normal queue order restored.",
-
   "play_mode": "🎵 ᴘʟᴀʏ ᴍᴏᴅᴇ",
-
   "status": "<blockquote>♛ <b>PLAYER STATUS</b></blockquote>\n\n𝄞 <b>Music Player</b>\n✦ Status: {0}",
-
   "no_playing": "<blockquote>🎵 <b>NOTHING PLAYING</b></blockquote>\n\nThere is currently no active music session.",
-
   "permission": "<blockquote>🔒 <b>PERMISSION DENIED</b></blockquote>\n\nYou don't have permission to use this player control.",
-
   "already_playing": "<blockquote>𝄞 <b>MUSIC ALREADY PLAYING</b></blockquote>\n\n✦ Your requested track has been added to the queue.",
-
   "download": "<blockquote>⬇️ <b>PREPARING MEDIA</b></blockquote>\n\n✦ Please wait while the requested media is being prepared...",
-
   "download_started": "<blockquote>⬇️ <b>DOWNLOAD STARTED</b></blockquote>\n\n𝄞 Preparing your requested media.",
-
   "download_complete": "<blockquote>✓ <b>DOWNLOAD COMPLETE</b></blockquote>\n\n✦ Media is ready.",
-
   "download_failed": "<blockquote>❌ <b>DOWNLOAD FAILED</b></blockquote>\n\n✦ Unable to prepare the requested media.",
-
   "cancel": "✕ ᴄᴀɴᴄᴇʟ",
-
   "cancelled": "<blockquote>✕ <b>ACTION CANCELLED</b></blockquote>\n\nThe current operation has been cancelled.",
-
   "ping": "<blockquote>♛ <b>APPLE MUSIX • SYSTEM STATUS</b></blockquote>\n\n✦ Bot: <b>Online</b>\n✦ Music Engine: <b>Ready</b>\n✦ Status: <b>Operational</b>\n\n𝄞 <i>Enjoy the music.</i>",
-
   "stats": "<blockquote>♛ <b>APPLE MUSIX • STATISTICS</b></blockquote>\n\n✦ Users: {0}\n✦ Chats: {1}\n✦ Active Streams: {2}\n✦ Uptime: {3}",
-
   "settings": "<blockquote>⚙️ <b>PLAYER SETTINGS</b></blockquote>\n\nCustomize the music experience for this chat.",
-
   "language": "🌐 ʟᴀɴɢᴜᴀɢᴇ",
-
   "admin_only": "🔐 ᴀᴅᴍɪɴ ᴏɴʟʏ",
-
   "enabled": "✓ ᴇɴᴀʙʟᴇᴅ",
-
   "disabled": "✕ ᴅɪꜱᴀʙʟᴇᴅ",
-
   "success": "<blockquote>✓ <b>ACTION COMPLETED</b></blockquote>\n\n✦ Your request was completed successfully.",
-
   "failed": "<blockquote>❌ <b>ACTION FAILED</b></blockquote>\n\n✦ Please try again.",
-
   "unknown_error": "<blockquote>⚠️ <b>UNEXPECTED ERROR</b></blockquote>\n\nSomething unexpected happened. Please try again later.",
-
   "maintenance": "<blockquote>🛠️ <b>MAINTENANCE MODE</b></blockquote>\n\nThe music system is temporarily unavailable.\n\n✦ Please try again later.",
-
-  "footer": "<blockquote>♛ <b>APPLE MUSIX</b>\n𝄞 Premium Telegram Music Experience</blockquote>"
+  "footer": "<blockquote>♛ <b>APPLE MUSIX</b>\n𝄞 Premium Telegram Music Experience</blockquote>",
+  "play_next": "<blockquote>▶️ <b>PLAYING NEXT</b></blockquote>\\n\\n✦ Moving to the next track in your queue...",
+  "play_again": "<blockquote>↻ <b>PLAYING AGAIN</b></blockquote>\\n\\n✦ Replaying the current track..."
 }
