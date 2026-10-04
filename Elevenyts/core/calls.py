@@ -373,22 +373,22 @@ class TgCall(PyTgCalls):
         )
 
         # --------------------------------------------------
-        # Thumbnail
+        # Start artwork generation in the background.
+        # It must never block the VC join.
         # --------------------------------------------------
+
+        thumb_task = None
 
         if (
             config.THUMB_GEN
             and isinstance(media, Track)
         ):
-            _thumb = await thumb.generate(media)
-
-        else:
-            _thumb = config.DEFAULT_THUMB
+            thumb_task = asyncio.create_task(
+                thumb.generate(media)
+            )
 
         # --------------------------------------------------
         # Direct stream URL
-        #
-        # If file_path is empty, generate a fresh URL.
         # --------------------------------------------------
 
         if not media.file_path:
@@ -601,38 +601,20 @@ class TgCall(PyTgCalls):
         )
 
         # ==================================================
-        # Make sure old call is disconnected
+        # Reuse an existing VC connection.
+        # PyTgCalls can replace the stream while connected,
+        # so leaving/rejoining is unnecessary latency.
         # ==================================================
 
         try:
-
-            call = await client.get_call(
-                chat_id
-            )
-
+            call = await client.get_call(chat_id)
             if call:
-
                 logger.debug(
-                    f"Already connected to {chat_id}, "
-                    f"leaving before reconnecting..."
+                    f"Reusing active VC connection for {chat_id}"
                 )
-
-                await client.leave_call(
-                    chat_id,
-                    close=False,
-                )
-
-        except (
-            ConnectionNotFound,
-            exceptions.NotInCallError,
-        ):
-            pass
-
         except Exception as e:
-
             logger.debug(
-                f"Error checking connection state "
-                f"for {chat_id}: {e}"
+                f"VC state check skipped for {chat_id}: {e}"
             )
 
         # ==================================================
@@ -735,6 +717,18 @@ class TgCall(PyTgCalls):
                         raise
 
                     raise
+
+            # Artwork is generated off the critical VC-join path.
+            # Wait for it only after the assistant is already connected.
+            if thumb_task:
+                try:
+                    _thumb = await thumb_task
+                except asyncio.CancelledError:
+                    _thumb = config.DEFAULT_THUMB
+                except Exception:
+                    _thumb = config.DEFAULT_THUMB
+            else:
+                _thumb = config.DEFAULT_THUMB
 
             # ==================================================
             # Voice command recording
