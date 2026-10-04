@@ -391,9 +391,28 @@ class TgCall(PyTgCalls):
         # Direct stream URL
         # --------------------------------------------------
 
+        # Prefetched YouTube URLs are temporary. Re-extract if stale.
+        if media.file_path:
+            try:
+                import time as _time
+                url_age = _time.monotonic() - float(
+                    getattr(media, "_stream_url_at", _time.monotonic())
+                )
+                if url_age > 240:
+                    media.file_path = None
+            except Exception:
+                media.file_path = None
+
         if not media.file_path:
 
             stream_url = await self._get_stream_url(media)
+
+            if stream_url:
+                try:
+                    import time as _time
+                    media._stream_url_at = _time.monotonic()
+                except Exception:
+                    pass
 
             if not stream_url:
 
