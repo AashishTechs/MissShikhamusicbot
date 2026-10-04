@@ -12,13 +12,15 @@
 # of this source code without permission is prohibited.
 # ==========================================================
 
+from pathlib import Path
+
 from pyrogram import enums, errors, filters, types
 
 from Elevenyts import app, config, db, lang
 from Elevenyts.helpers import buttons, utils
 
 
-WELCOME_IMAGE = "Welcome.jpg"
+WELCOME_IMAGE = str(Path(__file__).resolve().parents[3] / "Welcome.jpg")
 HELP_TEXT = (
     "<blockquote><b>🎧 APPLE MUSIX • HELP & COMMANDS</b></blockquote>\n\n"
     "Select a category below to explore available commands."
@@ -104,7 +106,7 @@ async def start(_, message: types.Message):
             reply_markup=key,
             quote=not private,
         )
-    except errors.ChatSendPhotosForbidden:
+    except (errors.ChatSendPhotosForbidden, OSError, ValueError):
         await message.reply_text(
             text=_text,
             reply_markup=key,
