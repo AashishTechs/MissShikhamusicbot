@@ -21,7 +21,27 @@ from Elevenyts.helpers import buttons, utils
 
 
 WELCOME_IMAGE = str(Path(__file__).resolve().parents[3] / "Welcome.jpg")
-WELCOME_FILE_ID = None
+WELCOME_FILE_ID_PATH = Path(__file__).resolve().parents[3] / ".welcome_file_id"
+
+
+def _load_welcome_file_id():
+    try:
+        value = WELCOME_FILE_ID_PATH.read_text(encoding="utf-8").strip()
+        return value or None
+    except (OSError, ValueError):
+        return None
+
+
+def _save_welcome_file_id(file_id):
+    try:
+        WELCOME_FILE_ID_PATH.write_text(file_id, encoding="utf-8")
+    except OSError:
+        pass
+
+
+# Persist the Telegram file_id so bot restarts do not force another image upload.
+WELCOME_FILE_ID = _load_welcome_file_id()
+
 HELP_TEXT = (
     "<blockquote><b>🎧 APPLE MUSIX • HELP & COMMANDS</b></blockquote>\n\n"
     "Select a category below to explore available commands."
@@ -109,9 +129,11 @@ async def start(_, message: types.Message):
         )
 
         # Cache Telegram's file_id after the first upload.
-        # Future /start requests reuse it and avoid re-uploading Welcome.jpg.
+        # Save it to disk so it survives bot restarts and future /start requests
+        # can reuse the Telegram-hosted image without uploading Welcome.jpg again.
         if WELCOME_FILE_ID is None and sent.photo:
             WELCOME_FILE_ID = sent.photo.file_id
+            _save_welcome_file_id(WELCOME_FILE_ID)
 
     except (errors.ChatSendPhotosForbidden, OSError, ValueError):
         await message.reply_text(
