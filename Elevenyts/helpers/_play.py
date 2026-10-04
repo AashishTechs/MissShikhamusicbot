@@ -153,8 +153,7 @@ def checkUB(play):
                         return
 
                 umm = await safe_reply(m.lang["play_invite"].format(app.name))
-                if umm:
-                    await asyncio.sleep(2)
+                # No artificial delay before the assistant joins.
                 try:
                     await client.join_chat(invite_link)
                 except errors.UserAlreadyParticipant:
