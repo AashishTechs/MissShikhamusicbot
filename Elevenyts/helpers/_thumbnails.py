@@ -148,215 +148,152 @@ class Thumbnail:
     ) -> str:
 
         try:
-
+            # --------------------------------------------------
+            # Reference-style music player card.
+            # The source thumbnail is used as the album/video art
+            # while the rest of the player UI is rendered locally.
+            # --------------------------------------------------
             with Image.open(temp) as temp_img:
-                base = temp_img.resize(size).convert("RGBA")
+                base = temp_img.convert("RGB").resize(size)
 
-            bg = base.filter(ImageFilter.GaussianBlur(28))
+            # Blurred background.
+            bg = base.filter(ImageFilter.GaussianBlur(32))
+            bg = ImageEnhance.Brightness(bg).enhance(0.32)
+            bg = ImageEnhance.Contrast(bg).enhance(1.15)
+            bg = bg.convert("RGBA")
 
-            bg = ImageEnhance.Brightness(bg).enhance(0.25)
-
-            bg = ImageEnhance.Contrast(bg).enhance(1.4)
-
-            overlay = Image.new(
-                "RGBA",
-                size,
-                (0, 0, 0, 120)
-            )
-
-            bg = Image.alpha_composite(bg, overlay)
-
-            panel = Image.new(
-                "RGBA",
-                (PANEL_W, PANEL_H),
-                (10, 10, 10, 155)
-            )
-
-            border = Image.new(
-                "RGBA",
-                (PANEL_W, PANEL_H),
-                (0, 0, 0, 0)
-            )
-
-            bd = ImageDraw.Draw(border)
-
-            bd.rounded_rectangle(
-                (0, 0, PANEL_W - 1, PANEL_H - 1),
-                radius=42,
-                outline=(0, 255, 255, 220),
-                width=3
-            )
-
-            mask = Image.new(
-                "L",
-                (PANEL_W, PANEL_H),
-                0
-            )
-
+            # Main rounded player surface.
+            card = Image.new("RGBA", (1140, 610), (24, 35, 47, 238))
+            mask = Image.new("L", card.size, 0)
             ImageDraw.Draw(mask).rounded_rectangle(
-                (0, 0, PANEL_W, PANEL_H),
-                radius=42,
-                fill=255
+                (0, 0, 1139, 609),
+                radius=34,
+                fill=255,
             )
-
-            panel = Image.alpha_composite(panel, border)
-
-            bg.paste(
-                panel,
-                (PANEL_X, PANEL_Y),
-                mask
-            )
+            bg.alpha_composite(card, (70, 55))
 
             draw = ImageDraw.Draw(bg)
 
-            draw.text(
-                (45, 22),
-                _decode_f(),
-                fill=(255, 255, 255, 230),
-                font=self.signature_font
+            # Album art.
+            art_size = 430
+            art_x, art_y = 105, 145
+            art = base.resize((art_size, art_size))
+            art_mask = Image.new("L", art.size, 0)
+            ImageDraw.Draw(art_mask).rounded_rectangle(
+                (0, 0, art_size - 1, art_size - 1),
+                radius=26,
+                fill=255,
+            )
+            bg.paste(art, (art_x, art_y), art_mask)
+
+            # Fonts.
+            title_font = self.title_font
+            regular_font = self.regular_font
+            icon_font = ImageFont.truetype(
+                "Elevenyts/helpers/Raleway-Bold.ttf",
+                34,
             )
 
-            thumb = base.resize((THUMB_W, THUMB_H))
-
-            tmask = Image.new(
-                "L",
-                thumb.size,
-                0
-            )
-
-            ImageDraw.Draw(tmask).rounded_rectangle(
-                (0, 0, THUMB_W, THUMB_H),
-                radius=28,
-                fill=255
-            )
-
-            bg.paste(
-                thumb,
-                (THUMB_X, THUMB_Y),
-                tmask
-            )
-
-            clean_title = re.sub(
-                r"\W+",
-                " ",
-                song.title
-            ).title()
-
+            clean_title = re.sub(r"\s+", " ", song.title).strip()
             final_title = trim_to_width(
                 clean_title,
-                self.title_font,
-                MAX_TITLE_WIDTH
+                title_font,
+                610,
             )
 
+            # Right-side title and source.
+            text_x = 575
             draw.text(
-                (TITLE_X + 2, TITLE_Y + 2),
+                (text_x + 2, 170 + 2),
                 final_title,
-                fill=(0, 0, 0),
-                font=self.title_font
+                fill=(0, 0, 0, 180),
+                font=title_font,
             )
-
             draw.text(
-                (TITLE_X, TITLE_Y),
+                (text_x, 170),
                 final_title,
-                fill=(255, 255, 255),
-                font=self.title_font
-            )
-
-            meta_text = (
-                f"Now Playing  •  YouTube  •  "
-                f"{song.view_count or 'Unknown Views'}"
+                fill=(255, 255, 255, 255),
+                font=title_font,
             )
 
             draw.text(
-                (TITLE_X, META_Y),
-                meta_text,
-                fill=(180, 180, 180),
-                font=self.regular_font
+                (text_x, 225),
+                "NOW PLAYING",
+                fill=(175, 190, 205, 255),
+                font=regular_font,
             )
+
+            # Progress bar.
+            bar_x = text_x
+            bar_y = 345
+            bar_w = 540
 
             draw.rounded_rectangle(
-                (
-                    BAR_X,
-                    BAR_Y - 5,
-                    BAR_X + BAR_TOTAL_LEN,
-                    BAR_Y + 5
-                ),
-                radius=12,
-                fill=(60, 60, 60)
+                (bar_x, bar_y, bar_x + bar_w, bar_y + 7),
+                radius=4,
+                fill=(92, 105, 118, 255),
             )
-
             draw.rounded_rectangle(
-                (
-                    BAR_X,
-                    BAR_Y - 5,
-                    BAR_X + BAR_RED_LEN,
-                    BAR_Y + 5
-                ),
-                radius=12,
-                fill=(0, 255, 255)
+                (bar_x, bar_y, bar_x + 95, bar_y + 7),
+                radius=4,
+                fill=(235, 238, 242, 255),
             )
-
             draw.ellipse(
-                (
-                    BAR_X + BAR_RED_LEN - 12,
-                    BAR_Y - 12,
-                    BAR_X + BAR_RED_LEN + 12,
-                    BAR_Y + 12
-                ),
-                fill=(0, 255, 255)
+                (bar_x + 87, bar_y - 5, bar_x + 101, bar_y + 9),
+                fill=(255, 255, 255, 255),
             )
 
             draw.text(
-                (BAR_X, BAR_Y + 18),
-                "00:00",
-                fill="white",
-                font=self.regular_font
+                (bar_x, bar_y + 20),
+                "0:00",
+                fill=(190, 200, 210, 255),
+                font=regular_font,
+            )
+            draw.text(
+                (bar_x + bar_w - 65, bar_y + 20),
+                song.duration,
+                fill=(190, 200, 210, 255),
+                font=regular_font,
             )
 
-            is_live = getattr(song, "is_live", False)
-
-            end_text = "LIVE" if is_live else song.duration
+            # Player controls matching the reference image.
+            controls = [
+                ("|<<", 650),
+                ("Ⅱ", 755),
+                (">>|", 860),
+            ]
+            for label, x in controls:
+                draw.text(
+                    (x, 420),
+                    label,
+                    fill=(245, 248, 250, 255),
+                    font=icon_font,
+                )
 
             draw.text(
-                (BAR_X + BAR_TOTAL_LEN - 80, BAR_Y + 18),
-                end_text,
-                fill=(0, 255, 255) if is_live else "white",
-                font=self.regular_font
+                (text_x, 485),
+                "🔊",
+                fill=(220, 230, 240, 255),
+                font=regular_font,
+            )
+            draw.rounded_rectangle(
+                (text_x + 45, 498, text_x + 540, 504),
+                radius=3,
+                fill=(95, 108, 120, 255),
             )
 
-            icons_path = "Elevenyts/helpers/play_icons.png"
+            # Small signature, matching the existing bot branding area.
+            draw.text(
+                (105, 92),
+                "APPLE MUSIC <<3",
+                fill=(255, 255, 255, 230),
+                font=self.signature_font,
+            )
 
-            if os.path.isfile(icons_path):
-
-                with Image.open(icons_path) as icons_img:
-
-                    ic = icons_img.resize(
-                        (ICONS_W, ICONS_H)
-                    ).convert("RGBA")
-
-                    r, g, b, a = ic.split()
-
-                    cyan_ic = Image.merge(
-                        "RGBA",
-                        (
-                            r.point(lambda _: 0),
-                            g.point(lambda _: 255),
-                            b.point(lambda _: 255),
-                            a
-                        )
-                    )
-
-                    bg.paste(
-                        cyan_ic,
-                        (ICONS_X, ICONS_Y),
-                        cyan_ic
-                    )
-
-            bg.save(output)
+            bg.convert("RGB").save(output, quality=95)
 
             try:
                 os.remove(temp)
-
             except OSError:
                 pass
 
