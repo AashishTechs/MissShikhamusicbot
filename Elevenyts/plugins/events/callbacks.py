@@ -92,10 +92,25 @@ async def _start_callback(_, query: types.CallbackQuery):
 
     await query.answer()
 
-    _text = query.lang["start_pm"].format(
-        query.from_user.first_name,
-        app.name
-    )
+    name = query.from_user.mention
+    _text = f"""Hey <b>{name}</b>,-: 🎧
+
+🍎 <b>Apple Music <<3</b> 🎵
+
+Your music. Your vibe. Your moment. ♡
+
+🎶 <b>High-Quality Music Streaming</b>
+⚡ <b>Fast & Smooth Playback</b>
+🔊 <b>24×7 Music in Voice Chat</b>
+
+━━━━━━━━━━━━━━━━━━
+
+🐼 <b>Ready to Feel the Music?</b>
+
+🔴 <b>Tap Help & Commands</b>
+🚀 <b>Explore my features & start listening!</b>
+
+👑 <b>Owner:</b> <a href="https://t.me/Aashish_0fficial">@Aashish_0fficial</a>"""
 
     key = buttons.start_key(
         query.lang,
@@ -116,6 +131,16 @@ async def _start_callback(_, query: types.CallbackQuery):
             )
         except Exception:
             pass
+
+
+@app.on_callback_query(filters.regex("^language$") & ~app.bl_users)
+@lang.language()
+@safe_callback
+async def _language_callback(_, query: types.CallbackQuery):
+    await query.answer(
+        "🌐 Language: English",
+        show_alert=True
+    )
 
 
 @app.on_callback_query(filters.regex("cancel_dl") & ~app.bl_users)
