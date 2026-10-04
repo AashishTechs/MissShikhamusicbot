@@ -207,36 +207,29 @@ class Inline:
         _text: str,
     ) -> types.InlineKeyboardMarkup:
 
+        # Reference-style queued player: exactly four controls.
         return self.ikm(
             [
                 [
                     self.ikb(
-                        text="⏪ 10",
-                        callback_data=f"controls seek_back_10 {chat_id}",
+                        text="▷",
+                        callback_data=f"controls resume {chat_id}",
+                        style=ButtonStyle.DANGER,
                     ),
                     self.ikb(
-                        text="⏸",
+                        text="Ⅱ",
                         callback_data=f"controls pause {chat_id}",
+                        style=ButtonStyle.PRIMARY,
                     ),
                     self.ikb(
-                        text="⏩ 10",
+                        text="▶|",
                         callback_data=f"controls skip {chat_id}",
-                    ),
-                ],
-                [
-                    self.ikb(
-                        text="✨ CLICK ME ↗",
-                        url=config.SUPPORT_CHANNEL,
+                        style=ButtonStyle.PRIMARY,
                     ),
                     self.ikb(
-                        text="💬 SUPPORT ↗",
-                        url=config.SUPPORT_CHAT,
-                    ),
-                ],
-                [
-                    self.ikb(
-                        text="✕ CLOSE",
-                        callback_data=f"controls close {chat_id}",
+                        text="□",
+                        callback_data=f"controls stop {chat_id}",
+                        style=ButtonStyle.DANGER,
                     ),
                 ],
             ]
