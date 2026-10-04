@@ -898,24 +898,39 @@ async def _help(_, query: types.CallbackQuery):
     if query.data in ("help", "help_main"):
         text = help_main
         markup = buttons.help_markup(query.lang)
-    else:
-        category = query.data.removeprefix("help_")
-        text = help_texts.get(category, help_main)
-        markup = buttons.help_markup(query.lang, True)
 
-    try:
-        await query.edit_message_caption(
+        # The main Help panel uses the Welcome.jpg photo.
+        # If we are coming back from a text-only category, replace that
+        # message with the photo panel.
+        try:
+            await query.message.delete()
+        except Exception:
+            pass
+
+        from pathlib import Path
+        welcome_image = str(Path(__file__).resolve().parents[3] / "Welcome.jpg")
+        await query.message.reply_photo(
+            photo=welcome_image,
             caption=text,
             reply_markup=markup,
         )
+        return
+
+    category = query.data.removeprefix("help_")
+    text = help_texts.get(category, help_main)
+    markup = buttons.help_markup(query.lang, True)
+
+    # Category pages must be text-only: remove the photo message and
+    # send the command list as a normal text message.
+    try:
+        await query.message.delete()
     except Exception:
-        try:
-            await query.edit_message_text(
-                text=text,
-                reply_markup=markup,
-            )
-        except Exception:
-            pass
+        pass
+
+    await query.message.reply_text(
+        text=text,
+        reply_markup=markup,
+    )
 
 
 @app.on_callback_query(
