@@ -1605,17 +1605,30 @@ class TgCall(PyTgCalls):
                 msg = None
 
                 # --------------------------------------------------
-                # IMPORTANT:
-                # Always refresh the direct URL for the next track.
-                #
-                # YouTube stream URLs are temporary.
+                # Use the prefetched direct URL whenever it is still
+                # fresh. Only extract a new URL when preload is missing
+                # or the cached URL is older than 240 seconds.
                 # --------------------------------------------------
 
-                media.file_path = None
+                stream_url = media.file_path
 
-                stream_url = await self._get_stream_url(
-                    media
-                )
+                if stream_url:
+                    try:
+                        import time as _time
+                        url_age = _time.monotonic() - float(
+                            getattr(media, "_stream_url_at", _time.monotonic())
+                        )
+                        if url_age >= 240:
+                            stream_url = None
+                            media.file_path = None
+                    except Exception:
+                        stream_url = None
+                        media.file_path = None
+
+                if not stream_url:
+                    stream_url = await self._get_stream_url(
+                        media
+                    )
 
                 if not stream_url:
 
