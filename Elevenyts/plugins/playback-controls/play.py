@@ -431,18 +431,8 @@ async def play_hndlr(
     if not file:
         return
 
-    # Search succeeded. Create the message now, after the search,
-    # instead of making the user wait through a visible search panel.
-    if sent is None:
-
-        sent = await safe_reply(
-            m,
-            "<blockquote>🎧 <b>PREPARING PLAYER</b></blockquote>",
-        )
-
-        if not sent:
-            return
-
+    # Search succeeded. Do not send a temporary preparation message.
+    # For a fresh track, play_media() creates the final player card itself.
     # ------------------------------------------------------
     # Video flag
     # ------------------------------------------------------
@@ -634,7 +624,7 @@ async def play_hndlr(
 
         await tune.play_media(
             chat_id=chat_id,
-            message=sent,
+            message=sent if sent is not None else None,
             media=file,
             message_chat_id=(
                 message_chat_id
