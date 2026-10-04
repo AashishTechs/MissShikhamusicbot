@@ -396,38 +396,38 @@ class Inline:
         rows = [
             [
                 self.ikb(
-                    text="🚀 CREATE YOUR GROUP ↗",
+                    text="🚀 CREATE YOUR GROUP",
                     url=f"https://t.me/{app.username}?startgroup=true",
                     style=ButtonStyle.DANGER,
                 )
             ],
             [
                 self.ikb(
-                    text="👤 OWNER ↗",
+                    text="👤 OWNER",
                     url="https://t.me/Aashish_0fficial",
                     style=ButtonStyle.SUCCESS,
                 ),
                 self.ikb(
-                    text="🌐 LANGUAGE ↗",
+                    text="🌐 LANGUAGE",
                     callback_data="language",
                     style=ButtonStyle.SUCCESS,
                 ),
             ],
             [
                 self.ikb(
-                    text="🤝 SUPPORT ↗",
-                    url=config.SUPPORT_CHAT,
+                    text="🤝 SUPPORT",
+                    url="https://t.me/deep_emotions_01",
                     style=ButtonStyle.PRIMARY,
                 ),
                 self.ikb(
-                    text="📢 UPDATES ↗",
-                    url=config.SUPPORT_CHANNEL,
+                    text="📢 UPDATES",
+                    url="https://t.me/+cGoEVo7d8YtjOTI9",
                     style=ButtonStyle.PRIMARY,
                 ),
             ],
             [
                 self.ikb(
-                    text="⚙️ HELP AND COMMANDS ↗",
+                    text="⚙️ HELP AND COMMANDS",
                     callback_data="help",
                     style=ButtonStyle.DANGER,
                 )
