@@ -330,10 +330,13 @@ async def play_hndlr(
 
         if "playlist" in url:
 
-            await safe_edit(
-                sent,
+            sent = await safe_reply(
+                m,
                 m.lang["playlist_fetch"],
             )
+
+            if not sent:
+                return
 
             try:
 
@@ -383,7 +386,7 @@ async def play_hndlr(
 
             file = await yt.search(
                 url,
-                sent.id,
+                m.id,
             )
 
         if not file:
