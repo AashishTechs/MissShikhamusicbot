@@ -816,7 +816,7 @@ async def _help(_, query: types.CallbackQuery):
         "<blockquote><b>🎧 APPLE MUSIX • HELP & COMMANDS</b></blockquote>\n\n"
         "CHOOSE THE CATEGORY FOR WHICH\n"
         "YOU WANNA GET HELP.\n"
-        "ASK YOUR DOUBTS AT <a href=\"https://t.me/Dosto_ki_Mehfil786\">SUPPORT CHAT</a>\n\n"
+        "ASK YOUR DOUBTS AT <a href=\"https://t.me/deep_emotions_01\">SUPPORT CHAT</a>\n\n"
         "ALL COMMANDS CAN BE USED WITH : /"
     )
 
