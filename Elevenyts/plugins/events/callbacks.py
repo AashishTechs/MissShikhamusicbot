@@ -1003,11 +1003,36 @@ async def _help(_, query: types.CallbackQuery):
     text = help_texts.get(category, help_main)
     markup = buttons.help_markup(query.lang, True)
 
-    # Send the category first, then remove the old panel.
-    # This avoids waiting for the delete request before the new page appears.
+    # Keep every help category in the same visual format as the
+    # main Help panel: same Welcome image, boxed title, content,
+    # and BACK button.
+    category_titles = {
+        "admin": "ADMIN",
+        "auth": "AUTH",
+        "blacklist": "BLACKLIST",
+        "broadcast": "BROADCAST",
+        "ping": "PING",
+        "play": "PLAY",
+        "sudo": "SUDO",
+        "videochats": "VIDEOCHATS",
+        "start": "START",
+        "autoplay": "AUTO PLAY",
+    }
+    title = category_titles.get(category, category.upper())
+    if not text.startswith("<blockquote>"):
+        text = (
+            f"<blockquote><b>🎧 APPLE MUSIX • {title}</b></blockquote>\\n\\n"
+            + text
+        )
+
+    from pathlib import Path
+    welcome_image = str(Path(__file__).resolve().parents[3] / "Welcome.jpg")
+
+    # Send the new panel first, then remove the previous panel.
     try:
-        new_message = await query.message.reply_text(
-            text=text,
+        new_message = await query.message.reply_photo(
+            photo=welcome_image,
+            caption=text,
             reply_markup=markup,
         )
         try:
@@ -1016,7 +1041,18 @@ async def _help(_, query: types.CallbackQuery):
             pass
         return new_message
     except Exception:
-        return
+        try:
+            new_message = await query.message.reply_text(
+                text=text,
+                reply_markup=markup,
+            )
+            try:
+                await query.message.delete()
+            except Exception:
+                pass
+            return new_message
+        except Exception:
+            return
 
 
 @app.on_callback_query(
