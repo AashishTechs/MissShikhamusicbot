@@ -14,6 +14,7 @@
 
 import asyncio
 import logging
+import time
 from typing import Dict, Set
 
 
@@ -98,18 +99,25 @@ class PreloadManager:
             return
 
         try:
-            logger.debug(
-                f"Skipping file preload for chat {chat_id}: "
-                f"{title}"
+            # Pre-fetch the temporary direct stream URL for the
+            # next queued track. This removes the URL-extraction
+            # wait when the current song ends.
+            from Elevenyts.core.youtube import yt
+
+            stream_url = await yt.get_stream_url(
+                media_id,
+                is_live=getattr(media, "is_live", False),
+                video=getattr(media, "video", False),
             )
 
-            # Important:
-            # file_path ko yahan direct URL se fill nahi karna.
-            # YouTube direct URLs expire ho sakte hain.
-            #
-            # Actual URL:
-            # Elevenyts/core/calls.py
-            # playback ke time generate karega.
+            if not stream_url:
+                logger.debug(
+                    f"Could not prefetch stream URL for {chat_id}: {title}"
+                )
+                return
+
+            media.file_path = stream_url
+            media._stream_url_at = time.monotonic()
 
             self._preloaded.setdefault(
                 chat_id,
@@ -117,8 +125,7 @@ class PreloadManager:
             ).add(media_id)
 
             logger.debug(
-                f"Direct-stream preparation complete for "
-                f"chat {chat_id}: {title}"
+                f"Stream URL prefetched for chat {chat_id}: {title}"
             )
 
         except asyncio.CancelledError:
