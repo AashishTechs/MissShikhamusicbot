@@ -588,11 +588,8 @@ async def play_hndlr(
 
     if not file.file_path:
 
-        await safe_edit(
-            sent,
-            "<blockquote>🔗 Preparing direct stream...</blockquote>",
-        )
-
+        # Extract the direct stream silently. The user-facing panel
+        # stays clean while the stream URL is prepared.
         stream_url = await get_direct_stream(
             file
         )
