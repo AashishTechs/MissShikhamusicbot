@@ -501,7 +501,12 @@ async def play_hndlr(
         # Call already active
         # --------------------------------------------------
 
-        if await db.get_call(chat_id):
+        # If another track is already in the queue, this request
+        # must always use the queued panel.  Queue positions are
+        # zero-based, so position > 0 means a track is already playing.
+        call_active = await db.get_call(chat_id)
+
+        if call_active or position > 0:
 
             queued_text = (
                 f"<blockquote>➕ <b>QUEUED | #{position}</b>  ”</blockquote>\n\n"
