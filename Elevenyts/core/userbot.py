@@ -105,7 +105,7 @@ class Userbot(Client):
             f"@{me.username}" if me.username else f"{client.name} (ID: {me.id})"
         )
         self.clients.append(client)
-        logger.info(f"👤 Assistant {num} started as @{client.username}")
+        logger.info(f"👤 Assistant {num} started as {client.display_name} (ID: {client.id})")
 
     async def boot(self):
         """
