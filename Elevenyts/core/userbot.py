@@ -83,14 +83,27 @@ class Userbot(Client):
                 f"⚠️ Assistant {num} couldn't send message to logger: {e}")
             # Continue anyway - this is not critical
 
-        client.id = client.me.id if hasattr(
-            client, 'me') and client.me else None
-        client.name = client.me.first_name if hasattr(
-            client, 'me') and client.me else f"Assistant{num}"
-        client.username = client.me.username if hasattr(
-            client, 'me') and client.me else None
-        client.mention = client.me.mention if hasattr(
-            client, 'me') and client.me else client.name
+        # Resolve the logged-in account explicitly instead of relying on
+        # Pyrogram's cached client.me value. This is important for
+        # session-string assistants whose username may be unset.
+        try:
+            me = await client.get_me()
+        except Exception as e:
+            logger.error(f"❌ Assistant {num} started but identity lookup failed: {e}")
+            try:
+                await client.stop()
+            except Exception:
+                pass
+            return
+
+        client.id = me.id
+        client.name = me.first_name or f"Assistant{num}"
+        client.username = me.username
+        # Pyrogram's mention works even when the account has no username.
+        client.mention = me.mention
+        client.display_name = (
+            f"@{me.username}" if me.username else f"{client.name} (ID: {me.id})"
+        )
         self.clients.append(client)
         logger.info(f"👤 Assistant {num} started as @{client.username}")
 
