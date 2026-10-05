@@ -30,7 +30,7 @@ class Queue:
     def add(self, chat_id: int, item: MediaItem) -> int:
         """Add a song to the end of the queue and return its position."""
         self.queues[chat_id].append(item)  # Add to end of queue
-        return len(self.queues[chat_id]) - 1  # Return position (0-based index)
+        return max(1, len(self.queues[chat_id]) - 1)  # User-facing waiting position starts at 1
 
     def check_item(self, chat_id: int, item_id: str) -> tuple[int, MediaItem | None]:
         """Check if an item with the given ID exists in the queue."""

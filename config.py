@@ -12,6 +12,7 @@
 # of this source code without permission is prohibited.
 # ==========================================================
 from os import getenv
+import os
 from typing import List
 from dotenv import load_dotenv
 
@@ -68,7 +69,7 @@ class Config:
         # Images
         self.DEFAULT_THUMB: str = getenv("DEFAULT_THUMB", "https://files.catbox.moe/iv2w0d.jpg")
         self.PING_IMG: str = getenv("PING_IMG", "https://files.catbox.moe/iv2w0d.jpg")
-        self.START_IMG: str = getenv("START_IMG", "https://files.catbox.moe/iv2w0d.jpg")
+        self.START_IMG: str = getenv("START_IMG", os.path.join(os.path.dirname(__file__), "Welcome.jpg"))
         self.RADIO_IMG: str = getenv("RADIO_IMG", "https://files.catbox.moe/iv2w0d.jpg")
 
         # Moderation
