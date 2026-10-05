@@ -66,5 +66,14 @@
   "maintenance": "<blockquote>🛠️ <b>MAINTENANCE MODE</b></blockquote>\n\nThe music system is temporarily unavailable.\n\n✦ Please try again later.",
   "footer": "<blockquote>♛ <b>APPLE MUSIX</b>\n𝄞 Premium Telegram Music Experience</blockquote>",
   "play_next": "<blockquote>▶️ <b>PLAYING NEXT</b></blockquote>\\n\\n✦ Moving to the next track in your queue...",
-  "play_again": "<blockquote>↻ <b>PLAYING AGAIN</b></blockquote>\\n\\n✦ Replaying the current track..."
+  "play_again": "<blockquote>↻ <b>PLAYING AGAIN</b></blockquote>\\n\\n✦ Replaying the current track...",
+  "processing": "<blockquote>⚙️ <b>PROCESSING</b></blockquote>\n\n✦ Preparing your request...",
+  "restarting": "<blockquote>🔄 <b>RESTARTING</b></blockquote>\n\n✦ Apple Musix is restarting. Please wait...",
+  "restarted": "<blockquote>✅ <b>RESTARTED</b></blockquote>\n\n✦ Apple Musix is coming back online.",
+  "log_fetch": "<blockquote>📋 <b>FETCHING LOGS</b></blockquote>\n\n✦ Please wait...",
+  "log_not_found": "<blockquote>❌ <b>LOG NOT FOUND</b></blockquote>\n\n✦ No log file is available.",
+  "log_sent": "<blockquote>📋 <b>APPLE MUSIX LOG</b></blockquote>\n\n✦ Application logs.",
+  "logger_usage": "<blockquote>⚠️ <b>USAGE</b></blockquote>\n\nUse <code>/{0} on</code> or <code>/{0} off</code>.",
+  "logger_on": "<blockquote>✅ <b>LOGGER ENABLED</b></blockquote>",
+  "logger_off": "<blockquote>✕ <b>LOGGER DISABLED</b></blockquote>"
 }
