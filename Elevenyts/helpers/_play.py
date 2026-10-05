@@ -156,11 +156,13 @@ def checkUB(play):
                         return
 
                 umm = await safe_reply(m.lang["play_invite"].format(app.name))
-                # No artificial delay before the assistant joins.
+
                 try:
                     await client.join_chat(invite_link)
+
                 except errors.UserAlreadyParticipant:
                     pass
+
                 except errors.InviteRequestSent:
                     try:
                         await client.approve_chat_join_request(
@@ -171,17 +173,18 @@ def checkUB(play):
                         if umm:
                             try:
                                 await umm.edit_text(
-                                    f"<blockquote><b>🔐 Bot Admin Required</b></blockquote>\n\n"
-                                    f"<blockquote>To play music in this chat, I need to be an <b>administrator</b>.\n\n"
-                                    f"<b>Required permissions:</b>\n"
-                                    f"• Manage Voice Chats\n"
-                                    f"• Invite Users via Link\n"
-                                    f"• Delete Messages\n\n"
-                                    f"Please promote me as admin with the required permissions.</blockquote>"
+                                    "<blockquote><b>🔐 Bot Admin Required</b></blockquote>\n\n"
+                                    "<blockquote>To play music in this chat, I need to be an <b>administrator</b>.\n\n"
+                                    "<b>Required permissions:</b>\n"
+                                    "• Manage Voice Chats\n"
+                                    "• Invite Users via Link\n"
+                                    "• Delete Messages\n\n"
+                                    "Please promote me as admin with the required permissions.</blockquote>"
                                 )
-                            except:
+                            except Exception:
                                 pass
                         return
+
                     except Exception as ex:
                         if umm:
                             try:
@@ -190,12 +193,13 @@ def checkUB(play):
                                         type(ex).__name__
                                     )
                                 )
-                            except:
+                            except Exception:
                                 pass
                         return
+
                 except Exception as join_ex:
-                    # The invite may expire between export and join.
-                    # Generate a fresh invite and retry once.
+                    # If Telegram rejects the invite hash, generate a fresh
+                    # invite and retry once.
                     if (
                         "InviteHashExpired" in type(join_ex).__name__
                         or "INVITE_HASH_EXPIRED" in str(join_ex)
@@ -205,25 +209,19 @@ def checkUB(play):
                                 m.chat.id
                             )
                             await client.join_chat(fresh_invite)
+
                         except errors.UserAlreadyParticipant:
                             pass
+
                         except errors.InviteRequestSent:
                             try:
                                 await client.approve_chat_join_request(
                                     m.chat.id,
                                     client.id,
                                 )
-                            except Exception as ex:
-                                if umm:
-                                    try:
-                                        await umm.edit_text(
-                                            m.lang["play_invite_error"].format(
-                                                type(ex).__name__
-                                            )
-                                        )
-                                    except:
-                                        pass
+                            except Exception:
                                 return
+
                         except Exception as retry_ex:
                             if umm:
                                 try:
@@ -232,9 +230,10 @@ def checkUB(play):
                                             type(retry_ex).__name__
                                         )
                                     )
-                                except:
+                                except Exception:
                                     pass
                             return
+
                     else:
                         if umm:
                             try:
@@ -243,57 +242,9 @@ def checkUB(play):
                                         type(join_ex).__name__
                                     )
                                 )
-                            except:
+                            except Exception:
                                 pass
                         return
-                if umm:
-                            try:
-                                await umm.edit_text(
-                                    f"<blockquote><b>🔐 Bot Admin Required</b></blockquote>\n\n"
-                                    f"<blockquote>To play music in this chat, I need to be an <b>administrator</b>.\n\n"
-                                    f"<b>Required permissions:</b>\n"
-                                    f"• Manage Voice Chats\n"
-                                    f"• Invite Users via Link\n"
-                                    f"• Delete Messages\n\n"
-                                    f"Please promote me as admin with the required permissions.</blockquote>"
-                                )
-                            except:
-                                pass
-                        return
-                    except Exception as ex:
-                        if umm:
-                            try:
-                                await umm.edit_text(
-                                    m.lang["play_invite_error"].format(
-                                        type(ex).__name__)
-                                )
-                            except:
-                                pass
-                        return
-                except errors.ChatAdminRequired:
-                    if umm:
-                        try:
-                            await umm.edit_text(
-                                f"<blockquote><b>🔐 Bot Admin Required</b></blockquote>\n\n"
-                                f"<blockquote>To play music in this chat, I need to be an <b>administrator</b>.\n\n"
-                                f"<b>Required permissions:</b>\n"
-                                f"• Manage Voice Chats\n"
-                                f"• Invite Users via Link\n"
-                                f"• Delete Messages\n\n"
-                                f"Please promote me as admin with the required permissions.</blockquote>"
-                            )
-                        except:
-                            pass
-                    return
-                except Exception as ex:
-                    if umm:
-                        try:
-                            await umm.edit_text(
-                                m.lang["play_invite_error"].format(type(ex).__name__)
-                            )
-                        except:
-                            pass
-                    return
 
                 if umm:
                     try:
