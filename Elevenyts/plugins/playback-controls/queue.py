@@ -1,17 +1,13 @@
 # ==========================================================
-# Copyright (c) 2026 ArtistBots
+# Copyright (c) 2026 Apple Music <<3
 # All Rights Reserved.
 #
-# Project      : ArtistBots API Telegram Music Bot
-# Powered By   : Artist
+# Project      : Apple Music Telegram Music Bot
+# Powered By   : Apple Music <<3
 # Type         : API Based Telegram Music Bot
 #
-# Bot          : @ArtistApibot
-# Channel      : https://t.me/artistbots
-# GitHub       : https://github.com/elevenyts
+# Bot          : @AppleMusix_bot
 #
-# Unauthorized copying, modification, or redistribution
-# of this source code without permission is prohibited.
 # ==========================================================
 
 from pyrogram import filters, types
@@ -43,6 +39,8 @@ async def _queue_func(_, m: types.Message):
 
     _reply = await m.reply_text("Fetching queue...")
     _queue = queue.get_queue(chat_id)
+    if not _queue:
+        return await _reply.edit_text(m.lang.get("queue_empty", "Queue is empty."))
     _media = _queue[0]
     _thumb = (
         await thumb.generate(_media)
@@ -56,7 +54,7 @@ async def _queue_func(_, m: types.Message):
     if _queue:
         _text += "\n\nUpcoming:"
         for i, media in enumerate(_queue, start=1):
-            if i == 15:
+            if i > 15:
                 break
             _text += f"\n{i}. {media.title} ({media.duration})"
 
