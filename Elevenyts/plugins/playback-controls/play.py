@@ -525,7 +525,7 @@ async def play_hndlr(
 
         call_active = await db.get_call(chat_id)
 
-        if already_has_track or call_active:
+        if already_has_track:
 
             queued_text = (
                 f"<blockquote>➕ <b>QUEUED | #{position}</b>  ”</blockquote>\n"
