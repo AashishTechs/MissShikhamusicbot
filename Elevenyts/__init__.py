@@ -80,7 +80,10 @@ yt = YouTube()
 from Elevenyts.helpers import Queue
 queue = Queue()
 
-# Initialize preload manager for next-track preparation\nfrom Elevenyts.helpers._preload import PreloadManager\npreload = PreloadManager()\n
+# Initialize preload manager for next-track preparation
+from Elevenyts.helpers._preload import PreloadManager
+preload = PreloadManager()
+
 # Initialize call handler
 from Elevenyts.core.calls import TgCall
 tune = TgCall()
@@ -114,4 +117,5 @@ async def stop() -> None:
     await userbot.exit()
     await db.close()
     
-    logger.info("✅ Bot stopped successfully.\n")
+    logger.info("✅ Bot stopped successfully.
+")
