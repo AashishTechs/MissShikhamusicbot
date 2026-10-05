@@ -1,17 +1,13 @@
 # ==========================================================
-# Copyright (c) 2026 ArtistBots
+# Copyright (c) 2026 Apple Music <<3
 # All Rights Reserved.
 #
-# Project      : ArtistBots API Telegram Music Bot
-# Powered By   : Artist
+# Project      : Apple Music Telegram Music Bot
+# Powered By   : Apple Music <<3
 # Type         : API Based Telegram Music Bot
 #
-# Bot          : @ArtistApibot
-# Channel      : https://t.me/artistbots
-# GitHub       : https://github.com/elevenyts
+# Bot          : @AppleMusix_bot
 #
-# Unauthorized copying, modification, or redistribution
-# of this source code without permission is prohibited.
 # ==========================================================
 import os
 import sys
@@ -189,7 +185,7 @@ async def _update(_, m: types.Message):
         asyncio.create_task(stop())
         await asyncio.sleep(2)
         
-        os.execl(sys.executable, sys.executable, "-m", "HasiiMusic")
+        os.execl(sys.executable, sys.executable, "-m", "Elevenyts")
         
     except FileNotFoundError:
         await sent.edit_text(
