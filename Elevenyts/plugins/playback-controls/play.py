@@ -231,14 +231,13 @@ async def play_hndlr(
                 else:
 
                     try:
-                        invite_link = chat.invite_link
-
-                        if not invite_link:
-                            invite_link = (
-                                await app.export_chat_invite_link(
-                                    channel_id
-                                )
+                        # Always generate a fresh invite link.
+                        # chat.invite_link may be expired.
+                        invite_link = (
+                            await app.export_chat_invite_link(
+                                channel_id
                             )
+                        )
 
                     except Exception:
 
