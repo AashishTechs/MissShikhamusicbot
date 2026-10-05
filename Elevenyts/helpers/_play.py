@@ -120,9 +120,12 @@ def checkUB(play):
                         pass
                 else:
                     try:
-                        invite_link = (await app.get_chat(m.chat.id)).invite_link
-                        if not invite_link:
-                            invite_link = await app.export_chat_invite_link(m.chat.id)
+                        # Always create a fresh invite for private groups.
+                        # Cached/old invite hashes can expire and cause
+                        # InviteHashExpired when the assistant joins.
+                        invite_link = await app.export_chat_invite_link(
+                            m.chat.id
+                        )
                     except errors.ChatAdminRequired:
                         await safe_reply(
                             f"<blockquote><b>🔐 Bot Admin Required</b></blockquote>\n\n"
@@ -158,6 +161,30 @@ def checkUB(play):
                     await client.join_chat(invite_link)
                 except errors.UserAlreadyParticipant:
                     pass
+                except Exception as join_ex:
+                    # The cached/primary invite may have expired between
+                    # export and join. Generate one more fresh invite and
+                    # retry once before reporting the failure.
+                    if "InviteHashExpired" in type(join_ex).__name__ or "INVITE_HASH_EXPIRED" in str(join_ex):
+                        try:
+                            fresh_invite = await app.export_chat_invite_link(
+                                m.chat.id
+                            )
+                            await client.join_chat(fresh_invite)
+                        except errors.UserAlreadyParticipant:
+                            pass
+                        except errors.InviteRequestSent:
+                            try:
+                                await client.approve_chat_join_request(
+                                    m.chat.id,
+                                    client.id,
+                                )
+                            except Exception:
+                                raise
+                        except Exception:
+                            raise
+                    else:
+                        raise
                 except errors.InviteRequestSent:
                     try:
                         await client.approve_chat_join_request(m.chat.id, client.id)
