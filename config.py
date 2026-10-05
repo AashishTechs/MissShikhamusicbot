@@ -11,7 +11,8 @@
 # Unauthorized copying, modification, or redistribution
 # of this source code without permission is prohibited.
 # ==========================================================
-from os import getenv\nimport os
+from os import getenv
+import os
 from typing import List
 from dotenv import load_dotenv
 
