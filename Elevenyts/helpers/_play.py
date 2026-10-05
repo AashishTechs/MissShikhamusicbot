@@ -161,11 +161,45 @@ def checkUB(play):
                     await client.join_chat(invite_link)
                 except errors.UserAlreadyParticipant:
                     pass
+                except errors.InviteRequestSent:
+                    try:
+                        await client.approve_chat_join_request(
+                            m.chat.id,
+                            client.id,
+                        )
+                    except errors.ChatAdminRequired:
+                        if umm:
+                            try:
+                                await umm.edit_text(
+                                    f"<blockquote><b>🔐 Bot Admin Required</b></blockquote>\n\n"
+                                    f"<blockquote>To play music in this chat, I need to be an <b>administrator</b>.\n\n"
+                                    f"<b>Required permissions:</b>\n"
+                                    f"• Manage Voice Chats\n"
+                                    f"• Invite Users via Link\n"
+                                    f"• Delete Messages\n\n"
+                                    f"Please promote me as admin with the required permissions.</blockquote>"
+                                )
+                            except:
+                                pass
+                        return
+                    except Exception as ex:
+                        if umm:
+                            try:
+                                await umm.edit_text(
+                                    m.lang["play_invite_error"].format(
+                                        type(ex).__name__
+                                    )
+                                )
+                            except:
+                                pass
+                        return
                 except Exception as join_ex:
-                    # The cached/primary invite may have expired between
-                    # export and join. Generate one more fresh invite and
-                    # retry once before reporting the failure.
-                    if "InviteHashExpired" in type(join_ex).__name__ or "INVITE_HASH_EXPIRED" in str(join_ex):
+                    # The invite may expire between export and join.
+                    # Generate a fresh invite and retry once.
+                    if (
+                        "InviteHashExpired" in type(join_ex).__name__
+                        or "INVITE_HASH_EXPIRED" in str(join_ex)
+                    ):
                         try:
                             fresh_invite = await app.export_chat_invite_link(
                                 m.chat.id
@@ -179,17 +213,40 @@ def checkUB(play):
                                     m.chat.id,
                                     client.id,
                                 )
-                            except Exception:
-                                raise
-                        except Exception:
-                            raise
+                            except Exception as ex:
+                                if umm:
+                                    try:
+                                        await umm.edit_text(
+                                            m.lang["play_invite_error"].format(
+                                                type(ex).__name__
+                                            )
+                                        )
+                                    except:
+                                        pass
+                                return
+                        except Exception as retry_ex:
+                            if umm:
+                                try:
+                                    await umm.edit_text(
+                                        m.lang["play_invite_error"].format(
+                                            type(retry_ex).__name__
+                                        )
+                                    )
+                                except:
+                                    pass
+                            return
                     else:
-                        raise
-                except errors.InviteRequestSent:
-                    try:
-                        await client.approve_chat_join_request(m.chat.id, client.id)
-                    except errors.ChatAdminRequired:
                         if umm:
+                            try:
+                                await umm.edit_text(
+                                    m.lang["play_invite_error"].format(
+                                        type(join_ex).__name__
+                                    )
+                                )
+                            except:
+                                pass
+                        return
+                if umm:
                             try:
                                 await umm.edit_text(
                                     f"<blockquote><b>🔐 Bot Admin Required</b></blockquote>\n\n"
