@@ -117,5 +117,4 @@ async def stop() -> None:
     await userbot.exit()
     await db.close()
     
-    logger.info("✅ Bot stopped successfully.
-")
+    logger.info("✅ Bot stopped successfully.")
